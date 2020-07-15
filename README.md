@@ -11,5 +11,6 @@ I am XING Jinbo(Doubiiu), just graduated from The Chinese University of Hong Kon
 ## Competitions
 
 ## Interests
-
-<script type="text/javascript" id="clustrmaps" src="//cdn.clustrmaps.com/map_v2.js?d=ZfjB6MUuOO69KjcqGKlnk-8ghUgF5QLSxEKP0YZjTF0&cl=ffffff&w=a"></script>
+<body style="width:300px;height:200px;>
+    <script type="text/javascript" id="clustrmaps" src="//cdn.clustrmaps.com/map_v2.js?d=ZfjB6MUuOO69KjcqGKlnk-8ghUgF5QLSxEKP0YZjTF0&cl=ffffff&w=a"></script>
+</body>
