@@ -29,15 +29,18 @@ Hi~ I am XING Jinbo(Doubiiu), just graduated from The Chinese University of Hong
 
 ## Competitions
 - Microsoft and DJI Technology Co. Ltd.
+
    AI X Drones Joint Universities Competition, 2nd runner-up
 
 - HUAWEI, HKSTP and HKSAIR
+
    HUAWEI CLOUD AI Developer Contest Hong Kong, bronze medal
-   
+
 - Tencent and Tsinghua University
+
    2019 WeChat Mini-program Development Competition, third prize
 
 ## Interests
-Computer games, Photography and IOS app development.
+- Computer games, Photography and IOS app development.
 
 <script type="text/javascript" id="clustrmaps" src="//cdn.clustrmaps.com/map_v2.js?d=ZfjB6MUuOO69KjcqGKlnk-8ghUgF5QLSxEKP0YZjTF0&cl=ffffff&w=a"></script>
