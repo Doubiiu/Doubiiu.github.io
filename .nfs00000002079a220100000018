@@ -53,7 +53,7 @@ ga('send', 'pageview');
 					The Chinese University of Hong Kong <br>
 					Shatin, N.T., Hong Kong<br>
 					<br>
-					Email: jbxing[at]cse[dot]cuhk[dot]edu[dot]hk
+					Email: jbxing@cse.cuhk.edu.hk
 				</p>
 					<a href="https://scholar.google.com/citations?hl=en&user=ZB0gLU0AAAAJ"><img src="./pic/google_scholar.png" height="30px" style="margin-bottom:-3px"></a>
 					<a href="https://github.com/Doubiiu"><img src="./pic/github_s.jpg" height="30px" style="margin-bottom:-3px"></a>
@@ -75,10 +75,10 @@ ga('send', 'pageview');
 	<a href="http://www.cse.cuhk.edu.hk/">Department of Computer Science and Engineering</a>, 
 	<a href="http://www.cuhk.edu.hk/">The Chinese University of Hong Kong</a>, 
 	supervised by <a href="https://www.cse.cuhk.edu.hk/~ttwong/myself.html">Prof. WONG, Tien-Tsin</a>.
-	Previously, I received my B.Sc. (1st class honor & <a href="https://www.erg.cuhk.edu.hk/erg/Elite">ELITE Stream</a>) and M.Sc. degrees in Computer Science from the Department of Computer Science and Engineering, The Chinese University of Hong Kong in 2020 and 2021 respectively.
+	Previously, I received my B.Sc. and M.Sc. degrees in Computer Science from the Department of Computer Science and Engineering, The Chinese University of Hong Kong in 2020 and 2021 respectively.
 </p>
 
-<p>My research interests include computational photography and low-level computer vision.</p>
+<p>My research interests include computer graphics and computer vision.</p>
 
 <h2>News</h2>
 <ul>
@@ -142,77 +142,47 @@ ga('send', 'pageview');
 	</li>
 </ul> -->
 
-<h2>Work Experience</h2>
-<li>
-	Research Assistant, &nbsp 05. 2020 - 08. 2021
-	<p></p>
-	<p>&nbsp&nbsp&nbsp Stanley Ho Big Data Decision Analytics Research Centre, CUHK, HKSAR</p>
-	<p>&nbsp&nbsp&nbsp Advisor: <a href="https://www.se.cuhk.edu.hk/people/academic-staff/prof-meng-mei-ling-helen/">Prof. Meng Meiling</a></p>
-        <p style="margin-top:3px">
-		</p>
-</li>
-<li>
-	Algorithm Engineer Intern, &nbsp 06. 2019 - 08. 2019
-	<p></p>
-	<p>&nbsp&nbsp&nbsp Cloud & Enterprise Intelligence, Huawei Technologies Co. Ltd, Shenzhen</p>
-	<p></p> 
-        <p style="margin-top:3px">
-		</p>
-</li>
-<li>
-	Summer Research Intern, &nbsp 05. 2018 - 07. 2018
-	<p></p>
-	<p>&nbsp&nbsp&nbsp Electronic Engineering Dept. CUHK, HKSAR</p>
-	<p></p> 
-	<p>&nbsp&nbsp&nbsp Advisor: <a href="https://www.ee.cuhk.edu.hk/en-gb/people/academic-staff/professors/prof-ni-zhao">Prof. Zhao Ni</a></p>
-        <p style="margin-top:3px">
-		</p>
-</li>
 
-
-<h2>Awards</h2>
-<ul>
-	<li>
-		Postgraduate Studentship
-	</li>
-	<li>
-		Distinguished Academic Performance Scholarship of MSc Programme
-	</li>
-	<!-- <li>
-		Entrance Scholarship of MSc Programme in Computer Science
-	</li> -->
-	<li>
-		ELITE Stream Student Scholarship (2018, 2019)
-	</li>
-	<li>
-		Computer Science scholarship
-	</li>
-	<li>
-		Dean’s List of Faculty of Engineering (2016, 2019, 2020)
-	</li>
-	<!-- <li>
-		Faculty of Engineering Admission Scholarship
-	</li> -->
-	<li>
-		Full Scholarship for Undergraduate Students (Mainland)
-	</li>
-</ul>
-
-<h2>Teaching</h2>
+<!-- <h2>Teaching</h2>
 <table id="tbTeaching" border="0" width="100%">
 	<tbody>
 		<tr>
-			<td> 2021-2022</td><td>Fall</td><td>Problem Solving by Programming (ENGG 1110)</td>
+			<td> 2020-2021</td><td>Fall</td><td>Fundamental Computing with C++ (CSCI 1540)</td>
 		</tr>
 		<tr>
-			<td> 2021-2022</td><td>Fall</td><td>Computer Game Software Production (CMSC 5727)</td>
+			<td> 2019-2020</td><td>Spring</td><td>Computer Principles and C Programming (CSCI 1510)</td>
+		</tr>
+		<tr>
+			<td> 2019-2020</td><td>Fall</td><td>Digital Logic and Systems (ENGG 2020)</td>
+		</tr>
+		<tr>
+			<td> 2018-2019</td><td>Fall</td><td>Digital Logic and Systems (ENGG 2020)</td>
 		</tr>
 	</tbody>
-</table>
+</table> -->
 
+<!--
 
+<h2>Experience</h2>
+<li>
+	Research Assistant, &nbsp 08. 2015 - Now
+	<p></p>
+	<p>&nbsp&nbsp&nbsp The Chinese University of Hong Kong</p>
+	<p></p> 
+		<p>&nbsp&nbsp&nbsp Advisor: Pheng Ann Heng</p> 
+        <p style="margin-top:3px">
+		</p>
+</li>
+<li>
+	Software Engineering Intern, &nbsp 01. 2015 - 04. 2015
+	<p></p>
+	<p>&nbsp&nbsp&nbsp Epiclouds, a startup company in Hangzhou</p>
+	<p></p> 
+        <p style="margin-top:3px">
+		</p>
+</li>
 
-
+	-->
 
 
 <div id="footer">
@@ -225,7 +195,7 @@ ga('send', 'pageview');
 	</div>  
 	
 	<br>
-        &copy; Jinbo Xing | Last updated: Nov. 2021
+        &copy; Jinbo Xing | Last updated: Sept. 2021
      
       </center>
 	</p>
