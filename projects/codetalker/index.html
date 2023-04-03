@@ -42,46 +42,6 @@
 </head>
 <body>
 
-<!-- <nav class="navbar" role="navigation" aria-label="main navigation">
-  <div class="navbar-brand">
-    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-    </a>
-  </div>
-  <div class="navbar-menu">
-    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
-      <a class="navbar-item" href="https://keunhong.com">
-      <span class="icon">
-          <i class="fas fa-home"></i>
-      </span>
-      </a>
-
-      <div class="navbar-item has-dropdown is-hoverable">
-        <a class="navbar-link">
-          More Research
-        </a>
-        <div class="navbar-dropdown">
-          <a class="navbar-item" href="https://hypernerf.github.io">
-            HyperNeRF
-          </a>
-          <a class="navbar-item" href="https://nerfies.github.io">
-            Nerfies
-          </a>
-          <a class="navbar-item" href="https://latentfusion.github.io">
-            LatentFusion
-          </a>
-          <a class="navbar-item" href="https://photoshape.github.io">
-            PhotoShape
-          </a>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</nav> -->
-
 
 <section class="hero">
   <div class="hero-body">
@@ -154,7 +114,7 @@
                   <span class="icon">
                       <i class="fab fa-github"></i>
                   </span>
-                  <span>Code*</span>
+                  <span>Code</span>
                   </a>
               </span>
               <!-- Dataset Link. -->
@@ -191,62 +151,7 @@
 </section>
 
 
-<!-- <section class="hero is-light is-small">
-  <div class="hero-body">
-    <div class="container">
-      <div id="results-carousel" class="carousel results-carousel">
-        <div class="item item-steve">
-          <video poster="" id="steve" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/steve.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-chair-tp">
-          <video poster="" id="chair-tp" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/chair-tp.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-shiba">
-          <video poster="" id="shiba" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/shiba.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-fullbody">
-          <video poster="" id="fullbody" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/fullbody.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-blueshirt">
-          <video poster="" id="blueshirt" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/blueshirt.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-mask">
-          <video poster="" id="mask" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/mask.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-coffee">
-          <video poster="" id="coffee" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/coffee.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-        <div class="item item-toby">
-          <video poster="" id="toby" autoplay controls muted loop playsinline height="100%">
-            <source src="./static/videos/toby2.mp4"
-                    type="video/mp4">
-          </video>
-        </div>
-      </div>
-    </div>
-  </div>
-</section> -->
+
 
 
 <section class="section">
@@ -280,23 +185,94 @@
       </div>
     </div>
     <!--/ Abstract. -->
+  </div>
+</section>
 
-    <!-- Paper video. -->
-    <!-- <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Video</h2>
-        <div class="publication-video">
-          <iframe src="https://www.youtube.com/embed/MrKrnHhk8IA?rel=0&amp;showinfo=0"
-                  frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+
+<section class="section">
+  <div class="container is-max-desktop">
+<!-- Method. -->
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Method</h2>
+
+        <!-- Discrete Motion Prior Learning. -->
+        <h3 class="title is-4">Discrete Motion Prior Learning</h3>
+        <div class="content has-text-justified">
+          <p>
+            CodeTalker first learns a discrete context-rich facial motion codebook by self-reconstruction
+            learning over real facial motions.
+          </p>
         </div>
+          <div class="content has-text-centered">
+            <img src="./static/images/codebook.png"
+                style="width: 55%"/>
+          </div>
+        <br/>
+        <!--/ Discrete Motion Prior Learning. -->
+
+        <!-- Speech-Driven Motion Synthesis. -->
+        <h3 class="title is-4">Speech-Driven Motion Synthesis</h3>
+        <div class="content has-text-justified">
+          <p>
+            It then autoregressively synthesize facial motions through code query conditioned on
+            both the speech signals and past motions.
+          </p>
+        </div>
+        <div class="content has-text-centered">
+          <img src="./static/images/speech-to-motion.png"
+              style="width: 100%"/>
+        </div>
+        <!--/ Speech-Driven Motion Synthesis. -->
+
       </div>
     </div>
-    
   </div>
-</section> -->
+</section>  
+<!--/ Method. -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Comparison</h2>
+
+        <div class="content has-text-justified">
+          <p>
+            Visual comparisons of sampled facial motions animated by different methods on
+            VOCA (left) and BIWI (right) dataset. The upper partition shows the facial 
+            animation conditioned on different speech parts, while the lower depicts the 
+            temporal statistics (mean and standard deviation) of adjacent-frame motion variations within a sequence.
+          </p>
+        </div>
+
+        <div class="content has-text-centered">
+          <img src="./static/images/comparison.png"
+              style="width: 100%"/>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>  
 
 
+<!-- <section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Related Works</h2>
 
+        <div class="content has-text-justified">
+          <ul>
+
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>   
+-->
 
 
 <section class="section" id="BibTeX">
@@ -314,7 +290,6 @@
 
 <footer class="footer">
   <div class="container">
-
     <div class="columns is-centered">
       <div class="column is-8">
         <div class="content">
