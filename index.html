@@ -56,6 +56,52 @@
         <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
 				
 
+          <tr onmouseout="piggycolor_stop()" onmouseover="piggycolor_start()">
+            <td style="padding:20px;width:25%;vertical-align:middle">
+              <div class="one">
+              <div class="two" id="pc_image" style="display: inline;"> 
+                <img src='images/piggycolor/color.png' alt="after for piggycolor" width="320" height="180">
+              </div>
+                <img src='images/piggycolor/color.png' alt="before for piggycolor" width="320" height="180">
+              </div>
+              <script type="text/javascript">
+                function piggycolor_start() {
+                  document.getElementById('pc_image').style.opacity = "1";
+                }
+
+                function piggycolor_stop() {
+                  document.getElementById('pc_image').style.opacity = "0";
+                }
+                piggycolor_stop()
+              </script>
+            </td>
+            <td style="padding:20px;width:75%;vertical-align:middle">
+              <b>
+                <papertitle>Improved Diffusion-based Image Colorization via Piggybacked Models</papertitle>
+              </b>
+              <br>
+              
+              <a href="https://hyliu.org/">Hanyuan Liu</a>,
+              <strong>Jinbo Xing</strong>,
+              <a href="https://msxie92.github.io/">Minshan Xie</a>, 
+              <a href="https://moeka.me/">Chengze Li</a>, 
+              <a href="https://www.cse.cuhk.edu.hk/~ttwong/myself.html">Tien-Tsin Wong</a>,
+              <br>
+              <em>arXiv preprint</em>, 2023
+              <p> 
+                <a href="https://arxiv.org/abs/2304.11105">arXiv</a> &nbsp/&nbsp
+                <a href="https://piggyback-color.github.io/">Project</a> &nbsp/&nbsp
+                <a href="https://github.com/hyliu/piggyback-color">Code</a>
+              </p>
+              <p>
+                We present a novel image colorization method, which leaverages the rich diffusion model prior. It takes text-based
+                 image colorization to another semantic level.
+              </p>
+            </td>
+          </tr>	
+
+
+
           <tr onmouseout="codetalker_stop()" onmouseover="codetalker_start()">
             <td style="padding:20px;width:25%;vertical-align:middle">
               <div class="one">
