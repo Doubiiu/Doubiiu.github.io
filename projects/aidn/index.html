@@ -127,16 +127,19 @@
 </section>
 
 <section class="hero teaser">
-  <div class="container is-max-desktop">
+  <div class="container is-max-desktop has-text-centered">
     <div class="hero-body">
       <!-- <video id="teaser" autoplay loop controls playsinline height="100%">
         <source src="./static/videos/AIDN_TIP_final_supp_video.mp4"
                 type="video/mp4">
       </video> -->
-      <img src="./static/images/teaser.png" style="width: 100%"/>
-      <h2 class="subtitle has-text-centered">
-        <strong>AIDN</strong> can downscale HR images to the LR images with the HR information embeded in a nearly-imperceptible form.
+      <img src="./static/images/usecase.png" style="width: 80%;text-align: center;"/>
+      <h2 class="subtitle has-text-justified">
+        <strong>AIDN</strong> can downscale HR images to the arbitrary-scale LR images with the HR information embeded in a nearly-imperceptible form.
         And it can faithfully restore the HR images whenever necessary.
+
+      The usecase is shown in this figure. (a) shows the conventional pipeline of distributing HR images over social media platforms. (b) shows the distribution pipeline with our proposed AIDN. <i>H</i> and <i>W</i> denote the height and width of images; s<sub>1</sub>, ..., s<sub>n</sub> are scale factors; and <i>N</i> stands for the upper-limit resolution of various social media platforms.
+      AIDN allows users to bypass the resolution upper-limit of social media platforms by preventing from auto-downscaling, thus receivers can obtain HR images with more details.
       </h2>
     </div>
   </div>
@@ -206,6 +209,32 @@
     </div>
   </div>
 </section>  
+
+
+<!-- Motivation. -->
+<!-- <section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Motivation & Usecase</h2>
+
+        <div class="content has-text-justified">
+          <p>
+            (a) shows the conventional pipeline of distributing HR images over social media platforms. (b) shows the distribution pipeline with our proposed AIDN. <i>H</i> and <i>W</i> denote the height and width of images; s<sub>1</sub>, ..., s<sub>n</sub> are scale factors; and <i>N</i> stands for the upper-limit resolution of various social media platforms.
+          </p>
+        </div>
+          <div class="content has-text-centered">
+            <img src="./static/images/usecase.png"
+                style="width: 90%"/>
+          </div>
+        <br/>
+
+      </div>
+    </div>
+  </div>
+</section>   -->
+<!-- Motivation. -->
+
 
 
 <section class="section">
