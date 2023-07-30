@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
+
+	<link rel="stylesheet" href="css/reset.css"> <!-- CSS reset -->
+	<link rel="stylesheet" href="css/style.css"> <!-- Resource style -->
+	<script src="js/modernizr.js"></script> <!-- Modernizr -->
+  	
+	<title>Image Comparison Slider</title>
+	<style> 
+	/* Add CSS to center align the text at the bottom of the page */ 
+	.center-aligned { position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); text-align: center; color:white}
+	/* Add CSS to center align the button */
+	#random-image-btn { 
+		display: block; 
+		margin: 20px auto; 
+		padding: 10px 20px; 
+		background-color: #3498db; 
+		color: #fff; 
+		border: none; 
+		border-radius: 5px; 
+		cursor: pointer; 
+		font-size: 16px; 
+		text-transform: uppercase; 
+	}
+	/* Add CSS to make the image larger in layout */
+	/* .cd-image-container img {
+		max-width: 100%;
+		width: 100%;
+	} */
+	
+	.cd-handle .line {
+		position: absolute;
+		left: 50%;
+		top: -500%;
+		transform: translateX(-50%);
+	}
+	header {
+		margin-top: -50px;
+		margin-bottom: 0px;
+		height: 150px;
+	}
+	</style>
+</head>
+<body>
+	<header>
+		<h1>Image rescaling comparison under scale &#215;4.0 on DIV2K</h1>
+	</header>
+	<figure class="cd-image-container">
+		<img src="bicubic_img/0801.png" alt="Original Image">
+		<span class="cd-image-label" data-type="original">Bicubic+Bicubic</span>
+
+		<div class="cd-resize-img"> <!-- the resizable image on top -->
+			<img src="aidn_img/0801_sr.png" alt="Modified Image">
+			<span class="cd-image-label" data-type="modified">AIDN (Ours)</span>
+		</div>
+
+		<span class="cd-handle">
+			<svg width="2" height="1100%" class="line">
+				<line x1="1" y1="0" x2="1" y2="100%" stroke="white" stroke-width="2"/>
+			</svg>
+		</span>
+	</figure> <!-- cd-image-container -->
+	<button id="random-image-btn">Next Sample</button>
+	<p class="center-aligned">The code template for image slider is borrowed from <a href="https://github.com/codyhouse/image-comparison-slider">here</a>.</p>
+<script src="js/jquery-2.1.1.js"></script>
+<script src="js/jquery.mobile.custom.min.js"></script> <!-- Resource jQuery -->
+<script src="js/main.js"></script> <!-- Resource jQuery -->
+<script> $(document).ready(function() { 
+	var currentIndex = 0;
+	var images = ['bicubic_img/0801.png', 'bicubic_img/0802.png', 'bicubic_img/0803.png', 'bicubic_img/0804.png', 'bicubic_img/0805.png', 'bicubic_img/0806.png', 'bicubic_img/0807.png', 'bicubic_img/0808.png', 'bicubic_img/0809.png', 'bicubic_img/0810.png']; // Add more image URLs to this array var 
+	$('#random-image-btn').click(function() {
+		currentIndex++;
+		if (currentIndex >= images.length) { currentIndex = 0; }
+		randomImage = images[currentIndex];
+		randomImage_ours = randomImage.replace("bicubic", "aidn");
+		randomImage_ours = randomImage_ours.replace(".png", "_sr.png");
+		$('.cd-image-container img').attr('src', randomImage); 
+		$('.cd-resize-img img').attr('src', randomImage_ours); 
+	}); 
+}); 
+</script>
+</body>
+</html>
