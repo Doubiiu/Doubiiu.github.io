@@ -21,7 +21,7 @@
                 <name>Jinbo Xing</name>
               </p>
               <p>
-                I am currently a second-year Ph.D student in the 
+                I am currently a third-year Ph.D student in the 
                 <a href="http://www.cse.cuhk.edu.hk/">CSE Department</a>, 
                 <a href="http://www.cuhk.edu.hk/">CUHK</a>, 
                 supervised by <a href="https://www.cse.cuhk.edu.hk/~ttwong/myself.html">Prof. Tien-Tsin WONG</a>.
@@ -30,7 +30,7 @@
                 Previously, I received my B.Sc. (1st class honor & <a href="https://www.erg.cuhk.edu.hk/erg/Elite">ELITE Stream</a>) and M.Sc. degrees in Computer Science at CUHK in 2020 and 2021 respectively.
               </p>
               <p>
-                I'm interested in low-level computer vision, image processing, 3D facial animation and AI generated content.
+                I'm interested in low-level computer vision, image processing, 3D facial animation and AIGC (in video generation).
               </p>
 
               <p style="text-align:center">
@@ -55,8 +55,198 @@
         </tbody></table>
         <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
 				
+          <tr onmouseout="myv_stop()" onmouseover="myv_start()">
+            <td style="padding:20px;width:35%;vertical-align:top;text-align:middle">
+              <div class="one">
+                <div class="two" id="myv_image" style="display: inline;"> 
+                  <img src='images/makeyourvideo/demo1.gif' alt="after for CodeTalker" width="320" height="250">
+                </div>
+                <img src='images/makeyourvideo/demo2.gif' alt="after for CodeTalker" width="320" height="250">
 
-          <!-- <tr onmouseout="piggycolor_stop()" onmouseover="piggycolor_start()">
+              </div>
+              <script type="text/javascript">
+                function myv_start() {
+                  document.getElementById('myv_image').style.opacity = "1";
+                }
+
+                function myv_stop() {
+                  document.getElementById('myv_image').style.opacity = "0";
+                }
+                myv_stop()
+              </script>
+            </td>
+            <td style="padding:20px;width:75%;vertical-align:middle">
+              <b>
+                <papertitle>Make-Your-Video: Customized Video Generation Using Textual and Structural Guidance</papertitle>
+              </b>
+              <br>
+              
+              <strong>Jinbo Xing</strong>,
+              <a href="https://menghanxia.github.io/">Menghan Xia</a>,
+              <a href="#">Yuxin Liu</a>,
+              <a href="https://julianjuaner.github.io/">Yuechen Zhang</a>,
+              <a href="https://yzhang2016.github.io/">Yong Zhang</a>,
+              <a href="https://github.com/YingqingHe">Yingqing He</a>,
+              <a href="https://github.com/hyliu">Hanyuan Liu</a>,
+              <a href="#">Haoxin Chen</a>,
+              <a href="https://vinthony.github.io/academic/">Xiaodong Cun</a>,
+              <a href="https://xinntao.github.io/">Xintao Wang</a>,
+              <a href="https://scholar.google.com/citations?hl=en&user=4oXBp9UAAAAJ&view_op=list_works&sortby=pubdate">Ying Shan</a>,
+              <a href="https://www.cse.cuhk.edu.hk/~ttwong/myself.html">Tien-Tsin Wong</a>
+              <br>
+              <em>arXiv preprint</em>, 2023
+              <p> 
+                <a href="https://arxiv.org/abs/2306.00943">arXiv</a> 
+                &nbsp/&nbsp <a href="https://doubiiu.github.io/projects/Make-Your-Video/">Project</a> 
+                &nbsp/&nbsp <a href="https://github.com/AILab-CVC/Make-Your-Video">Code</a> 
+              </p>
+              <p>
+                Given text description and video structure (depth), our approach can generate temporally coherent and high-fidelity videos. Its applications include dynamic 3d-scene-to-video creation, real-life scene to video, and video rerendering.
+              </p>
+            </td>
+          </tr>
+
+          <tr onmouseout="rival_stop()" onmouseover="rival_start()">
+            <td style="padding:20px;width:25%;vertical-align:middle">
+              <div class="one">
+              <div class="two" id="rival_image" style="display: inline;"> 
+                <img src='images/rival/rival.png' alt="after for piggycolor" width="320" height="180">
+              </div>
+                <img src='images/rival/rival-default.png' alt="before for piggycolor" width="320" height="180">
+              </div>
+              <script type="text/javascript">
+                function rival_start() {
+                  document.getElementById('rival_image').style.opacity = "1";
+                }
+
+                function rival_stop() {
+                  document.getElementById('rival_image').style.opacity = "0";
+                }
+                rival_stop()
+              </script>
+            </td>
+            <td style="padding:20px;width:75%;vertical-align:middle">
+              <b>
+                <papertitle>RIVAL: Real-World Image Variation by Aligning Diffusion Inversion Chain</papertitle>
+              </b>
+              <br>
+              
+              <a href="https://julianjuaner.github.io/">Yuechen Zhang</a>,
+              <strong>Jinbo Xing</strong>,
+              <a href="https://appsrv.cse.cuhk.edu.hk/~ericlo/">Eric Lo</a>,
+              <a href="https://jiaya.me/">Jiaya Jia</a>
+
+              <br>
+              <em>Neural Information Processing Systems (<b>NeurIPS</b> spotlight)</em>, 2023
+              <p> 
+                <a href="https://arxiv.org/abs/2305.18729">arXiv</a> 
+                &nbsp/&nbsp <a href="https://rival-diff.github.io/">Project</a> 
+                &nbsp/&nbsp <a href="https://github.com/julianjuaner/RIVAL/">Code</a> 
+              </p>
+              <p>
+                Given a real-world image, our proposed method can generate its semantic-aligned variants. The approach is compatible with customized image generation, inpainting, controllable image synthesis, style transfer, etc.
+              </p>
+            </td>
+          </tr>          
+
+          <tr onmouseout="aas_stop()" onmouseover="aas_start()">
+            <td style="padding:20px;width:25%;vertical-align:middle">
+              <div class="one">
+              <div class="two" id="aas_image" style="display: inline;"> 
+                <img src='images/animate-a-story/teaser.png' alt="after for piggycolor" width="320" height="180">
+              </div>
+                <img src='images/animate-a-story/teaser.png' alt="before for piggycolor" width="320" height="180">
+              </div>
+              <script type="text/javascript">
+                function aas_start() {
+                  document.getElementById('aas_image').style.opacity = "1";
+                }
+
+                function aas_stop() {
+                  document.getElementById('aas_image').style.opacity = "0";
+                }
+                aas_stop()
+              </script>
+            </td>
+            <td style="padding:20px;width:75%;vertical-align:middle">
+              <b>
+                <papertitle>Animate-A-Story: Storytelling with Retrieval-Augmented Video Generation</papertitle>
+              </b>
+              <br>
+              
+              <a href="https://github.com/YingqingHe">Yingqing He</a>,
+              <a href="https://menghanxia.github.io/">Menghan Xia</a>,
+              <a href="#">Haoxin Chen</a>,
+              <a href="https://vinthony.github.io/academic/">Xiaodong Cun</a>,
+              <a href="https://github.com/yuanygong">Yuan Gong</a>,
+              <strong>Jinbo Xing</strong>,
+              <a href="https://yzhang2016.github.io/">Yong Zhang</a>,
+              <a href="https://xinntao.github.io/">Xintao Wang</a>,
+              <a href="#">Chao Weng</a>,
+              <a href="https://scholar.google.com/citations?hl=en&user=4oXBp9UAAAAJ&view_op=list_works&sortby=pubdate">Ying Shan</a>,
+              <a href="https://cqf.io/">Qifeng Chen</a>
+              <br>
+              <em>arXiv preprint</em>, 2023
+              <p> 
+                <a href="https://arxiv.org/abs/2307.06940">arXiv</a> 
+                &nbsp/&nbsp <a href="https://github.com/AILab-CVC/Animate-A-Story">Project</a> 
+                &nbsp/&nbsp <a href="https://github.com/AILab-CVC/Animate-A-Story">Code</a> 
+              </p>
+              <p>
+                We utilize the abundance of existing video clips and synthesize a coherent storytelling video by customizing their appearances with given visual concepts.
+              </p>
+            </td>
+          </tr>
+          
+          <tr onmouseout="piggycolorvideo_stop()" onmouseover="piggycolorvideo_start()">
+            <td style="padding:20px;width:35%;vertical-align:middle;text-align:middle">
+              <div class="one" style="display: inline;">
+                <!-- <div class="two" id="pcv_image" style="display: inline;"> 
+                  <video  width="320" height="180" muted autoplay loop>
+                  <source src="images/piggycolor-video/teaser-h265.mp4" alt="Annimation for FVI" width="320"type="video/mp4">
+                  </video>
+                </div> -->
+                <div class="two" id="pcv_image" style="display: inline;">
+                  <img src='images/piggycolor-video/screen.jpg' alt="before for piggycolor" width="320" height="150">
+                </div>
+                <img src='images/piggycolor-video/screen.jpg' alt="before for piggycolor" width="320" height="150">
+              </div>
+              <script type="text/javascript">
+                function piggycolorvideo_start() {
+                  document.getElementById('pcv_image').style.opacity = "1";
+                }
+
+                function piggycolorvideo_stop() {
+                  document.getElementById('pcv_image').style.opacity = "0";
+                }
+                piggycolorvideo_stop()
+              </script>
+            </td>
+            <td style="padding:20px;width:75%;vertical-align:middle">
+              <b>
+                <papertitle>Video Colorization with Pre-trained Text-to-Image Diffusion Models</papertitle>
+              </b>
+              <br>
+              
+              <a href="https://hyliu.org/">Hanyuan Liu</a>,
+              <a href="https://msxie92.github.io/">Minshan Xie</a>,
+              <strong>Jinbo Xing</strong>,
+              <a href="https://moeka.me/">Chengze Li</a>, 
+              <a href="https://www.cse.cuhk.edu.hk/~ttwong/myself.html">Tien-Tsin Wong</a>
+              <br>
+              <em>arXiv preprint</em>, 2023
+              <p> 
+                <a href="https://arxiv.org/abs/2306.01732">arXiv</a> &nbsp/&nbsp
+                <a href="https://colordiffuser.github.io/">Project</a> &nbsp/&nbsp
+                <a href="https://github.com/hyliu/ColorDiffuser">Code</a>
+              </p>
+              <p>
+                We present an effective video colorization method, an adaptation of a pre-trained text-to-image diffusion model for video colorization.
+              </p>
+            </td>
+          </tr>	
+
+          <tr onmouseout="piggycolor_stop()" onmouseover="piggycolor_start()">
             <td style="padding:20px;width:25%;vertical-align:middle">
               <div class="one">
               <div class="two" id="pc_image" style="display: inline;"> 
@@ -85,7 +275,7 @@
               <strong>Jinbo Xing</strong>,
               <a href="https://msxie92.github.io/">Minshan Xie</a>, 
               <a href="https://moeka.me/">Chengze Li</a>, 
-              <a href="https://www.cse.cuhk.edu.hk/~ttwong/myself.html">Tien-Tsin Wong</a>,
+              <a href="https://www.cse.cuhk.edu.hk/~ttwong/myself.html">Tien-Tsin Wong</a>
               <br>
               <em>arXiv preprint</em>, 2023
               <p> 
@@ -98,8 +288,7 @@
                  image colorization to another semantic level.
               </p>
             </td>
-          </tr>	 -->
-
+          </tr>	
 
 
           <tr onmouseout="codetalker_stop()" onmouseover="codetalker_start()">
@@ -131,7 +320,7 @@
               <a href="https://julianjuaner.github.io/">Yuechen Zhang</a>, 
               <a href="https://vinthony.github.io/academic/">Xiaodong Cun</a>, 
               <a href="https://juewang725.github.io/">Jue Wang</a>,  
-              <a href="https://www.cse.cuhk.edu.hk/~ttwong/myself.html">Tien-Tsin Wong</a>,
+              <a href="https://www.cse.cuhk.edu.hk/~ttwong/myself.html">Tien-Tsin Wong</a>
               <br>
               <em>Computer Vision and Pattern Recognition (<b>CVPR</b>)</em>, 2023
               <p> 
@@ -248,7 +437,7 @@
                   <source src="images/FVI_CVM21/FVI.mp4" alt="Annimation for FVI" width="320" height="180" type="video/mp4">
                   </video>
                 </div>
-                <img src='images/FVI_CVM21/FVI_cover.png' alt="Cover Image for FVI" width="320" ,="" height="180">
+                <img src='images/FVI_CVM21/FVI_cover.png' alt="Cover Image for FVI" width="320" height="180">
               </div>
               <script type="text/javascript">
                 function fvi_start() {
@@ -486,6 +675,8 @@
                   Journal Review:
                   <br>
                   The Visual Computer Journal (TVCJ)
+                  <br>
+                  IEEE Transactions on Visualization and Computer Graphics (TVCG)
                 </p>
                 
               </li>
@@ -540,7 +731,7 @@
             <td style="padding:0px">
               <br>
               <p style="text-align:right;font-size:small;">
-                Last updated: Aug 2023
+                Last updated: Sep 2023
                 <br>
                 Web page design credit to <a href="https://jonbarron.info" style="font-size: 14px">Jon Barron</a>
               </p>
