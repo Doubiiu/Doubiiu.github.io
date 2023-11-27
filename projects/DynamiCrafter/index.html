@@ -1,0 +1,1130 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>DynamiCrafter: Animating Open-domain Images with Video Diffusion Priors</title>
+<link href="style.css" rel="stylesheet" type="text/css">
+
+<link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+      rel="stylesheet">
+
+<link rel="stylesheet" href="./static/css/bulma.min.css">
+<link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+<link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+<link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+<link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+<link rel="stylesheet" href="./static/css/index.css">
+<link rel="icon" href="./static/images/favicon.svg">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script defer src="./static/js/fontawesome.all.min.js"></script>
+<script src="./static/js/bulma-carousel.min.js"></script>
+<script src="./static/js/bulma-slider.min.js"></script>
+<script src="./static/js/index.js"></script>
+</head>
+
+<body>
+	<button style="position: fixed;right: 15px;top:  50%;height: 100px;width: 140px; font-size: 20px;" type="button"><a href="#top">Back to top</a></button> 
+<div class="page-container">
+  <!-- <h1 align="center">DynamiCrafter:<br>Animating Open-domain Images with Video Diffusion Priors</h1> -->
+  
+  
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">DynamiCrafter: Animating Open-domain <br>Images with Video Diffusion Priors</h1>
+            <div class="column is-full_width">
+              <!-- <h2 class="title is-4">CVPR 2023</h2> -->
+            </div>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                <a href="https://doubiiu.github.io/">Jinbo Xing</a><sup>1</sup>,</span>
+              <span class="author-block">
+                <a href="https://menghanxia.github.io/">Menghan Xia</a><sup>2</sup>,</span>
+              <span class="author-block">
+                <a href="https://yzhang2016.github.io/">Yong Zhang</a><sup>2</sup>,
+              </span>
+              <span class="author-block">
+                <a href="#">Haoxin Chen</a><sup>2</sup>,
+              </span>
+              <span class="author-block">
+                <a href="#">Wangbo Yu</a><sup>3</sup>,
+              </span>
+              <br>
+              <span class="author-block">
+                <a href="https://github.com/hyliu">Hanyuan Liu</a><sup>1</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://xinntao.github.io/">Xintao Wang</a><sup>2</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://www.cse.cuhk.edu.hk/~ttwong/myself.html">Tien-Tsin Wong</a><sup>1</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://scholar.google.com/citations?hl=en&user=4oXBp9UAAAAJ&view_op=list_works&sortby=pubdate">Ying Shan</a><sup>2</sup>
+              </span>
+            </div>
+  
+            <div class="is-size-5 publication-authors">
+              <span class="author-block"><sup>1</sup>The Chinese University of Hong Kong,</span>&nbsp;
+              <span class="author-block"><sup>2</sup>Tencent AI Lab,</span>&nbsp;
+              <span class="author-block"><sup>3</sup>Peking University</span>
+            </div>
+  
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <!-- PDF Link. -->
+                <!-- <span class="link-block">
+                  <a href=""
+                     class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                        <i class="fas fa-file-pdf"></i>
+                    </span>
+                    <span>Paper</span>
+                  </a>
+                </span> -->
+                <span class="link-block">
+                  <a href="https://arxiv.org/abs/2310.12190"
+                     class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                        <i class="ai ai-arxiv"></i>
+                    </span>
+                    <span>arXiv</span>
+                  </a>
+                </span>
+                <!-- Video Link. -->
+                <!-- <span class="link-block">
+                  <a href="#teaser"
+                     class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                        <i class="fab fa-youtube"></i>
+                    </span>
+                    <span>Video</span>
+                  </a>
+                </span> -->
+                <!-- Code Link. -->
+                <span class="link-block">
+                  <a href="https://github.com/Doubiiu/DynamiCrafter"
+                     class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                        <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                    </a>
+                </span>
+                <!-- Dataset Link. -->
+                <span class="link-block">
+                  <a href="#"
+                     class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                        <i class="far fa-images"></i>
+                    </span>
+                    <span>Online demo (coming soon)</span>
+                  </a>
+                </span>
+              
+              </div>
+              <div class="publication-links">
+
+                <span class="link-block">
+                  <a href="#our_results_container"
+                     class="external-link button is-normal is-rounded">
+                    <!-- <span class="icon">
+                        <i class="far fa-images"></i>
+                    </span> -->
+                    <span>Showcases</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="#comparison_with_baseline_container"
+                     class="external-link button is-normal is-rounded">
+                    <span>Comparisons</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="#motion_control_container"
+                     class="external-link button is-normal is-rounded">
+                    <span>Motion control</span>
+                  </a>
+                </span>              
+              </div>
+
+              <div class="publication-links">
+                <span class="link-block">
+                  <a href="#applications_container"
+                     class="external-link button is-normal is-rounded">
+                    <span>Applications</span>
+                  </a>
+                </span>
+
+                <span class="link-block">
+                  <a href="#other_controls_container"
+                     class="external-link button is-normal is-rounded">
+                    <span>Other controls</span>
+                  </a>
+                </span>
+
+                <span class="link-block">
+                  <a href="#ablation_container"
+                     class="external-link button is-normal is-rounded">
+                    <span>Ablation study</span>
+                  </a>
+                </span>
+
+                <span class="link-block">
+                  <a href="#limitations_container"
+                     class="external-link button is-normal is-rounded">
+                    <span>Limitations</span>
+                  </a>
+                </span>
+              
+              </div>
+
+
+
+            </div>
+
+
+            <!-- <div class="is-size-6 publication-authors">
+              <span class="author-block">Unless stated otherwise, all video results contains 16 frames at a resolution of 256 &times; 256.</span>
+
+            </div> -->
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+	
+  <!-- <p align="center">&nbsp;</p> -->
+	<a href="#top"></a>
+
+  
+    <!------------------ BEGIN SECTION ------------------>
+    <!-- <p>&nbsp;</p> -->
+    <!-- <hr> -->
+        
+    <h2 style="margin-top: 0em;" id="our_results_container" align="left"><a name="image-results" id="image-results"></a>Showcases produced by our method</h2>
+    <p align="left">
+        Hover over to view the input still images and text prompts.
+    </p>
+    <table  width="1000" align="center">
+      <tbody>
+        <!-- <div class="video-container">
+          <video  width="200" src="" autoplay loop controls muted></video>
+          <img class="hover-image" src="video_showcase/extra2/" alt="Hover image">
+          <div class="caption"></div>
+        </div> -->
+        <tr>
+          <th>
+              <div class="video-container">
+                <video  width="200" src="video_showcase/extra2/guitar0_sample3.mp4" autoplay loop controls muted></video>
+                <img class="hover-image" src="video_showcase/extra2/guitar0.jpeg_00.png" alt="Hover image">
+                <div class="caption">bear playing guitar happily, snowing</div>
+              </div>
+          </th>
+          <th>
+            <div class="video-container">
+              <video  width="200" src="video_showcase/extra2/walk0_sample4.mp4" autoplay loop controls muted></video>
+              <img class="hover-image" src="video_showcase/extra2/walk0.png_00.png" alt="Hover image">
+              <div class="caption">boy walking on the street</div>
+            </div>
+          </th>
+          <th>
+            <div class="video-container">
+              <video  width="200" src="video_showcase/extra2/cat1_sample2.mp4" autoplay loop controls muted></video>
+              <img class="hover-image" src="video_showcase/extra2/cat1.jpeg_00.png" alt="Hover image">
+              <div class="caption">cat dancing</div>
+            </div>
+          </th>
+          <th>
+            <div class="video-container">
+              <video  width="200" src="video_showcase/extra2/cow_sample3.mp4" autoplay loop controls muted></video>
+              <img class="hover-image" src="video_showcase/extra2/cow.jpeg_00.png" alt="Hover image">
+              <div class="caption">cowboy riding a bull over a fence</div>
+            </div>
+          </th>
+          <th>
+            <div class="video-container">
+              <video  width="200" src="video_showcase/JDB/Upscaled_Aime_Tribolet_springtime_landscape_golden_hour_morning_pale_yel_e6946f8d-37c1-4ce8-bf62-6ba90d23bd93_sample0.mp4" autoplay loop controls muted></video>
+              <img class="hover-image" src="video_showcase/JDB/Upscaled_Aime_Tribolet_springtime_landscape_golden_hour_morning_pale_yel_e6946f8d-37c1-4ce8-bf62-6ba90d23bd93.mp4_00.png" alt="Hover image">
+              <div class="caption">zoom-in, a landscape, springtime</div>
+            </div>
+          </th>
+        </tr>
+        <tr>
+          <th>
+            <div class="video-container">
+              <video  width="200" src="video_showcase/extra2/dance1_sample1.mp4" autoplay loop controls muted></video>
+              <img class="hover-image" src="video_showcase/extra2/dance1.jpeg_00.png" alt="Hover image">
+              <div class="caption">two people dancing</div>
+            </div>
+          </th>
+          <th>
+            <div class="video-container">
+              <video  width="200" src="video_showcase/extra2/explode0_sample4.mp4" autoplay loop controls muted></video>
+              <img class="hover-image" src="video_showcase/extra2/explode0.jpeg_00.png" alt="Hover image">
+              <div class="caption">explode colorful smoke coming out</div>
+            </div>
+          </th>
+          <th>
+            <div class="video-container">
+              <video  width="200" src="video_showcase/JDB/Upscaled_Alex__State_Blonde_woman_riding_on_top_of_a_moving_washing_mach_c31acaa3-dd30-459f-a109-2d2eb4c00fe2_sample0.mp4" autoplay loop controls muted></video>
+              <img class="hover-image" src="video_showcase/JDB/Upscaled_Alex__State_Blonde_woman_riding_on_top_of_a_moving_washing_mach_c31acaa3-dd30-459f-a109-2d2eb4c00fe2.mp4_00.png" alt="Hover image">
+              <div class="caption">A blonde woman rides on top of a moving washing machine into the sunset.</div>
+            </div>
+          </th>
+          <th>
+            <div class="video-container">
+              <video  width="200" src="video_showcase/extra2/girl3_sample2.mp4" autoplay loop controls muted></video>
+              <img class="hover-image" src="video_showcase/extra2/girl3.jpeg_00.png" alt="Hover image">
+              <div class="caption">girl talking and blinking</div>
+            </div>
+          </th>
+          <th>
+            <div class="video-container">
+              <video  width="200" src="video_showcase/extra2/ship_sample0.mp4" autoplay loop controls muted></video>
+              <img class="hover-image" src="video_showcase/extra2/ship.jpeg_00.png" alt="Hover image">
+              <div class="caption">sailing ship in the ocean, waves are surging</div>
+            </div>
+          </th>
+        </tr>
+        <tr>
+          <th>
+            <div class="video-container">
+              <video  width="200" src="video_showcase/extra2/boat_sample3.mp4" autoplay loop controls muted></video>
+              <img class="hover-image" src="video_showcase/extra2/boat.jpeg_00.png" alt="Hover image">
+              <div class="caption">a woman in a moving boat with lanterns</div>
+            </div>
+          </th>
+          <th>
+            <div class="video-container">
+              <video  width="200" src="video_showcase/extra2/motocycle1_sample3.mp4" autoplay loop controls muted></video>
+              <img class="hover-image" src="video_showcase/extra2/motocycle1.jpeg_00.png" alt="Hover image">
+              <div class="caption">man riding a motocycle down the street</div>
+            </div>
+          </th>
+          <th>
+            <div class="video-container">
+              <video  width="200" src="video_showcase/extra2/piano_sample2.mp4" autoplay loop controls muted></video>
+              <img class="hover-image" src="video_showcase/extra2/piano.jpeg_00.png" alt="Hover image">
+              <div class="caption">man playing piano</div>
+            </div>
+          </th>
+          <th>
+            <div class="video-container">
+              <video  width="200" src="video_showcase/extra2/rabbit_sample3.mp4" autoplay loop controls muted></video>
+              <img class="hover-image" src="video_showcase/extra2/rabbit.jpeg_00.png" alt="Hover image">
+              <div class="caption">two rabits playing</div>
+            </div>
+          </th>
+          <th>
+            <div class="video-container">
+              <video  width="200" src="video_showcase/extra2/robot_sample3.mp4" autoplay loop controls muted></video>
+              <img class="hover-image" src="video_showcase/extra2/robot.png_00.png" alt="Hover image">
+              <div class="caption">robot walking in a field</div>
+            </div>
+          </th>
+        </tr>
+        <tr>
+          <th>
+            <div class="video-container">
+              <video  width="200" src="video_showcase/extra2/girl001.mp4" autoplay loop controls muted></video>
+              <img class="hover-image" src="video_showcase/extra2/girl001.jpeg" alt="Hover image">
+              <div class="caption">A girl talking</div>
+            </div>
+          </th>
+          <th>
+            <div class="video-container">
+              <video  width="200" src="video_showcase/extra2/violin_sample4.mp4" autoplay loop controls muted></video>
+              <img class="hover-image" src="video_showcase/extra2/violin.png_00.png" alt="Hover image">
+              <div class="caption">man playing violin in the rain</div>
+            </div>
+          </th>
+          <th>
+            <div class="video-container">
+              <video  width="200" src="video_showcase/JDB/Upscaled_Daath_a_fit_track_and_field_female_athlete_stretching_on_the_fi_87217a79-c357-4436-a66c-a59df84959aa_sample0.mp4" autoplay loop controls muted></video>
+              <img class="hover-image" src="video_showcase/JDB/Upscaled_Daath_a_fit_track_and_field_female_athlete_stretching_on_the_fi_87217a79-c357-4436-a66c-a59df84959aa.mp4_00.png" alt="Hover image">
+              <div class="caption">A fit track and field female athlete is seen stretching on the field in anime style.</div>
+            </div>
+          </th>
+          <th>
+            <div class="video-container">
+              <video  width="200" src="video_showcase/JDB/Upscaled_Berattyln2013_Design_fonts_with_Meta_Great_Dane_with_Crown_Gold_0860aba0-1219-4418-a167-1f3924a6a714_sample1.mp4" autoplay loop controls muted></video>
+              <img class="hover-image" src="video_showcase/JDB/Upscaled_Berattyln2013_Design_fonts_with_Meta_Great_Dane_with_Crown_Gold_0860aba0-1219-4418-a167-1f3924a6a714.mp4_00.png" alt="Hover image">
+              <div class="caption">A regal Great Dane wearing a golden crown stands in front of a neon-lit, cyberpunk cityscape, adorned in metallic armor. The Meta Fonts advertisement in the starry sky above indicates the city is the hub of the digital currency universe, with a high-quality and futuristic design.</div>
+            </div>
+          </th>
+          <th>
+            <div class="video-container">
+              <video  width="200" src="video_showcase/extra2/bird000.mp4" autoplay loop controls muted></video>
+              <img class="hover-image" src="video_showcase/extra2/bird000.jpeg" alt="Hover image">
+              <div class="caption">A bird on the tree branch.</div>
+            </div>
+          </th>
+        </tr>
+
+        <tr>
+          <th>
+            <div class="video-container">
+              <video  width="200" src="video_showcase/JDB/Upscaled_404_Funds_Not_Found__1d49a25b-e4a6-4e7b-8c5b-7ba7633b4b2b_sample0.mp4" autoplay loop controls muted></video>
+              <img class="hover-image" src="video_showcase/JDB/Upscaled_404_Funds_Not_Found__1d49a25b-e4a6-4e7b-8c5b-7ba7633b4b2b.mp4_00.png" alt="Hover image">
+              <div class="caption">An old house is being demolished at a construction site.</div>
+            </div>
+          </th>
+          <th>
+            <div class="video-container">
+              <video  width="200" src="video_showcase/extra2/beatles.mp4" autoplay loop controls muted></video>
+              <img class="hover-image" src="video_showcase/extra2/beatles.jpg_00.png" alt="Hover image">
+              <div class="caption">Some people walks on a road with pedestrian crossing.</div>
+            </div>
+          </th>
+          <th>
+            <div class="video-container">
+              <video  width="200" src="video_showcase/extra2/explode1_sample4.mp4" autoplay loop controls muted></video>
+              <img class="hover-image" src="video_showcase/extra2/explode1.png_00.png" alt="Hover image">
+              <div class="caption">explode, colorful smoke</div>
+            </div>
+          </th>
+          <th>
+            <div class="video-container">
+              <video  width="200" src="video_showcase/JDB/Upscaled_404_Funds_Not_Found__393bc2de-982e-4677-8821-e1eef54a3ceb_sample2.mp4" autoplay loop controls muted></video>
+              <img class="hover-image" src="video_showcase/JDB/Upscaled_404_Funds_Not_Found__393bc2de-982e-4677-8821-e1eef54a3ceb.mp4_00.png" alt="Hover image">
+              <div class="caption">A burger, fries, and a soda from a fast food restaurant.</div>
+            </div>
+          </th>
+          <th>
+            <div class="video-container">
+              <video  width="200" src="video_showcase/JDB/Upscaled_404_Funds_Not_Found__44613a4d-147f-4c84-b6e2-b47ecb69b0a5_sample2.mp4" autoplay loop controls muted></video>
+              <img class="hover-image" src="video_showcase/JDB/Upscaled_404_Funds_Not_Found__44613a4d-147f-4c84-b6e2-b47ecb69b0a5.mp4_00.png" alt="Hover image">
+              <div class="caption">Man with fire buring on his head</div>
+            </div>
+          </th>
+        </tr>
+        <tr>
+          <th>
+            <div class="video-container">
+              <video  width="200" src="video_showcase/JDB/Upscaled_Aime_Tribolet_springtime_landscape_golden_hour_morning_beautifu_44bd740e-6912-4693-9b8b-d7ce7f3789b2_sample0.mp4" autoplay loop controls muted></video>
+              <img class="hover-image" src="video_showcase/JDB/Upscaled_Aime_Tribolet_springtime_landscape_golden_hour_morning_beautifu_44bd740e-6912-4693-9b8b-d7ce7f3789b2.mp4_00.png" alt="Hover image">
+              <div class="caption">a beautiful landscape, springtime</div>
+            </div>
+          </th>
+          <th>
+            <div class="video-container">
+              <video  width="200" src="video_showcase/extra2/dance0_sample0.mp4" autoplay loop controls muted></video>
+              <img class="hover-image" src="video_showcase/extra2/dance0.jpeg_00.png" alt="Hover image">
+              <div class="caption">girl dancing, red smoke behind</div>
+            </div>
+          </th>
+          <th>
+            <div class="video-container">
+              <video  width="200" src="video_showcase/extra2/fire_sample0.mp4" autoplay loop controls muted></video>
+              <img class="hover-image" src="video_showcase/extra2/fire.jpeg_00.png" alt="Hover image">
+              <div class="caption">a man with fire burning</div>
+            </div>
+          </th>
+          <th>
+            <div class="video-container">
+              <video  width="200" src="video_showcase/JDB/Upscaled_Alex_Evans_quintessential_steampunk_cogs_gears_airships_contrap_824d5736-96ce-44ab-a31d-e59f9799e065_sample1.mp4" autoplay loop controls muted></video>
+              <img class="hover-image" src="video_showcase/JDB/Upscaled_Alex_Evans_quintessential_steampunk_cogs_gears_airships_contrap_824d5736-96ce-44ab-a31d-e59f9799e065.mp4_00.png" alt="Hover image">
+              <div class="caption">A flying city filled with airships, contraptions, cogs, and gears, all illuminated by the dim gaslight.</div>
+            </div>
+          </th>
+          <th>
+            <div class="video-container">
+              <video  width="200" src="video_showcase/JDB/Upscaled_Dreamtide_Futuristic_protogen_masculine_cool_pose_sky_blue_apri_0ba1c219-63bc-4e08-be11-155fbee07f77_sample0.mp4" autoplay loop controls muted></video>
+              <img class="hover-image" src="video_showcase/JDB/Upscaled_Dreamtide_Futuristic_protogen_masculine_cool_pose_sky_blue_apri_0ba1c219-63bc-4e08-be11-155fbee07f77.mp4_00.png" alt="Hover image">
+              <div class="caption">A futuristic protogen with special abilities poses in a masculine and epic mid-battle stance.</div>
+            </div>
+          </th>
+        </tr>
+        <tr>
+          <th>
+            <div class="video-container">
+              <video  width="200" src="video_showcase/JDB/Upscaled_Alexandre99_planet_by_Ian_Mcque_3324a92c-1b87-47fd-850c-b2a5e7e2eaab_sample1.mp4" autoplay loop controls muted></video>
+              <img class="hover-image" src="video_showcase/JDB/Upscaled_Alexandre99_planet_by_Ian_Mcque_3324a92c-1b87-47fd-850c-b2a5e7e2eaab.mp4_00.png" alt="Hover image">
+              <div class="caption">A futuristic, steampunk-style planet with a bustling city and a large, industrial ship dominates the scene amidst narrow and winding streets, while a giant, mysterious mechanical structure looms in the distance with flying transportation vehicles dotting the sky.</div>
+            </div>
+          </th>
+          <th>
+            <div class="video-container">
+              <video  width="200" src="video_showcase/JDB/Upscaled_Alexccas_Caravaggio_style_baroque_detailed_oil_on_canvas_painti_13c1cda5-144a-49b2-a764-fc69d75ebc6e_sample1.mp4" autoplay loop controls muted></video>
+              <img class="hover-image" src="video_showcase/JDB/Upscaled_Alexccas_Caravaggio_style_baroque_detailed_oil_on_canvas_painti_13c1cda5-144a-49b2-a764-fc69d75ebc6e.mp4_00.png" alt="Hover image">
+              <div class="caption">An old couple takes a peaceful stroll through a blooming cherry blossom field alongside a serene pond in this detailed oil on canvas painting created in Caravaggio style during the Baroque period.</div>
+            </div>
+          </th>
+          <th>
+            <div class="video-container">
+              <video  width="200" src="video_showcase/JDB/Upscaled_AlexZhiv_A_little_boy_sits_crying_by_a_small_river_on_the_backg_068fa3d8-23a8-40aa-9523-0f180633daaa_sample2.mp4" autoplay loop controls muted></video>
+              <img class="hover-image" src="video_showcase/JDB/Upscaled_AlexZhiv_A_little_boy_sits_crying_by_a_small_river_on_the_backg_068fa3d8-23a8-40aa-9523-0f180633daaa.mp4_00.png" alt="Hover image">
+              <div class="caption">A little boy sits by a small river, crying, while a Belgian shepherd dog with good eyes looks at him.</div>
+            </div>
+          </th>
+          <th>
+            <div class="video-container">
+              <video  width="200" src="video_showcase/JDB/Upscaled_Aleznox_a_cannabis_cure_for_veterans_ad5ffdd3-cc78-409c-aeaa-1cc46a1da6c8_sample0.mp4" autoplay loop controls muted></video>
+              <img class="hover-image" src="video_showcase/JDB/Upscaled_Aleznox_a_cannabis_cure_for_veterans_ad5ffdd3-cc78-409c-aeaa-1cc46a1da6c8.mp4_00.png" alt="Hover image">
+              <div class="caption">A veteran holding a plant that represents the hope and healing.</div>
+            </div>
+          </th>
+          <th>
+            <div class="video-container">
+              <video  width="200" src="video_showcase/JDB/Upscaled_AlfPogs_enraged_nerd_Pixar_Style_Cartoon_Digital_Art_Bokeh_Phot_888b7cca-1903-4f45-9c86-6de8bef64a63_sample1.mp4" autoplay loop controls muted></video>
+              <img class="hover-image" src="video_showcase/JDB/Upscaled_AlfPogs_enraged_nerd_Pixar_Style_Cartoon_Digital_Art_Bokeh_Phot_888b7cca-1903-4f45-9c86-6de8bef64a63.mp4_00.png" alt="Hover image">
+              <div class="caption">An enraged nerd in Pixar Style is featured in a digital art cartoon, captured in a photoshoot under the bright and glowing nightclub lighting.</div>
+            </div>
+          </th>
+        </tr>
+        <tr>
+          <th>
+            <div class="video-container">
+              <video  width="200" src="video_showcase/JDB/Upscaled_AlfPogs_robot_soldier_decimating_his_human_enemy_photorealistic_36157737-168c-49ae-bf11-cad89b80e133_sample1.mp4" autoplay loop controls muted></video>
+              <img class="hover-image" src="video_showcase/JDB/Upscaled_AlfPogs_robot_soldier_decimating_his_human_enemy_photorealistic_36157737-168c-49ae-bf11-cad89b80e133.mp4_00.png" alt="Hover image">
+              <div class="caption">A robot soldier is in the process of decimating his human enemy in a dynamic pose.</div>
+            </div>
+          </th>
+          <th>
+            <div class="video-container">
+              <video  width="200" src="video_showcase/JDB/Upscaled_Algo_Ritmo_hip_hop_dancer_in_Madrid_epic_hdr_8k_legendary_backg_9c86a4ec-45b3-4e8e-bf2b-3ec13b93ec00_sample0.mp4" autoplay loop controls muted></video>
+              <img class="hover-image" src="video_showcase/JDB/Upscaled_Algo_Ritmo_hip_hop_dancer_in_Madrid_epic_hdr_8k_legendary_backg_9c86a4ec-45b3-4e8e-bf2b-3ec13b93ec00.mp4_00.png" alt="Hover image">
+              <div class="caption">A hip hop dancer performing in Madrid.</div>
+            </div>
+          </th>
+          <th>
+            <div class="video-container">
+              <video  width="200" src="video_showcase/JDB/Upscaled_Alice_In_the_style_of_Japanese_anime_a_cute_Alice_with_a_bored__2c84b03b-e2ae-4e16-b274-95547415e3f2_sample0.mp4" autoplay loop controls muted></video>
+              <img class="hover-image" src="video_showcase/JDB/Upscaled_Alice_In_the_style_of_Japanese_anime_a_cute_Alice_with_a_bored__2c84b03b-e2ae-4e16-b274-95547415e3f2.mp4_00.png" alt="Hover image">
+              <div class="caption">A cute Alice model is portrayed wearing a blue dress with a bored expression against a pink background.</div>
+            </div>
+          </th>
+          <th>
+            <div class="video-container">
+              <video  width="200" src="video_showcase/JDB/Upscaled_Bartenderdude_Viking_talking_i_mobile_phone_in_the_style_of_And_b0d9657a-8d2f-4963-9b69-4652ef29a6f9_sample0.mp4" autoplay loop controls muted></video>
+              <img class="hover-image" src="video_showcase/JDB/Upscaled_Bartenderdude_Viking_talking_i_mobile_phone_in_the_style_of_And_b0d9657a-8d2f-4963-9b69-4652ef29a6f9.mp4_00.png" alt="Hover image">
+              <div class="caption">A Viking is talking on a mobile phone.</div>
+            </div>
+          </th>
+          <th>
+            <div class="video-container">
+              <video  width="200" src="video_showcase/JDB/Upscaled_Benwaters6_Formula_One_Driver_walking_away_from_exploding_car_w_90121d09-8ae0-4b5d-94b7-6ee283836a08_sample0.mp4" autoplay loop controls muted></video>
+              <img class="hover-image" src="video_showcase/JDB/Upscaled_Benwaters6_Formula_One_Driver_walking_away_from_exploding_car_w_90121d09-8ae0-4b5d-94b7-6ee283836a08.mp4_00.png" alt="Hover image">
+              <div class="caption">A Formula One driver walks towards an exploding car.</div>
+            </div>
+          </th>
+        </tr>
+        <tr>
+          <th>
+            <div class="video-container">
+              <video  width="200" src="video_showcase/extra2/walk2_sample4.mp4" autoplay loop controls muted></video>
+              <img class="hover-image" src="video_showcase/extra2/walk2.jpeg_00.png" alt="Hover image">
+              <div class="caption">a robot walking</div>
+            </div>
+          </th>
+          <th>
+            <div class="video-container">
+              <video  width="200" src="video_showcase/JDB/Upscaled_Bergshire_1900s_renaissance_photograph_girl_white_top_and_gold__54a6c324-f9dd-4806-be09-95bd6fb27ec3_sample2.mp4" autoplay loop controls muted></video>
+              <img class="hover-image" src="video_showcase/JDB/Upscaled_Bergshire_1900s_renaissance_photograph_girl_white_top_and_gold__54a6c324-f9dd-4806-be09-95bd6fb27ec3.mp4_00.png" alt="Hover image">
+              <div class="caption">A girl wearing a white top and a gold emerald necklace in the Renaissance era.</div>
+            </div>
+          </th>
+          <th>
+            <div class="video-container">
+              <video  width="200" src="video_showcase/JDB/Upscaled_Bertje3000_an_obese_raccoon_wielding_a_sledge_hammer_performing_48acd617-5eb6-41b0-a340-68e38cb14731_sample1.mp4" autoplay loop controls muted></video>
+              <img class="hover-image" src="video_showcase/JDB/Upscaled_Bertje3000_an_obese_raccoon_wielding_a_sledge_hammer_performing_48acd617-5eb6-41b0-a340-68e38cb14731.mp4_00.png" alt="Hover image">
+              <div class="caption">An obese raccoon wielding a sledgehammer performs a song by The Scorpions at a rock festival, looking into the camera lens, exuding lazy badassery in a photorealistic style.</div>
+            </div>
+          </th>
+          <th>
+            <div class="video-container">
+              <video  width="200" src="video_showcase/extra2/cat0_sample1.mp4" autoplay loop controls muted></video>
+              <img class="hover-image" src="video_showcase/extra2/cat0.png_00.png" alt="Hover image">
+              <div class="caption">cat riding a scooter in the heavy rain</div>
+            </div>
+          </th>
+          <th>
+            <div class="video-container">
+              <video  width="200" src="video_showcase/JDB/Upscaled_Daath_a_male_Viking_God_warrior_wielding_an_enormous_axe_fighti_48ba4382-856b-4e0a-bd54-23e313b86cbb_sample0.mp4" autoplay loop controls muted></video>
+              <img class="hover-image" src="video_showcase/JDB/Upscaled_Daath_a_male_Viking_God_warrior_wielding_an_enormous_axe_fighti_48ba4382-856b-4e0a-bd54-23e313b86cbb.mp4_00.png" alt="Hover image">
+              <div class="caption">A male Viking God warrior wielding an enormous axe fights in Valhalla.</div>
+            </div>
+          </th>
+        </tr>
+        <tr>
+          <th>
+            <div class="video-container">
+              <video  width="200" src="video_showcase/JDB/Upscaled_Daath_a_rich_wealthy_bull_with_a_cigar_in_his_mouth_8k_anime_st_38c26b1d-158b-4b98-976a-d572c493d21f_sample2.mp4" autoplay loop controls muted></video>
+              <img class="hover-image" src="video_showcase/JDB/Upscaled_Daath_a_rich_wealthy_bull_with_a_cigar_in_his_mouth_8k_anime_st_38c26b1d-158b-4b98-976a-d572c493d21f.mp4_00.png" alt="Hover image">
+              <div class="caption">A wealthy bull smoking a cigar.</div>
+            </div>
+          </th>
+          <th>
+            <div class="video-container">
+              <video  width="200" src="video_showcase/JDB/Upscaled_Daath_an_attractive_female_cyborg_with_a_machine_gun_looking_re_ea0f9531-c76a-4f66-81e2-2c5c30042916_sample2.mp4" autoplay loop controls muted></video>
+              <img class="hover-image" src="video_showcase/JDB/Upscaled_Daath_an_attractive_female_cyborg_with_a_machine_gun_looking_re_ea0f9531-c76a-4f66-81e2-2c5c30042916.mp4_00.png" alt="Hover image">
+              <div class="caption">An attractive female cyborg is holding a machine gun, looking ready for action.</div>
+            </div>
+          </th>
+          <th>
+            <div class="video-container">
+              <video  width="200" src="video_showcase/JDB/Upscaled_Alex_O_a_modern_city_with_neighborhood_in_the_center_pristine_l_77cc2334-a544-429b-94e7-f2b546a60148_sample0.mp4" autoplay loop controls muted></video>
+              <img class="hover-image" src="video_showcase/JDB/Upscaled_Alex_O_a_modern_city_with_neighborhood_in_the_center_pristine_l_77cc2334-a544-429b-94e7-f2b546a60148.mp4_00.png" alt="Hover image">
+              <div class="caption">A modern city with a neighborhood in the center, featuring pristine white buildings and skyscrapers. In the heart of the neighborhood lies a lush and beautiful park, creating a bright and friendly atmosphere with a touch of futurism.</div>
+            </div>
+          </th>
+          <th>
+            <div class="video-container">
+              <video  width="200" src="video_showcase/JDB/Upscaled_Erik_O_Pirata_full_body_profile_shot_of_a_blond_guy_wearing_a_g_45d9257d-e075-43ce-9d78-2aa83483db74_sample0.mp4" autoplay loop controls muted></video>
+              <img class="hover-image" src="video_showcase/JDB/Upscaled_Erik_O_Pirata_full_body_profile_shot_of_a_blond_guy_wearing_a_g_45d9257d-e075-43ce-9d78-2aa83483db74.mp4_00.png" alt="Hover image">
+              <div class="caption">A blond guy wearing green overalls, a black t-shirt, and green kitty ears headphones, giving a thumbs up. He is standing in front of an amusement park, exuding a traditional line, fun, and colorful style reminiscent of Jojo's Bizarre Adventure.</div>
+            </div>
+          </th>
+          <th>
+            <div class="video-container">
+              <video  width="200" src="video_showcase/JDB/Upscaled_Gem_90s_anime_by_Yoshito_Usui_a_tall_man_with_soft_features_wea_43a8953c-bea8-44e1-8337-a196d7761b88_sample0.mp4" autoplay loop controls muted></video>
+              <img class="hover-image" src="video_showcase/JDB/Upscaled_Gem_90s_anime_by_Yoshito_Usui_a_tall_man_with_soft_features_wea_43a8953c-bea8-44e1-8337-a196d7761b88.mp4_00.png" alt="Hover image">
+              <div class="caption">A tall man with soft features wearing a light-colored sweater stands in the middle of an empty train station platform during golden hour in autumn.</div>
+            </div>
+          </th>
+        </tr>
+        <tr>
+          <th>
+            <div class="video-container">
+              <video  width="200" src="video_showcase/extra2/horse0_sample0.mp4" autoplay loop controls muted></video>
+              <img class="hover-image" src="video_showcase/extra2/horse0.jpeg_00.png" alt="Hover image">
+              <div class="caption">horse running in a field</div>
+            </div>
+          </th>
+          <th>
+            <div class="video-container">
+              <video  width="200" src="video_showcase/JDB/Upscaled_Fairhaven_ford_mustang_rushes_on_incredible_roads_rain_snowUnre_2e692ef3-6a62-4697-b3be-3f841f2641b7_sample0.mp4" autoplay loop controls muted></video>
+              <img class="hover-image" src="video_showcase/JDB/Upscaled_Fairhaven_ford_mustang_rushes_on_incredible_roads_rain_snowUnre_2e692ef3-6a62-4697-b3be-3f841f2641b7.mp4_00.png" alt="Hover image">
+              <div class="caption">A Ford Mustang drives on a road through rain and snow.</div>
+            </div>
+          </th>
+          <th>
+            <div class="video-container">
+              <video  width="200" src="video_showcase/JDB/Upscaled_Fairhaven_indian_sauron_the_lord_of_the_ringslots_of_dancingpho_a85cf74f-b6b6-4762-8d5c-41ac0b0a623f_sample0.mp4" autoplay loop controls muted></video>
+              <img class="hover-image" src="video_showcase/JDB/Upscaled_Fairhaven_indian_sauron_the_lord_of_the_ringslots_of_dancingpho_a85cf74f-b6b6-4762-8d5c-41ac0b0a623f.mp4_00.png" alt="Hover image">
+              <div class="caption">Man dancing and performing in front of a crowd</div>
+            </div>
+          </th>
+          <th>
+            <div class="video-container">
+              <video  width="200" src="video_showcase/JDB/Upscaled_Fairhaven_voldemortcook_in_prisoncooks_aproncooks_hatputs_food__6b74fa21-210d-43a3-8de9-2903a3cf23c1_sample0.mp4" autoplay loop controls muted></video>
+              <img class="hover-image" src="video_showcase/JDB/Upscaled_Fairhaven_voldemortcook_in_prisoncooks_aproncooks_hatputs_food__6b74fa21-210d-43a3-8de9-2903a3cf23c1.mp4_00.png" alt="Hover image">
+              <div class="caption">Voldemort, a prisoner cook, prepares food while wearing an apron, dimly-lit prison kitchen.</div>
+            </div>
+          </th>
+          <th>
+            <div class="video-container">
+              <video  width="200" src="video_showcase/extra2/mecha_sample2.mp4" autoplay loop controls muted></video>
+              <img class="hover-image" src="video_showcase/extra2/mecha.png_00.png" alt="Hover image">
+              <div class="caption">robot mecha dancing</div>
+            </div>
+          </th>
+        </tr>
+                  <tr> <td><br /></td> </tr> 
+      </tbody>
+    </table>
+    <!------------------ END   SECTION ------------------>   
+
+
+
+
+    <!------------------ BEGIN SECTION ------------------>
+    <p>&nbsp;</p>
+    <hr>
+        
+    <h2 id="comparison_with_baseline_container" align="left"><a name="image-results" id="image-results"></a>Comparisons with baseline methods</h2>
+    <p align="left">
+      We compare our method against existing methods using still images with a wide range of content (e.g., landscape, human, animal, vehicle, statue) and style (e.g., real-life, AI-generated, painting, clay, anime, isometric illustration). 
+    </p>
+    <div class="container">
+        <img src="video_comparison/01.gif" alt="GIF 1" class="gif">
+        <img src="video_comparison/02.gif" alt="GIF 2" class="gif">
+        <img src="video_comparison/03.gif" alt="GIF 1" class="gif">
+        <img src="video_comparison/04.gif" alt="GIF 2" class="gif">
+        <img src="video_comparison/05.gif" alt="GIF 1" class="gif">
+        <img src="video_comparison/06.gif" alt="GIF 2" class="gif">
+        <img src="video_comparison/07.gif" alt="GIF 1" class="gif">
+        <img src="video_comparison/08.gif" alt="GIF 2" class="gif">
+        <img src="video_comparison/09.gif" alt="GIF 1" class="gif">
+        <img src="video_comparison/10.gif" alt="GIF 2" class="gif">
+        <img src="video_comparison/11.gif" alt="GIF 1" class="gif">
+        <img src="video_comparison/12.gif" alt="GIF 2" class="gif">
+        <img src="video_comparison/13.gif" alt="GIF 1" class="gif">
+        <img src="video_comparison/14.gif" alt="GIF 2" class="gif">
+        <img src="video_comparison/15.gif" alt="GIF 1" class="gif">
+        <img src="video_comparison/16.gif" alt="GIF 2" class="gif">
+        <img src="video_comparison/17.gif" alt="GIF 1" class="gif">
+        <img src="video_comparison/18.gif" alt="GIF 2" class="gif">
+    </div>
+    <!------------------ END   SECTION ------------------>    
+
+
+    <!------------------ BEGIN SECTION ------------------>
+    <p>&nbsp;</p>
+    <hr>
+        
+    <h2 id="motion_control_container" align="left"><a name="image-results" id="image-results"></a>Motion control using text</h2>
+    <table  width="1000" align="center">
+      <tbody>
+        <tr>
+          <th style="font-size: 16px; color: #d4a845;font-family: Cavolini;">"Man talking"</th>
+          <th style="font-size: 16px">PikaLabs</th>
+          <th style="font-size: 16px">Gen-2</th>
+          <th style="font-size: 16px">DynamiCrafter (Ours)</th>
+          <th style="font-size: 16px">DynamiCrafter<sub>DCP</sub> (Ours)</th>
+        </tr>
+        <tr>
+          <th><img class="input_image_motion" src="video_controls/motion_control/man_input.png" alt=""/></th>
+          <th><video  width="200" src="video_controls/motion_control/man_talking_pikalabs.mp4" autoplay loop controls muted/></th>
+          <th><video  width="200" src="video_controls/motion_control/man_talking_gen2.mp4" autoplay loop controls muted/></th>
+          <th><video  width="200" src="video_controls/motion_control/man_talking_ours0.mp4" autoplay loop controls muted/></th>
+          <th><video  width="200" src="video_controls/motion_control/man_talking_ours.mp4" autoplay loop controls muted/></th>
+        </tr>
+        <tr>
+          <th style="font-size: 16px; color: #d4a845;font-family: Cavolini;">"Man waving hands"</th>
+          <!-- <th style="font-size: 16px">PikaLabs</th>
+          <th style="font-size: 16px">Gen-2</th>
+          <th style="font-size: 16px">DynamiCrafter (Ours)</th>
+          <th style="font-size: 16px">DynamiCrafter<sub>DCP</sub> (Ours)</th> -->
+        </tr>
+        <tr>
+          <th><img class="input_image_motion" src="video_controls/motion_control/man_input.png" alt=""/></th>
+          <th><video  width="200" src="video_controls/motion_control/man_waving_pikalabs.mp4" autoplay loop controls muted/></th>
+          <th><video  width="200" src="video_controls/motion_control/man_waving_gen2.mp4" autoplay loop controls muted/></th>
+          <th><video  width="200" src="video_controls/motion_control/man_waving_ours0.mp4" autoplay loop controls muted/></th>
+          <th><video  width="200" src="video_controls/motion_control/man_waving_ours.mp4" autoplay loop controls muted/></th>
+        </tr>
+        <tr>
+          <th style="font-size: 16px; color: #d4a845;font-family: Cavolini;">"Man clapping"</th>
+          <!-- <th style="font-size: 16px">PikaLabs</th>
+          <th style="font-size: 16px">Gen-2</th>
+          <th style="font-size: 16px">DynamiCrafter (Ours)</th>
+          <th style="font-size: 16px">DynamiCrafter<sub>DCP</sub> (Ours)</th> -->
+        </tr>
+        <tr>
+          <th><img class="input_image_motion" src="video_controls/motion_control/man_input.png" alt=""/></th>
+          <th><video  width="200" src="video_controls/motion_control/man_clapping_pikalabs.mp4" autoplay loop controls muted/></th>
+          <th><video  width="200" src="video_controls/motion_control/man_clapping_gen2.mp4" autoplay loop controls muted/></th>
+          <th><video  width="200" src="video_controls/motion_control/man_clapping_ours0.mp4" autoplay loop controls muted/></th>
+          <th><video  width="200" src="video_controls/motion_control/man_clapping_ours.mp4" autoplay loop controls muted/></th>
+        </tr>
+                  <tr> <td><br /></td> </tr> 
+      </tbody>
+    </table>
+
+    <table  width="1000" align="center">
+      <tbody>
+        <tr>
+          <th style="font-size: 16px; color: #d4a845;font-family: Cavolini;">"Girl dancing"</th>
+          <th style="font-size: 16px">PikaLabs</th>
+          <th style="font-size: 16px">Gen-2</th>
+          <th style="font-size: 16px">DynamiCrafter (Ours)</th>
+          <th style="font-size: 16px">DynamiCrafter<sub>DCP</sub> (Ours)</th>
+        </tr>
+        <tr>
+          <th><img class="input_image_motion" src="video_controls/motion_control/girl_input.png" alt=""/></th>
+          <th><video  width="200" src="video_controls/motion_control/girl_dancing_pikalabs.mp4" autoplay loop controls muted/></th>
+          <th><video  width="200" src="video_controls/motion_control/girl_dancing_gen2.mp4" autoplay loop controls muted/></th>
+          <th><video  width="200" src="video_controls/motion_control/girl_dancing_ours0.mp4" autoplay loop controls muted/></th>
+          <th><video  width="200" src="video_controls/motion_control/girl_dancing_ours.mp4" autoplay loop controls muted/></th>
+        </tr>
+        <tr>
+          <th style="font-size: 16px; color: #d4a845;font-family: Cavolini;">"Girl waving hands"</th>
+          <!-- <th style="font-size: 16px">PikaLabs</th>
+          <th style="font-size: 16px">Gen-2</th>
+          <th style="font-size: 16px">DynamiCrafter (Ours)</th>
+          <th style="font-size: 16px">DynamiCrafter<sub>DCP</sub> (Ours)</th> -->
+        </tr>
+        <tr>
+          <th><img class="input_image_motion" src="video_controls/motion_control/girl_input.png" alt=""/></th>
+          <th><video  width="200" src="video_controls/motion_control/girl_waving_pikalabs.mp4" autoplay loop controls muted/></th>
+          <th><video  width="200" src="video_controls/motion_control/girl_waving_gen2.mp4" autoplay loop controls muted/></th>
+          <th><video  width="200" src="video_controls/motion_control/girl_waving_ours0.mp4" autoplay loop controls muted/></th>
+          <th><video  width="200" src="video_controls/motion_control/girl_waving_ours.mp4" autoplay loop controls muted/></th>
+        </tr>
+        <tr>
+          <th style="font-size: 16px; color: #d4a845;font-family: Cavolini;">"Girl twirling her hair"</th>
+          <!-- <th style="font-size: 16px">PikaLabs</th>
+          <th style="font-size: 16px">Gen-2</th>
+          <th style="font-size: 16px">DynamiCrafter (Ours)</th>
+          <th style="font-size: 16px">DynamiCrafter<sub>DCP</sub> (Ours)</th> -->
+        </tr>
+        <tr>
+          <th><img class="input_image_motion" src="video_controls/motion_control/girl_input.png" alt=""/></th>
+          <th><video  width="200" src="video_controls/motion_control/girl_hair_pikalabs.mp4" autoplay loop controls muted/></th>
+          <th><video  width="200" src="video_controls/motion_control/girl_hair_gen2.mp4" autoplay loop controls muted/></th>
+          <th><video  width="200" src="video_controls/motion_control/girl_hair_ours0.mp4" autoplay loop controls muted/></th>
+          <th><video  width="200" src="video_controls/motion_control/girl_hair_ours.mp4" autoplay loop controls muted/></th>
+        </tr>
+                  <tr> <td><br /></td> </tr> 
+      </tbody>
+    </table>
+    <!------------------ END   SECTION ------------------>    
+
+    <!------------------ BEGIN SECTION ------------------>
+    <p>&nbsp;</p>
+    <hr>
+        
+    <h2 id="applications_container" align="left"><a name="image-results" id="image-results"></a>Applications</h2>
+    <p align="left">
+        Storytelling with shots. We can use ChatGPT (enpowered by DALL·E 3) to create several shots of a story and then generate storytelling videos by animating these shots. <a href="https://twitter.com/storeg_/status/1714528834979299597">[Image source]</a>
+    </p>
+    <table  width="300" align="center">
+      <tbody>
+        <tr>
+          <th></th>
+          <th style="font-size: 12px">"A disheartened bear sat by the lake, hanging its head."</th>
+          <th style="font-size: 12px">"He is meeting a girl and introducing himself."</th>
+          <th></th>
+          <td rowspan="4" colspan="4">
+              <video width="300" src="video_application/storytelling/storytellingvideo.mp4" autoplay loop controls muted/>
+          </td>
+        </tr>
+        <tr>
+          <th></th>
+          <th><img class="input_image_story" src="video_application/storytelling/shot00.png" alt=""/></th>
+          <th><img class="input_image_story" src="video_application/storytelling/shot01.png" alt=""/></th>
+          <th></th>
+        </tr>
+        <tr>
+          <th><img style="width: 400px;" src="video_application/storytelling/chatgpt.jpg" alt=""/></th>
+          <th style="font-size: 12px">"He chatted happily with that girl by the lake."</th>
+          <th style="font-size: 12px">"Before leaving, the girl told him to be positive."</th>
+          <th><img style="width: 150px;" src="video_application/storytelling/dynamicrafter.jpg" alt=""/></th>
+        </tr>
+        <tr>
+          <th></th>
+          <th><img class="input_image_story" src="video_application/storytelling/shot02.png" alt=""/></th>
+          <th><img class="input_image_story" src="video_application/storytelling/shot03.png" alt=""/></th>
+          <th></th>
+        </tr>
+        <!-- <tr>
+          <th><video  width="256" src="video_application/storytelling/shot00.mp4" autoplay loop controls muted/></th>
+          <th><video  width="256" src="video_application/storytelling/shot01.mp4" autoplay loop controls muted/></th>
+          <th><video  width="256" src="video_application/storytelling/shot02.mp4" autoplay loop controls muted/></th>
+          <th><video  width="256" src="video_application/storytelling/shot03.mp4" autoplay loop controls muted/></th>
+        </tr> -->
+                  <tr> <td><br /></td> </tr> 
+      </tbody>
+    </table>
+    <!-- <table  width="300" align="center">
+      <tr>
+        <th><video width="300" src="video_application/storytelling/storytellingvideo.mp4" autoplay loop controls muted/></th>
+      </tr>
+    </table> -->
+    
+    <p align="left">
+      Looping video generation (@320&times;512 resolution).
+    </p>
+    <table  width="1024" align="center">
+      <tbody>
+        <tr>
+          <th><video  width="340" src="video_application/looping/60_sample2.mp4" autoplay loop controls muted/></th>
+          <th><video  width="340" src="video_application/looping/35_sample1.mp4" autoplay loop controls muted/></th>
+          <th><video  width="340" src="video_application/looping/36_sample2.mp4" autoplay loop controls muted/></th>
+        </tr>
+        <tr>
+          <th><video  width="340" src="video_application/looping/05_sample2.mp4" autoplay loop controls muted/></th>
+          <th><video  width="340" src="video_application/looping/25_sample2.mp4" autoplay loop controls muted/></th>
+          <th><video  width="340" src="video_application/looping/34_sample2.mp4" autoplay loop controls muted/></th>
+        </tr>
+
+                  <tr> <td><br /></td> </tr> 
+      </tbody>
+    </table>
+
+    <p align="left">
+      Generative frame interpolation (@320&times;512 resolution).
+    </p>
+    <table  width="1024" align="center">
+      <tbody>
+        <tr>
+          <th style="font-size: 16px">Input starting frame</th>
+          <th style="font-size: 16px">Input ending frame</th>
+          <th style="font-size: 16px">Generated video</th>
+        </tr>
+        <tr>
+          <th><img class="input_image_frameinterp" src="video_application/frameinterpolation/gkxX0kb8mE8_input_start.png" alt=""/></th>
+          <th><img class="input_image_frameinterp" src="video_application/frameinterpolation/gkxX0kb8mE8_input_end.png" alt=""/></th>
+          <th><video  width="340" src="video_application/frameinterpolation/gkxX0kb8mE8.mp4" autoplay loop controls muted/></th>
+        </tr>
+        <tr>
+          <th><img class="input_image_frameinterp" src="video_application/frameinterpolation/YwHJYWvv_dM_input_start.png" alt=""/></th>
+          <th><img class="input_image_frameinterp" src="video_application/frameinterpolation/YwHJYWvv_dM_input_end.png" alt=""/></th>
+          <th><video  width="340" src="video_application/frameinterpolation/YwHJYWvv_dM.mp4" autoplay loop controls muted/></th>
+        </tr>
+        <tr>
+          <th><img class="input_image_frameinterp" src="video_application/frameinterpolation/ypDLB52Ykk4_input_start.png" alt=""/></th>
+          <th><img class="input_image_frameinterp" src="video_application/frameinterpolation/ypDLB52Ykk4_input_end.png" alt=""/></th>
+          <th><video  width="340" src="video_application/frameinterpolation/ypDLB52Ykk4.mp4" autoplay loop controls muted/></th>
+        </tr>
+                  <tr> <td><br /></td> </tr> 
+      </tbody>
+    </table>
+    <!------------------ END   SECTION ------------------> 
+
+
+
+
+    <!------------------ BEGIN SECTION ------------------>
+    <p>&nbsp;</p>
+    <hr>
+        
+    <h2 id="other_controls_container" align="left"><a name="image-results" id="image-results"></a>Other controls</h2>
+    <p align="left">
+        FPS control.
+    </p>
+    <table  width="1024" align="center">
+      <tbody>
+        <tr>
+          <th style="font-size: 13px; color: #d4a845;font-family: Cavolini;">"An anime scene with windmills standing tall in a field and blue sky"</th>
+          <th style="font-size: 16px">FPS = 30</th>
+          <th style="font-size: 16px">FPS = 10</th>
+          <th style="font-size: 16px">FPS = 5</th>
+        </tr>
+        <tr>
+          <th><img class="input_image" src="video_controls/fps_control/windmill.png" alt=""/></th>
+          <th><img class="input_image" src="video_controls/fps_control/fps30_windmill.gif" alt=""/></th>
+          <th><img class="input_image" src="video_controls/fps_control/fps10_windmill.gif" alt=""/></th>
+          <th><img class="input_image" src="video_controls/fps_control/fps5_windmill.gif" alt=""/></th>
+        </tr>
+        <tr>
+          <th style="font-size: 14px; color: #d4a845;font-family: Cavolini;">"A boat moving on the sea"</th>
+          <th style="font-size: 16px">FPS = 30</th>
+          <th style="font-size: 16px">FPS = 10</th>
+          <th style="font-size: 16px">FPS = 5</th>
+        </tr>
+        <tr>
+          <th><img class="input_image" src="video_controls/fps_control/boat.png" alt=""/></th>
+          <th><img class="input_image" src="video_controls/fps_control/fps30_boat.gif" alt=""/></th>
+          <th><img class="input_image" src="video_controls/fps_control/fps10_boat.gif" alt=""/></th>
+          <th><img class="input_image" src="video_controls/fps_control/fps5_boat.gif" alt=""/></th>
+        </tr>
+                  <tr> <td><br /></td> </tr> 
+      </tbody>
+    </table>
+
+
+    <p align="left">
+      Multi-cond classifier free guidance. Higher <i>s</i><sub>txt</sub> and <i>s</i><sub>img</sub> indicates a more significant impact for the text prompt and image condition, respectively.
+    </p>
+    <table  width="1024" align="center">
+      <tbody>
+        <tr>
+          <th style="font-size: 16px; color: #d4a845;font-family: Cavolini;">"A statue of two men with wings are <i>dancing"</i></th>
+          <th style="font-size: 16px"><i>s</i><sub>txt</sub>=<i>s</i><sub>img</sub>=7.5</th>
+          <th style="font-size: 16px"><i>s</i><sub>txt</sub>=1.2, <i>s</i><sub>img</sub>=7.5</th>
+          <th style="font-size: 16px"><i>s</i><sub>txt</sub>=7.5, <i>s</i><sub>img</sub>=1.2</th>
+        </tr>
+        <tr>
+          <th><img class="input_image" src="video_controls/cfg/input.png" alt=""/></th>
+          <th><img class="input_image" src="video_controls/cfg/dance7.5.gif" alt=""/></th>
+          <th><img class="input_image" src="video_controls/cfg/dance1.2-7.5.gif" alt=""/></th>
+          <th><img class="input_image" src="video_controls/cfg/dance7.5-1.2.gif" alt=""/></th>
+        </tr>
+                  <tr> <td><br /></td> </tr> 
+      </tbody>
+    </table>
+
+
+    <!------------------ END   SECTION ------------------>    
+
+
+    <!------------------ BEGIN SECTION ------------------>
+    <p>&nbsp;</p>
+    <hr>
+        
+    <h2 id="ablation_container" align="left"><a name="image-results" id="image-results"></a>Ablation study</h2>
+    <p align="left">
+        Dual-stream image injection. 
+    </p>
+    <table  width="1200" align="center">
+      <tbody>
+        <tr>
+          <th style="font-size: 16px; color: #d4a845;font-family: Cavolini;">"A camel in a zoo enclosure"</th>
+          <th style="font-size: 16px">Ours</th>
+          <th style="font-size: 16px">w/o ctx</th>
+          <th style="font-size: 16px">w/o VDG</th>
+          <th style="font-size: 16px">w/o &lambda;</th>
+          <th style="font-size: 16px">Ours<sub>G</sub></th>
+        </tr>
+        <tr>
+          <th><img class="input_image_ablation1" src="video_ablation/ablation1_input.png" alt=""/></th>
+          <th><img class="input_image_ablation1" src="video_ablation/ablation1_ours.gif" alt=""/></th>
+          <th><img class="input_image_ablation1" src="video_ablation/ablation1_woctx.gif" alt=""/></th>
+          <th><img class="input_image_ablation1" src="video_ablation/ablation1_woVDG.gif" alt=""/></th>
+          <th><img class="input_image_ablation1" src="video_ablation/ablation1_wolambda.gif" alt=""/></th>
+          <th><img class="input_image_ablation1" src="video_ablation/ablation1_G.gif" alt=""/></th>
+        </tr>
+                  <tr> <td><br /></td> </tr> 
+      </tbody>
+    </table>
+
+
+    <p align="left">
+      Training paradigm. Visual comparisons of the context conditioning stream learned in one-stage and our two-stage adaption strategy.
+    </p>
+    <table  width="768" align="center">
+      <tbody>
+        <tr>
+          <th style="font-size: 16px; color: #d4a845;font-family: Cavolini;">"A man hiking in the mountains with a backpack"</th>
+          <th style="font-size: 16px">One-stage</th>
+          <th style="font-size: 16px">Our adaption</th>
+        </tr>
+        <tr>
+          <th><img class="input_image" src="video_ablation/ablation2.1_input.png" alt=""/></th>
+          <th><img class="input_image" src="video_ablation/ablation2.1_onestage.gif" alt=""/></th>
+          <th><img class="input_image" src="video_ablation/ablation2.1_ours.gif" alt=""/></th>
+        </tr>
+                  <tr> <td><br /></td> </tr> 
+      </tbody>
+    </table>
+
+
+    <p align="left">
+      Training paradigm.
+    </p>
+    <table  width="1024" align="center">
+      <tbody>
+        <tr>
+          <th style="font-size: 16px; color: #d4a845;font-family: Cavolini;">"A girl with short blue and pink hair speaking"</th>
+          <th style="font-size: 16px">Ours</th>
+          <th style="font-size: 16px">Fine-tuning entire.</th>
+          <th style="font-size: 16px">1st frame condtion</th>
+        </tr>
+        <tr>
+          <th><img class="input_image" src="video_ablation/ablation2.2_input.png" alt=""/></th>
+          <th><img class="input_image" src="video_ablation/ablation2.2_ours.gif" alt=""/></th>
+          <th><img class="input_image" src="video_ablation/ablation2.2_ent.gif" alt=""/></th>
+          <th><img class="input_image" src="video_ablation/ablation2.2_1stframe.gif" alt=""/></th>
+        </tr>
+                  <tr> <td><br /></td> </tr> 
+      </tbody>
+    </table>
+    <!------------------ END   SECTION ------------------> 
+
+
+
+    <!------------------ BEGIN SECTION ------------------>
+    <p>&nbsp;</p>
+    <hr>
+        
+    <h2 id="limitations_container" align="left"><a name="image-results" id="image-results"></a>Limitations</h2>
+    <p align="left">
+        Challenging case in terms of image content understanding. 
+    </p>
+    <table  width="600" align="center">
+      <tbody>
+        <tr>
+          <th style="font-size: 16px; color: #d4a845;font-family: Cavolini;">"Moving clouds in an anime scene"</th>
+          <th style="font-size: 16px">Output</th>
+        </tr>
+        <tr>
+          <th><img class="input_image" src="video_failure_case/limitation00.png" alt=""/></th>
+          <th><img class="input_image" src="video_failure_case/limitation00.gif" alt=""/></th>
+        </tr>
+                  <tr> <td><br /></td> </tr> 
+      </tbody>
+    </table>
+
+
+    <p align="left">
+      Inability to generate specific motions since the dataset lacks precise motion descriptions. 
+    </p>
+    <table  width="600" align="center">
+      <tbody>
+        <tr>
+          <th style="font-size: 16px; color: #d4a845;font-family: Cavolini;">"Girl rubbing her eyes"</th>
+          <th style="font-size: 16px">Output</th>
+        </tr>
+        <tr>
+          <th><img class="input_image" src="video_failure_case/limitation01.png" alt=""/></th>
+          <th><img class="input_image" src="video_failure_case/limitation01.gif" alt=""/></th>
+        </tr>
+                  <tr> <td><br /></td> </tr> 
+      </tbody>
+    </table>
+
+
+    <p align="left">
+      Inheriting slight flickering artifacts and human face distortion issue from the pre-trained low-resolution T2V model. 
+    </p>
+    <table  width="600" align="center">
+      <tbody>
+        <tr>
+          <th style="font-size: 16px; color: #d4a845;font-family: Cavolini;">"Old man walking with his wife"</th>
+          <th style="font-size: 16px">Output</th>
+        </tr>
+        <tr>
+          <th><img class="input_image" src="video_failure_case/limitation02.png" alt=""/></th>
+          <th><img class="input_image" src="video_failure_case/limitation02.gif" alt=""/></th>
+        </tr>
+                  <tr> <td><br /></td> </tr> 
+      </tbody>
+    </table>
+    <!------------------ END   SECTION ------------------> 
+
+
+
+
+
+</div>
+
+
+<script>
+  const videoContainer = document.querySelector('.video-container');
+  const video = document.querySelector('video');
+  const hoverImage = document.querySelector('.hover-image');
+  const caption = document.querySelector('.caption');
+
+  videoContainer.addEventListener('mouseenter', () => {
+      video.pause();
+      hoverImage.style.display = 'block';
+      caption.style.display = 'block';
+  });
+
+  videoContainer.addEventListener('mouseleave', () => {
+      video.play();
+      hoverImage.style.display = 'none';
+      caption.style.display = 'none';
+  });
+
+  // for nerfies template
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+
+  gtag('js', new Date());
+
+  gtag('config', 'G-PYVRSFMDRL');
+</script>
+
+
+<footer class="footer">
+  <div class="container" style="text-align: left;">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            Website content is licensed under a <a rel="license"
+                                                href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative
+            Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            Website source code based on the <a href="https://nerfies.github.io/"> Nerfies</a> project page and <a href="https://diffusion-tokenflow.github.io/"> TokenFlow (supp)</a>. If you want to reuse their <a
+              href="https://github.com/nerfies/nerfies.github.io">source code</a>, please credit them appropriately.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
