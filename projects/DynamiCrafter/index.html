@@ -6,7 +6,7 @@
 
 <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
       rel="stylesheet">
-
+      <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css"> -->
 <link rel="stylesheet" href="./static/css/bulma.min.css">
 <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
 <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
@@ -147,7 +147,7 @@
                 <span class="link-block">
                   <a href="#motion_control_container"
                      class="external-link button is-normal is-rounded">
-                    <span>Motion control</span>
+                    <span>Motion control using text</span>
                   </a>
                 </span>              
               </div>
@@ -633,7 +633,6 @@
 
 
 
-
     <!------------------ BEGIN SECTION ------------------>
     <p>&nbsp;</p>
     <hr>
@@ -642,7 +641,66 @@
     <p align="left">
       We compare our method against existing methods using still images with a wide range of content (e.g., landscape, human, animal, vehicle, statue) and style (e.g., real-life, AI-generated, painting, clay, anime, isometric illustration). 
     </p>
-    <div class="container">
+
+
+    <div id="results-carousel" class="carousel results-carousel" align="center">
+      <div class="item item-video1">
+        <img id="video11" src="video_comparison/01.gif" alt="GIF 1" class="gif">
+      </div>
+      <div class="item item-video2">
+        <img id="video11" src="video_comparison/02.gif" alt="GIF 1" class="gif">
+      </div>
+      <div class="item item-video3">
+        <img id="video11" src="video_comparison/03.gif" alt="GIF 1" class="gif">
+      </div>
+      <div class="item item-video1">
+        <img id="video11" src="video_comparison/04.gif" alt="GIF 1" class="gif">
+      </div>
+      <div class="item item-video2">
+        <img id="video11" src="video_comparison/05.gif" alt="GIF 1" class="gif">
+      </div>
+      <div class="item item-video3">
+        <img id="video11" src="video_comparison/06.gif" alt="GIF 1" class="gif">
+      </div>
+      <div class="item item-video1">
+        <img id="video11" src="video_comparison/07.gif" alt="GIF 1" class="gif">
+      </div>
+      <div class="item item-video2">
+        <img id="video11" src="video_comparison/08.gif" alt="GIF 1" class="gif">
+      </div>
+      <div class="item item-video3">
+        <img id="video11" src="video_comparison/09.gif" alt="GIF 1" class="gif">
+      </div>
+      <div class="item item-video3">
+        <img id="video11" src="video_comparison/10.gif" alt="GIF 1" class="gif">
+      </div>
+      <div class="item item-video3">
+        <img id="video11" src="video_comparison/11.gif" alt="GIF 1" class="gif">
+      </div>
+      <div class="item item-video3">
+        <img id="video11" src="video_comparison/12.gif" alt="GIF 1" class="gif">
+      </div>
+      <div class="item item-video3">
+        <img id="video11" src="video_comparison/13.gif" alt="GIF 1" class="gif">
+      </div>
+      <div class="item item-video3">
+        <img id="video11" src="video_comparison/14.gif" alt="GIF 1" class="gif">
+      </div>
+      <div class="item item-video3">
+        <img id="video11" src="video_comparison/15.gif" alt="GIF 1" class="gif">
+      </div>
+      <div class="item item-video3">
+        <img id="video11" src="video_comparison/16.gif" alt="GIF 1" class="gif">
+      </div>
+      <div class="item item-video3">
+        <img id="video11" src="video_comparison/17.gif" alt="GIF 1" class="gif">
+      </div>
+      <div class="item item-video3">
+        <img id="video11" src="video_comparison/18.gif" alt="GIF 1" class="gif">
+      </div>
+    </div>
+
+    <!-- <div class="container">
         <img src="video_comparison/01.gif" alt="GIF 1" class="gif">
         <img src="video_comparison/02.gif" alt="GIF 2" class="gif">
         <img src="video_comparison/03.gif" alt="GIF 1" class="gif">
@@ -661,7 +719,7 @@
         <img src="video_comparison/16.gif" alt="GIF 2" class="gif">
         <img src="video_comparison/17.gif" alt="GIF 1" class="gif">
         <img src="video_comparison/18.gif" alt="GIF 2" class="gif">
-    </div>
+    </div> -->
     <!------------------ END   SECTION ------------------>    
 
 
@@ -1105,6 +1163,53 @@
   gtag('js', new Date());
 
   gtag('config', 'G-PYVRSFMDRL');
+
+
+
+
+
+  // for carousel
+  window.addEventListener('DOMContentLoaded', (event) => {
+        const videoWrappers = document.querySelectorAll('.video-wrapper');
+      
+        videoWrappers.forEach(wrapper => {
+          const defaultVideo = wrapper.querySelector('.default-video');
+          const aspectRatio = defaultVideo.videoWidth / defaultVideo.videoHeight;
+          const height = wrapper.offsetWidth / aspectRatio;
+      
+          wrapper.style.height = `${height}px`;
+      
+          wrapper.addEventListener('mouseenter', () => {
+            defaultVideo.pause();
+            hoverVideo.play();
+          });
+      
+          wrapper.addEventListener('mouseleave', () => {
+            defaultVideo.play();
+            hoverVideo.pause();
+          });
+        });
+      }); 
+      $(document).ready(function() {
+        var carouselItems = $('.carousel .item');
+        var numItems = carouselItems.length;
+        var numVideos = 5;
+        var currentIndex = 0;
+    
+        $('.carousel').on('click', function() {
+          currentIndex++;
+          if (currentIndex + numVideos <= numItems) {
+            carouselItems.removeClass('active');
+            carouselItems.slice(currentIndex, currentIndex + numVideos).addClass('active');
+          } else {
+            currentIndex = 0;
+            carouselItems.removeClass('active');
+            carouselItems.slice(currentIndex, currentIndex + numVideos).addClass('active');
+          }
+        });
+    
+        carouselItems.slice(currentIndex, currentIndex + numVideos).addClass('active');
+      });
 </script>
 
 
