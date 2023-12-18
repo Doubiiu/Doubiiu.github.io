@@ -96,7 +96,8 @@
               <p> 
                 <a href="https://arxiv.org/abs/2310.12190">arXiv</a> 
                 &nbsp/&nbsp <a href="https://doubiiu.github.io/projects/DynamiCrafter/">Project</a> 
-                &nbsp/&nbsp <a href="https://github.com/Doubiiu/DynamiCrafter">Code</a> 
+                &nbsp/&nbsp <a href="https://github.com/Doubiiu/DynamiCrafter">Code</a>
+                &nbsp/&nbsp <a href="https://huggingface.co/spaces/Doubiiu/DynamiCrafter">Demo</a> 
               </p>
               <p>
                 An open-domain image animation method based on video diffusion priors.
@@ -104,6 +105,54 @@
             </td>
           </tr>
 
+
+          <tr onmouseout="sc_stop()" onmouseover="sc_start()">
+            <td style="padding:20px;width:25%;vertical-align:middle">
+              <div class="one">
+                <div class="two" id="sc_image" style="display: inline;"> 
+                  <img src='images/stylecrafter/cover.gif' alt="after for CodeTalker" width="320" height="180">
+                </div>
+                <img src='images/stylecrafter/cover.gif' alt="after for CodeTalker" width="320" height="180">
+
+              </div>
+              <script type="text/javascript">
+                function sc_start() {
+                  document.getElementById('sc_image').style.opacity = "1";
+                }
+
+                function sc_stop() {
+                  document.getElementById('sc_image').style.opacity = "0";
+                }
+                sc_stop()
+              </script>
+            </td>
+            <td style="padding:20px;width:75%;vertical-align:middle">
+              <b>
+                <papertitle>StyleCrafter: Enhancing Stylized Text-to-Video Generation with Style Adapter</papertitle>
+              </b>
+              <br>
+              
+              <a href="https://github.com/GongyeLiu">Gongye Liu</a>,
+              <a href="https://menghanxia.github.io/">Menghan Xia</a>,
+              <a href="https://yzhang2016.github.io/">Yong Zhang</a>,
+              <a href="#">Haoxin Chen</a>,
+              <strong>Jinbo Xing</strong>,
+              <a href="https://xinntao.github.io/">Xintao Wang</a>,
+              <a href="https://scholar.google.com/citations?user=4gH3sxsAAAAJ&hl=zh-CN&oi=ao">Yujiu Yang</a>,
+              <a href="https://scholar.google.com/citations?hl=en&user=4oXBp9UAAAAJ&view_op=list_works&sortby=pubdate">Ying Shan</a>
+              <br>
+              <em>arXiv preprint</em>, 2023
+              <p> 
+                <a href="https://arxiv.org/abs/2312.00330">arXiv</a> 
+                &nbsp/&nbsp <a href="https://gongyeliu.github.io/StyleCrafter.github.io/">Project</a> 
+                &nbsp/&nbsp <a href="https://github.com/GongyeLiu/StyleCrafter">Code</a>
+                &nbsp/&nbsp <a href="https://huggingface.co/spaces/liuhuohuo/StyleCrafter">Demo</a> 
+              </p>
+              <p>
+                Given a stylized image as reference, the model can generate images and videos with consistent styles based on text prompt.
+              </p>
+            </td>
+          </tr>
 
 
           <tr onmouseout="vc_stop()" onmouseover="vc_start()">
@@ -842,7 +891,7 @@
             <td style="padding:0px">
               <br>
               <p style="text-align:right;font-size:small;">
-                Last updated: Nov 2023
+                Last updated: Dec. 2023
                 <br>
                 Web page design credit to <a href="https://jonbarron.info" style="font-size: 14px">Jon Barron</a>
               </p>
