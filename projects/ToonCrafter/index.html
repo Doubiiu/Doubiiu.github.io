@@ -1,0 +1,1256 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>DynamiCrafter: Animating Open-domain Images with Video Diffusion Priors</title>
+<link href="style.css" rel="stylesheet" type="text/css">
+
+<link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+      rel="stylesheet">
+      <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css"> -->
+<link rel="stylesheet" href="./static/css/bulma.min.css">
+<link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+<link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+<link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+<link rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+<link rel="stylesheet" href="./static/css/index.css">
+<link rel="icon" href="./static/icon.svg">
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script defer src="./static/js/fontawesome.all.min.js"></script>
+<script src="./static/js/bulma-carousel.min.js"></script>
+<script src="./static/js/bulma-slider.min.js"></script>
+<script src="./static/js/index.js"></script>
+</head>
+
+<body>
+	<button style="position: fixed;right: 15px;top:  50%;height: 100px;width: 140px; font-size: 20px;" type="button"><a href="#top">Back to top</a></button> 
+<div class="page-container">
+  <!-- <h1 align="center">DynamiCrafter:<br>Animating Open-domain Images with Video Diffusion Priors</h1> -->
+  
+  
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <!-- <img src="static/logo_long.png" style="height:90px"></img> -->
+            <h1 class="title is-1 publication-title">ToonCrafter: Generative Cartoon Interpolation</h1>
+            <div class="column is-full_width">
+              <!-- <h2 class="title is-4">CVPR 2023</h2> -->
+            </div>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">
+                <a href="https://doubiiu.github.io/">Jinbo Xing</a><sup>1</sup>,</span>
+              <span class="author-block">
+                  <a href="https://github.com/hyliu">Hanyuan Liu</a><sup>2</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://menghanxia.github.io/">Menghan Xia</a><sup>3</sup>,</span>
+              <span class="author-block">
+                <a href="https://yzhang2016.github.io/">Yong Zhang</a><sup>3</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://xinntao.github.io/">Xintao Wang</a><sup>3</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://scholar.google.com/citations?hl=en&user=4oXBp9UAAAAJ&view_op=list_works&sortby=pubdate">Ying Shan</a><sup>3</sup>,
+              </span>
+              <span class="author-block">
+                <a href="https://www.cse.cuhk.edu.hk/~ttwong/myself.html">Tien-Tsin Wong</a><sup>1</sup>
+              </span>
+            </div>
+  
+            <div class="is-size-5 publication-authors">
+              <span class="author-block"><sup>1</sup>The Chinese University of Hong Kong,</span>&nbsp;
+              <span class="author-block"><sup>2</sup>City University of Hong Kong,</span>&nbsp;
+              <span class="author-block"><sup>3</sup>Tencent AI Lab</span>
+            </div>
+  
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <!-- PDF Link. -->
+                <!-- <span class="link-block">
+                  <a href=""
+                     class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                        <i class="fas fa-file-pdf"></i>
+                    </span>
+                    <span>Paper</span>
+                  </a>
+                </span> -->
+                <span class="link-block">
+                  <a href="#"
+                     class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                        <i class="ai ai-arxiv"></i>
+                    </span>
+                    <span>arXiv</span>
+                  </a>
+                </span>
+                <!-- Code Link. -->
+                <span class="link-block">
+                  <a href="#"
+                     class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon">
+                        <i class="fab fa-github"></i>
+                    </span>
+                    <span>Code</span>
+                    </a>
+                </span>
+                <!-- Dataset Link. -->
+
+              </div>
+              <div class="publication-links">
+              
+
+                <span class="link-block">
+                  <a href="#teaser"
+                     class="external-link button is-normal is-rounded">
+                    <!-- <span class="icon">
+                        <i class="far fa-images"></i>
+                    </span> -->
+                    <span>Teaser</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="#our_results_container"
+                     class="external-link button is-normal is-rounded">
+                    <span>Showcases</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="#comparison_with_baseline_container"
+                     class="external-link button is-normal is-rounded">
+                    <span>Comparisons</span>
+                  </a>
+                </span>              
+              </div>
+
+              <div class="publication-links">
+                <span class="link-block">
+                  <a href="#applications_container"
+                     class="external-link button is-normal is-rounded">
+                    <span>Applications</span>
+                  </a>
+                </span>
+
+                <span class="link-block">
+                  <a href="#sparse_container"
+                     class="external-link button is-normal is-rounded">
+                    <span>Sparse sketch guidance</span>
+                  </a>
+                </span>
+
+                <span class="link-block">
+                  <a href="#ablation_container"
+                     class="external-link button is-normal is-rounded">
+                    <span>Ablation study</span>
+                  </a>
+                </span>
+
+                <span class="link-block">
+                  <a href="#limitations_container"
+                     class="external-link button is-normal is-rounded">
+                    <span>Limitations</span>
+                  </a>
+                </span>
+              
+              </div>
+
+
+
+            </div>
+
+
+            <!-- <div class="is-size-6 publication-authors">
+              <span class="author-block">Unless stated otherwise, all video results contains 16 frames at a resolution of 256 &times; 256.</span>
+
+            </div> -->
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+	
+  <!-- <p align="center">&nbsp;</p> -->
+	<a href="#top"></a>
+
+
+  <!------------------ BEGIN SECTION ------------------>
+  <!-- <p>&nbsp;</p> -->
+  <hr>
+  <h2 style="margin-top: 0em;" id="teaser" align="left"><a name="image-results" id="image-results"></a>Teaser video</h2>
+    
+  <table  width="1024" align="center">
+    <tbody>
+      <tr>
+        <th style="font-size: 16px">Input starting frame</th>
+        <th style="font-size: 16px">Input ending frame</th>
+        <th style="font-size: 16px">Traditional synthesis interpolation (EISAI)</th>
+        <th style="font-size: 16px"><b>Our generative interpolation</b></th>
+      </tr>
+      <tr>
+        <th><img class="input_image_frameinterp" src="teaser/74302_1349_frame1.png" alt=""/></th>
+        <th><img class="input_image_frameinterp" src="teaser/74302_1349_frame3.png" alt=""/></th>
+        <th><video  width="340" src="teaser/74302_1349_EISAI.mp4" autoplay loop controls muted/></th>
+        <th><video  width="340" src="teaser/74302_1349_WOurs.mp4" autoplay loop controls muted/></th>
+      </tr>
+      <tr>
+        <th><img class="input_image_frameinterp" src="teaser/Japan_v2_1_097010_s2_frame1.png" alt=""/></th>
+        <th><img class="input_image_frameinterp" src="teaser/Japan_v2_1_097010_s2_frame3.png" alt=""/></th>
+        <th><video  width="340" src="teaser/Japan_v2_1_097010_s2_EISAI.mp4" autoplay loop controls muted/></th>
+        <th><video  width="340" src="teaser/Japan_v2_1_097010_s2_Ours.mp4" autoplay loop controls muted/></th>
+      </tr>
+      <tr>
+        <th><img class="input_image_frameinterp" src="teaser/74090_592.mp4_00-00.png" alt=""/></th>
+        <th><img class="input_image_frameinterp" src="teaser/74090_592.mp4_00-01.png" alt=""/></th>
+        <th><video  width="340" src="teaser/74090_592_EISAI.mp4" autoplay loop controls muted/></th>
+        <th><video  width="340" src="teaser/74090_592_WOurs.mp4" autoplay loop controls muted/></th>
+      </tr>
+        <tr> <td><br /></td> </tr> 
+    </tbody>
+  </table>
+
+
+
+
+  <!------------------ BEGIN SECTION ------------------>
+  <p>&nbsp;</p>
+  <hr>
+  <h2 style="margin-top: 0em;" id="our_results_container" align="left"><a name="image-results" id="image-results"></a>Showcases produced by our ToonCrafter</h2>
+    
+  <table  width="1024" align="center">
+    <tbody>
+      <tr>
+        <th><img class="input_image_topdownlayout" src="./02comparison/Japan_v2_2_062266_s2_frame1.png" alt=""/></th>
+        <th rowspan="2"><video  width="340" src="./02comparison/Japan_v2_2_062266_s2_frame1/Japan_v2_2_062266_s2_frame1_Ours.mp4" autoplay loop controls muted/></th>
+        <th><img class="input_image_topdownlayout" src="./02comparison/Japan_v2_3_110774_s3_frame1.png" alt=""/></th>
+        <th rowspan="2"><video  width="340" src="./02comparison/Japan_v2_3_110774_s3_frame1/Japan_v2_3_110774_s3_frame1_Ours.mp4" autoplay loop controls muted/></th>
+      </tr>
+      <tr>
+        <th><img class="input_image_topdownlayout" src="./02comparison/Japan_v2_2_062266_s2_frame3.png" alt=""/></th>
+        <th><img class="input_image_topdownlayout" src="./02comparison/Japan_v2_3_110774_s3_frame3.png" alt=""/></th>
+      </tr>
+
+      <tr>
+        <th><img class="input_image_topdownlayout" src="./02comparison/Japan_v2_3_143164_s1_frame1.png" alt=""/></th>
+        <th rowspan="2"><video  width="340" src="./02comparison/Japan_v2_3_143164_s1_frame1/Japan_v2_3_143164_s1_frame1_Ours.mp4" autoplay loop controls muted/></th>
+        <th><img class="input_image_topdownlayout" src="./02comparison/Japan_v2_1_070321_s3_frame1.png" alt=""/></th>
+        <th rowspan="2"><video  width="340" src="./02comparison/Japan_v2_1_070321_s3_frame1/Japan_v2_1_070321_s3_frame1_Ours.mp4" autoplay loop controls muted/></th>
+      </tr>
+      <tr>
+        <th><img class="input_image_topdownlayout" src="./02comparison/Japan_v2_3_143164_s1_frame3.png" alt=""/></th>
+        <th><img class="input_image_topdownlayout" src="./02comparison/Japan_v2_1_070321_s3_frame3.png" alt=""/></th>
+      </tr>
+
+      <tr>
+        <th><img class="input_image_topdownlayout" src="./02comparison/74921_1320.mp4_00-00.png" alt=""/></th>
+        <th rowspan="2"><video  width="340" src="./02comparison/74921_1320/74921_1320_Ours.mp4" autoplay loop controls muted/></th>
+        <th><img class="input_image_topdownlayout" src="./02comparison/Japan_v2_1_121331_s3_frame1.png" alt=""/></th>
+        <th rowspan="2"><video  width="340" src="./02comparison/Japan_v2_1_121331_s3_frame1/Japan_v2_1_121331_s3_frame1_Ours.mp4" autoplay loop controls muted/></th>
+      </tr>
+      <tr>
+        <th><img class="input_image_topdownlayout" src="./02comparison/74921_1320.mp4_00-01.png" alt=""/></th>
+        <th><img class="input_image_topdownlayout" src="./02comparison/Japan_v2_1_121331_s3_frame3.png" alt=""/></th>
+      </tr>
+
+      <tr>
+        <th><img class="input_image_topdownlayout" src="./02comparison/Japan_v2_3_119235_s2_frame1.png" alt=""/></th>
+        <th rowspan="2"><video  width="340" src="./02comparison/Japan_v2_3_119235_s2_frame1/Japan_v2_3_119235_s2_frame1_Ours.mp4" autoplay loop controls muted/></th>
+        <th><img class="input_image_topdownlayout" src="./01showcase/74912_144.mp4_00-00.png" alt=""/></th>
+        <th rowspan="2"><video  width="340" src="./01showcase/74912_144.mp4" autoplay loop controls muted/></th>
+      </tr>
+      <tr>
+        <th><img class="input_image_topdownlayout" src="./02comparison/Japan_v2_3_119235_s2_frame3.png" alt=""/></th>
+        <th><img class="input_image_topdownlayout" src="./01showcase/74912_144.mp4_00-01.png" alt=""/></th>
+      </tr>
+      
+      
+      <tr>
+        <th><img class="input_image_topdownlayout" src="./02comparison/Japan_v2_3_023962_s3_frame1.png" alt=""/></th>
+        <th rowspan="2"><video  width="340" src="./02comparison/Japan_v2_3_023962_s3_frame1/Japan_v2_3_023962_s3_frame1_Ours.mp4" autoplay loop controls muted/></th>
+        <th><img class="input_image_topdownlayout" src="./02comparison/Japan_v2_3_168850_s3_frame1.png" alt=""/></th>
+        <th rowspan="2"><video  width="340" src="./02comparison/Japan_v2_3_168850_s3_frame1/Japan_v2_3_168850_s3_frame1_Ours.mp4" autoplay loop controls muted/></th>
+      </tr>
+      <tr>
+        <th><img class="input_image_topdownlayout" src="./02comparison/Japan_v2_3_023962_s3_frame3.png" alt=""/></th>
+        <th><img class="input_image_topdownlayout" src="./02comparison/Japan_v2_3_168850_s3_frame3.png" alt=""/></th>
+      </tr>
+
+      <tr>
+        <th><img class="input_image_topdownlayout" src="./01showcase/72109_125.mp4_00-00.png" alt=""/></th>
+        <th rowspan="2"><video  width="340" src="./01showcase/72109_125.mp4" autoplay loop controls muted/></th>
+        <th><img class="input_image_topdownlayout" src="./01showcase/73172(31)_609.mp4_00-00.png" alt=""/></th>
+        <th rowspan="2"><video  width="340" src="./01showcase/73172(31)_609.mp4" autoplay loop controls muted/></th>
+      </tr>
+      <tr>
+        <th><img class="input_image_topdownlayout" src="./01showcase/72109_125.mp4_00-01.png" alt=""/></th>
+        <th><img class="input_image_topdownlayout" src="./01showcase/73172(31)_609.mp4_00-01.png" alt=""/></th>
+      </tr>
+
+      <tr>
+        <th><img class="input_image_topdownlayout" src="./01showcase/73777_1940.mp4_00-00.png" alt=""/></th>
+        <th rowspan="2"><video  width="340" src="./01showcase/73777_1940.mp4" autoplay loop controls muted/></th>
+        <th><img class="input_image_topdownlayout" src="./01showcase/74091_1217.mp4_00-00.png" alt=""/></th>
+        <th rowspan="2"><video  width="340" src="./01showcase/74091_1217.mp4" autoplay loop controls muted/></th>
+      </tr>
+      <tr>
+        <th><img class="input_image_topdownlayout" src="./01showcase/73777_1940.mp4_00-01.png" alt=""/></th>
+        <th><img class="input_image_topdownlayout" src="./01showcase/74091_1217.mp4_00-01.png" alt=""/></th>
+      </tr>
+
+      <tr>
+        <th><img class="input_image_topdownlayout" src="./01showcase/74250_451.mp4_00-00.png" alt=""/></th>
+        <th rowspan="2"><video  width="340" src="./01showcase/74250_451.mp4" autoplay loop controls muted/></th>
+        <th><img class="input_image_topdownlayout" src="./02comparison/Japan_v2_3_061099_s2_frame1.png" alt=""/></th>
+        <th rowspan="2"><video  width="340" src="./02comparison/Japan_v2_3_061099_s2_frame1/Japan_v2_3_061099_s2_frame1_Ours.mp4" autoplay loop controls muted/></th>
+      </tr>
+      <tr>
+        <th><img class="input_image_topdownlayout" src="./01showcase/74250_451.mp4_00-01.png" alt=""/></th>
+        <th><img class="input_image_topdownlayout" src="./02comparison/Japan_v2_3_061099_s2_frame3.png" alt=""/></th>
+      </tr>
+        <tr> <td><br /></td> </tr> 
+    </tbody>
+  </table>
+
+
+    <!------------------ BEGIN SECTION ------------------>
+    <p>&nbsp;</p>
+    <hr>
+        
+    <h2 id="comparison_with_baseline_container" align="left"><a name="image-results" id="image-results"></a>Comparisons with baseline methods</h2>
+    <table  width="1024" align="center">
+      <tbody>
+
+
+            <tr>
+              <th style="font-size: 16px">Input</th>
+              <th style="font-size: 16px">AnimeInterp</th>
+              <th style="font-size: 16px">EISAI</th>
+              <th style="font-size: 16px">FILM</th>
+            </tr>
+            <tr>
+              <th><img class="input_image_topdownlayout" src="./02comparison/Japan_v2_1_157174_s2_frame1.png" alt=""/></th>
+              <th rowspan="2"><video  width="340" src="./02comparison/Japan_v2_1_157174_s2_frame1/Japan_v2_1_157174_s2_frame1_AnimeInterp.mp4" autoplay loop controls muted/></th>
+              <th rowspan="2"><video  width="340" src="./02comparison/Japan_v2_1_157174_s2_frame1/Japan_v2_1_157174_s2_frame1_EISAI.mp4" autoplay loop controls muted/></th>
+              <th rowspan="2"><video  width="340" src="./02comparison/Japan_v2_1_157174_s2_frame1/Japan_v2_1_157174_s2_frame1_FILM.mp4" autoplay loop controls muted/></th>
+            </tr>
+            <tr>
+              <th><img class="input_image_topdownlayout" src="./02comparison/Japan_v2_1_157174_s2_frame3.png" alt=""/></th>
+            </tr>
+    
+            <th style="font-size: 16px"></th>
+            <th style="font-size: 16px">SEINE</th>
+            <th style="font-size: 16px">ToonCrafter (Ours)</th>
+            <th style="font-size: 16px"></th>
+          </tr>
+          <tr>
+            <th></th>
+            <th rowspan="2"><video  width="340" src="./02comparison/Japan_v2_1_157174_s2_frame1/Japan_v2_1_157174_s2_frame1_SEINE.mp4" autoplay loop controls muted/></th>
+            <th rowspan="2"><video  width="340" src="./02comparison/Japan_v2_1_157174_s2_frame1/Japan_v2_1_157174_s2_frame1_Ours.mp4" autoplay loop controls muted/></th>
+            <th></th>
+          </tr>
+          <tr>
+            <th></th>
+            <th></th>
+          </tr>
+
+
+
+        <tr>
+          <th style="font-size: 16px">Input</th>
+          <th style="font-size: 16px">AnimeInterp</th>
+          <th style="font-size: 16px">EISAI</th>
+          <th style="font-size: 16px">FILM</th>
+        </tr>
+        <tr>
+          <th><img class="input_image_topdownlayout" src="./02comparison/Japan_v2_1_060306_s2_frame1.png" alt=""/></th>
+          <th rowspan="2"><video  width="340" src="./02comparison/Japan_v2_1_060306_s2/Japan_v2_1_060306_s2_AnimeInterp.mp4" autoplay loop controls muted/></th>
+          <th rowspan="2"><video  width="340" src="./02comparison/Japan_v2_1_060306_s2/Japan_v2_1_060306_s2_EISAI.mp4" autoplay loop controls muted/></th>
+          <th rowspan="2"><video  width="340" src="./02comparison/Japan_v2_1_060306_s2/Japan_v2_1_060306_s2_FILM.mp4" autoplay loop controls muted/></th>
+        </tr>
+        <tr>
+          <th><img class="input_image_topdownlayout" src="./02comparison/Japan_v2_1_060306_s2_frame3.png" alt=""/></th>
+        </tr>
+
+        <th style="font-size: 16px"></th>
+        <th style="font-size: 16px">SEINE</th>
+        <th style="font-size: 16px">ToonCrafter (Ours)</th>
+        <th style="font-size: 16px"></th>
+      </tr>
+      <tr>
+        <th></th>
+        <th rowspan="2"><video  width="340" src="./02comparison/Japan_v2_1_060306_s2/Japan_v2_1_060306_s2_SEINE.mp4" autoplay loop controls muted/></th>
+        <th rowspan="2"><video  width="340" src="./02comparison/Japan_v2_1_060306_s2/Japan_v2_1_060306_s2_Ours.mp4" autoplay loop controls muted/></th>
+        <th></th>
+      </tr>
+      <tr>
+        <th></th>
+        <th></th>
+      </tr>
+
+      <tr>
+        <th style="font-size: 16px">Input</th>
+        <th style="font-size: 16px">AnimeInterp</th>
+        <th style="font-size: 16px">EISAI</th>
+        <th style="font-size: 16px">FILM</th>
+      </tr>
+      <tr>
+        <th><img class="input_image_topdownlayout" src="./02comparison/74880_401.mp4_00-00.png" alt=""/></th>
+        <th rowspan="2"><video  width="340" src="./02comparison/74880_401/74880_401_AnimeInterp.mp4" autoplay loop controls muted/></th>
+        <th rowspan="2"><video  width="340" src="./02comparison/74880_401/74880_401_EISAI.mp4" autoplay loop controls muted/></th>
+        <th rowspan="2"><video  width="340" src="./02comparison/74880_401/74880_401_FILM.mp4" autoplay loop controls muted/></th>
+      </tr>
+      <tr>
+        <th><img class="input_image_topdownlayout" src="./02comparison/74880_401.mp4_00-01.png" alt=""/></th>
+      </tr>
+
+      <th style="font-size: 16px"></th>
+      <th style="font-size: 16px">SEINE</th>
+      <th style="font-size: 16px">ToonCrafter (Ours)</th>
+      <th style="font-size: 16px"></th>
+    </tr>
+    <tr>
+      <th></th>
+      <th rowspan="2"><video  width="340" src="./02comparison/74880_401/74880_401_SEINE.mp4" autoplay loop controls muted/></th>
+      <th rowspan="2"><video  width="340" src="./02comparison/74880_401/74880_401_Ours.mp4" autoplay loop controls muted/></th>
+      <th></th>
+    </tr>
+    <tr>
+      <th></th>
+      <th></th>
+    </tr>
+
+    <tr>
+      <th style="font-size: 16px">Input</th>
+      <th style="font-size: 16px">AnimeInterp</th>
+      <th style="font-size: 16px">EISAI</th>
+      <th style="font-size: 16px">FILM</th>
+    </tr>
+    <tr>
+      <th><img class="input_image_topdownlayout" src="./02comparison/Japan_v2_3_112216_s2_frame1.png" alt=""/></th>
+      <th rowspan="2"><video  width="340" src="./02comparison/Japan_v2_3_112216_s2_frame1/Japan_v2_3_112216_s2_frame1_AnimeInterp.mp4" autoplay loop controls muted/></th>
+      <th rowspan="2"><video  width="340" src="./02comparison/Japan_v2_3_112216_s2_frame1/Japan_v2_3_112216_s2_frame1_EISAI.mp4" autoplay loop controls muted/></th>
+      <th rowspan="2"><video  width="340" src="./02comparison/Japan_v2_3_112216_s2_frame1/Japan_v2_3_112216_s2_frame1_FILM.mp4" autoplay loop controls muted/></th>
+    </tr>
+    <tr>
+      <th><img class="input_image_topdownlayout" src="./02comparison/Japan_v2_3_112216_s2_frame3.png" alt=""/></th>
+    </tr>
+
+    <th style="font-size: 16px"></th>
+    <th style="font-size: 16px">SEINE</th>
+    <th style="font-size: 16px">ToonCrafter (Ours)</th>
+    <th style="font-size: 16px"></th>
+  </tr>
+  <tr>
+    <th></th>
+    <th rowspan="2"><video  width="340" src="./02comparison/Japan_v2_3_112216_s2_frame1/Japan_v2_3_112216_s2_frame1_SEINE.mp4" autoplay loop controls muted/></th>
+    <th rowspan="2"><video  width="340" src="./02comparison/Japan_v2_3_112216_s2_frame1/Japan_v2_3_112216_s2_frame1_Ours.mp4" autoplay loop controls muted/></th>
+    <th></th>
+  </tr>
+  <tr>
+    <th></th>
+    <th></th>
+  </tr>
+
+  <tr>
+    <th style="font-size: 16px">Input</th>
+    <th style="font-size: 16px">AnimeInterp</th>
+    <th style="font-size: 16px">EISAI</th>
+    <th style="font-size: 16px">FILM</th>
+  </tr>
+  <tr>
+    <th><img class="input_image_topdownlayout" src="./02comparison/Japan_v2_2_056102_s3_frame1.png" alt=""/></th>
+    <th rowspan="2"><video  width="340" src="./02comparison/Japan_v2_2_056102_s3_frame1/Japan_v2_2_056102_s3_frame1_AnimeInterp.mp4" autoplay loop controls muted/></th>
+    <th rowspan="2"><video  width="340" src="./02comparison/Japan_v2_2_056102_s3_frame1/Japan_v2_2_056102_s3_frame1_EISAI.mp4" autoplay loop controls muted/></th>
+    <th rowspan="2"><video  width="340" src="./02comparison/Japan_v2_2_056102_s3_frame1/Japan_v2_2_056102_s3_frame1_FILM.mp4" autoplay loop controls muted/></th>
+  </tr>
+  <tr>
+    <th><img class="input_image_topdownlayout" src="./02comparison/Japan_v2_2_056102_s3_frame3.png" alt=""/></th>
+  </tr>
+
+  <th style="font-size: 16px"></th>
+  <th style="font-size: 16px">SEINE</th>
+  <th style="font-size: 16px">ToonCrafter (Ours)</th>
+  <th style="font-size: 16px"></th>
+</tr>
+<tr>
+  <th></th>
+  <th rowspan="2"><video  width="340" src="./02comparison/Japan_v2_2_056102_s3_frame1/Japan_v2_2_056102_s3_frame1_SEINE.mp4" autoplay loop controls muted/></th>
+  <th rowspan="2"><video  width="340" src="./02comparison/Japan_v2_2_056102_s3_frame1/Japan_v2_2_056102_s3_frame1_Ours.mp4" autoplay loop controls muted/></th>
+  <th></th>
+</tr>
+<tr>
+  <th></th>
+  <th></th>
+</tr>
+
+
+
+<tr>
+  <th style="font-size: 16px">Input</th>
+  <th style="font-size: 16px">AnimeInterp</th>
+  <th style="font-size: 16px">EISAI</th>
+  <th style="font-size: 16px">FILM</th>
+</tr>
+<tr>
+  <th><img class="input_image_topdownlayout" src="./02comparison/74857_340_frame1.png" alt=""/></th>
+  <th rowspan="2"><video  width="340" src="./02comparison/74857_340/74857_340_AnimeInterp.mp4" autoplay loop controls muted/></th>
+  <th rowspan="2"><video  width="340" src="./02comparison/74857_340/74857_340_EISAI.mp4" autoplay loop controls muted/></th>
+  <th rowspan="2"><video  width="340" src="./02comparison/74857_340/74857_340_FILM.mp4" autoplay loop controls muted/></th>
+</tr>
+<tr>
+  <th><img class="input_image_topdownlayout" src="./02comparison/74857_340_frame3.png" alt=""/></th>
+</tr>
+
+<th style="font-size: 16px"></th>
+<th style="font-size: 16px">SEINE</th>
+<th style="font-size: 16px">ToonCrafter (Ours)</th>
+<th style="font-size: 16px"></th>
+</tr>
+<tr>
+<th></th>
+<th rowspan="2"><video  width="340" src="./02comparison/74857_340/74857_340_SEINE.mp4" autoplay loop controls muted/></th>
+<th rowspan="2"><video  width="340" src="./02comparison/74857_340/74857_340_WOurs.mp4" autoplay loop controls muted/></th>
+<th></th>
+</tr>
+<tr>
+<th></th>
+<th></th>
+</tr>
+
+<tr>
+  <th style="font-size: 16px">Input</th>
+  <th style="font-size: 16px">AnimeInterp</th>
+  <th style="font-size: 16px">EISAI</th>
+  <th style="font-size: 16px">FILM</th>
+</tr>
+<tr>
+  <th><img class="input_image_topdownlayout" src="./02comparison/74906_1462_frame1.png" alt=""/></th>
+  <th rowspan="2"><video  width="340" src="./02comparison/74906_1462/74906_1462_AnimeInterp.mp4" autoplay loop controls muted/></th>
+  <th rowspan="2"><video  width="340" src="./02comparison/74906_1462/74906_1462_EISAI.mp4" autoplay loop controls muted/></th>
+  <th rowspan="2"><video  width="340" src="./02comparison/74906_1462/74906_1462_FILM.mp4" autoplay loop controls muted/></th>
+</tr>
+<tr>
+  <th><img class="input_image_topdownlayout" src="./02comparison/74906_1462_frame3.png" alt=""/></th>
+</tr>
+
+<th style="font-size: 16px"></th>
+<th style="font-size: 16px">SEINE</th>
+<th style="font-size: 16px">ToonCrafter (Ours)</th>
+<th style="font-size: 16px"></th>
+</tr>
+<tr>
+<th></th>
+<th rowspan="2"><video  width="340" src="./02comparison/74906_1462/74906_1462_SEINE.mp4" autoplay loop controls muted/></th>
+<th rowspan="2"><video  width="340" src="./02comparison/74906_1462/74906_1462_WOurs.mp4" autoplay loop controls muted/></th>
+<th></th>
+</tr>
+<tr>
+<th></th>
+<th></th>
+</tr>
+
+
+<tr>
+  <th style="font-size: 16px">Input</th>
+  <th style="font-size: 16px">AnimeInterp</th>
+  <th style="font-size: 16px">EISAI</th>
+  <th style="font-size: 16px">FILM</th>
+</tr>
+<tr>
+  <th><img class="input_image_topdownlayout" src="./02comparison/Japan_v2_3_139766_s3_frame1.png" alt=""/></th>
+  <th rowspan="2"><video  width="340" src="./02comparison/Japan_v2_3_139766_s3_frame1/Japan_v2_3_139766_s3_frame1_AnimeInterp.mp4" autoplay loop controls muted/></th>
+  <th rowspan="2"><video  width="340" src="./02comparison/Japan_v2_3_139766_s3_frame1/Japan_v2_3_139766_s3_frame1_EISAI.mp4" autoplay loop controls muted/></th>
+  <th rowspan="2"><video  width="340" src="./02comparison/Japan_v2_3_139766_s3_frame1/Japan_v2_3_139766_s3_frame1_FILM.mp4" autoplay loop controls muted/></th>
+</tr>
+<tr>
+  <th><img class="input_image_topdownlayout" src="./02comparison/Japan_v2_3_139766_s3_frame3.png" alt=""/></th>
+</tr>
+
+<th style="font-size: 16px"></th>
+<th style="font-size: 16px">SEINE</th>
+<th style="font-size: 16px">ToonCrafter (Ours)</th>
+<th style="font-size: 16px"></th>
+</tr>
+<tr>
+<th></th>
+<th rowspan="2"><video  width="340" src="./02comparison/Japan_v2_3_139766_s3_frame1/Japan_v2_3_139766_s3_frame1_SEINE.mp4" autoplay loop controls muted/></th>
+<th rowspan="2"><video  width="340" src="./02comparison/Japan_v2_3_139766_s3_frame1/Japan_v2_3_139766_s3_frame1_Ours.mp4" autoplay loop controls muted/></th>
+<th></th>
+</tr>
+<tr>
+<th></th>
+<th></th>
+</tr>
+
+<tr>
+  <th style="font-size: 16px">Input</th>
+  <th style="font-size: 16px">AnimeInterp</th>
+  <th style="font-size: 16px">EISAI</th>
+  <th style="font-size: 16px">FILM</th>
+</tr>
+<tr>
+  <th><img class="input_image_topdownlayout" src="./02comparison/Japan_v2_2_036023_s3_frame1.png" alt=""/></th>
+  <th rowspan="2"><video  width="340" src="./02comparison/Japan_v2_2_036023_s3_frame1/Japan_v2_2_036023_s3_frame1_AnimeInterp.mp4" autoplay loop controls muted/></th>
+  <th rowspan="2"><video  width="340" src="./02comparison/Japan_v2_2_036023_s3_frame1/Japan_v2_2_036023_s3_frame1_EISAI.mp4" autoplay loop controls muted/></th>
+  <th rowspan="2"><video  width="340" src="./02comparison/Japan_v2_2_036023_s3_frame1/Japan_v2_2_036023_s3_frame1_FILM.mp4" autoplay loop controls muted/></th>
+</tr>
+<tr>
+  <th><img class="input_image_topdownlayout" src="./02comparison/Japan_v2_2_036023_s3_frame3.png" alt=""/></th>
+</tr>
+
+<th style="font-size: 16px"></th>
+<th style="font-size: 16px">SEINE</th>
+<th style="font-size: 16px">ToonCrafter (Ours)</th>
+<th style="font-size: 16px"></th>
+</tr>
+<tr>
+<th></th>
+<th rowspan="2"><video  width="340" src="./02comparison/Japan_v2_2_036023_s3_frame1/Japan_v2_2_036023_s3_frame1_SEINE.mp4" autoplay loop controls muted/></th>
+<th rowspan="2"><video  width="340" src="./02comparison/Japan_v2_2_036023_s3_frame1/Japan_v2_2_036023_s3_frame1_Ours.mp4" autoplay loop controls muted/></th>
+<th></th>
+</tr>
+<tr>
+<th></th>
+<th></th>
+</tr>
+
+          <tr> <td><br /></td> </tr> 
+      </tbody>
+    </table>
+
+    
+ 
+    <!-- 
+
+        <tr>
+          <th style="font-size: 16px">Input</th>
+          <th style="font-size: 16px">AnimeInterp</th>
+          <th style="font-size: 16px">EISAI</th>
+          <th style="font-size: 16px">FILM</th>
+        </tr>
+        <tr>
+          <th><img class="input_image_topdownlayout" src="" alt=""/></th>
+          <th rowspan="2"><video  width="340" src="" autoplay loop controls muted/></th>
+          <th rowspan="2"><video  width="340" src="" autoplay loop controls muted/></th>
+          <th rowspan="2"><video  width="340" src="" autoplay loop controls muted/></th>
+        </tr>
+        <tr>
+          <th><img class="input_image_topdownlayout" src="" alt=""/></th>
+        </tr>
+
+        <th style="font-size: 16px"></th>
+        <th style="font-size: 16px">SEINE</th>
+        <th style="font-size: 16px">ToonCrafter (Ours)</th>
+        <th style="font-size: 16px"></th>
+      </tr>
+      <tr>
+        <th></th>
+        <th rowspan="2"><video  width="340" src="" autoplay loop controls muted/></th>
+        <th rowspan="2"><video  width="340" src="" autoplay loop controls muted/></th>
+        <th></th>
+      </tr>
+      <tr>
+        <th></th>
+        <th></th>
+      </tr>
+
+   -->
+
+    <!------------------ BEGIN SECTION ------------------>
+    <p>&nbsp;</p>
+    <hr>
+        
+    <h2 id="applications_container" align="left"><a name="image-results" id="image-results"></a>Applications</h2>
+    <p align="left">
+        Cartoon sketch interpolation.
+    </p>
+    <table  width="1024" align="center">
+      <tbody>
+        <tr>
+          <th style="font-size: 16px">Input frames</th>
+          <th style="font-size: 16px">Interpolation results</th>
+          <th style="font-size: 16px">Input frames</th>
+          <th style="font-size: 16px">Interpolation results</th>
+        </tr>
+        <tr>
+          <th><img class="input_image_topdownlayout media-border" src="./03application/sketch_interpolation/Japan_v2_1_101855_s3/frame0001.png" alt=""/></th>
+          <th rowspan="2"><video  class="media-border" width="340" src="./03application/sketch_interpolation/Japan_v2_1_101855_s3.mp4" autoplay loop controls muted/></th>
+          <th><img class="input_image_topdownlayout media-border" src="./03application/sketch_interpolation/Japan_v2_0_050193_s3/frame0001.png" alt=""/></th>
+          <th rowspan="2"><video class="media-border" width="340" src="./03application/sketch_interpolation/Japan_v2_0_050193_s3.mp4" autoplay loop controls muted/></th>
+        </tr>
+        <tr>
+          <th><img class="input_image_topdownlayout media-border" src="./03application/sketch_interpolation/Japan_v2_1_101855_s3/frame0016.png" alt=""/></th>
+          <th><img class="input_image_topdownlayout media-border" src="./03application/sketch_interpolation/Japan_v2_0_050193_s3/frame0016.png" alt=""/></th>
+        </tr>
+
+        <tr>
+          <th><img class="input_image_topdownlayout media-border" src="./03application/sketch_interpolation/Japan_v2_3_119235_s2/frame0001.png" alt=""/></th>
+          <th rowspan="2"><video class="media-border" width="340" src="./03application/sketch_interpolation/Japan_v2_3_119235_s2.mp4" autoplay loop controls muted/></th>
+          <th><img class="input_image_topdownlayout media-border" src="./03application/sketch_interpolation/Japan_v2_1_147064_s2/frame0001.png" alt=""/></th>
+          <th rowspan="2"><video class="media-border"  width="340" src="./03application/sketch_interpolation/Japan_v2_1_147064_s2.mp4" autoplay loop controls muted/></th>
+        </tr>
+        <tr>
+          <th><img class="input_image_topdownlayout media-border" src="./03application/sketch_interpolation/Japan_v2_3_119235_s2/frame0016.png" alt=""/></th>
+          <th><img class="input_image_topdownlayout media-border" src="./03application/sketch_interpolation/Japan_v2_1_147064_s2/frame0016.png" alt=""/></th>
+        </tr>
+        
+          <tr> <td><br /></td> </tr> 
+      </tbody>
+    </table>
+
+    <!-- 
+    <tr>
+      <th><img class="input_image_topdownlayout" src="" alt=""/></th>
+      <th rowspan="2"><video  width="340" src="" autoplay loop controls muted/></th>
+      <th><img class="input_image_topdownlayout" src="" alt=""/></th>
+      <th rowspan="2"><video  width="340" src="" autoplay loop controls muted/></th>
+    </tr>
+    <tr>
+      <th><img class="input_image_topdownlayout" src="" alt=""/></th>
+      <th><img class="input_image_topdownlayout" src="" alt=""/></th>
+    </tr>
+   -->
+
+
+
+  
+    <p align="left">
+      Reference-based sketch colorization (single-image-reference).
+    </p>
+    <table  width="1024" align="center">
+      <tbody>
+        <tr>
+          <th style="font-size: 16px">Input</th>
+          <th style="font-size: 16px">Colorization results</th>
+          <th style="font-size: 16px">Input</th>
+          <th style="font-size: 16px">Colorization results</th>
+        </tr>
+        <tr>
+          <th><img class="input_image_topdownlayout" src="./03application/colorization/reference/72036_124/frame0001.png" alt=""/></th>
+          <th rowspan="2"><video  width="340" src="./03application/colorization/single_output/72036_124.mp4" autoplay loop controls muted/></th>
+          <th><img class="input_image_topdownlayout" src="./03application/colorization/reference/73172(15)_520/frame0001.png" alt=""/></th>
+          <th rowspan="2"><video  width="340" src="./03application/colorization/single_output/73172(15)_520.mp4" autoplay loop controls muted/></th>
+        </tr>
+        <tr>
+          <th ><video class="media-border" width="170" src="./03application/colorization/single_input/72036_124.mp4" autoplay loop controls muted/></th>
+          <th ><video class="media-border" width="170" src="./03application/colorization/single_input/73172(15)_520.mp4" autoplay loop controls muted/></th>
+        </tr>
+        <tr>
+          <th><img class="input_image_topdownlayout" src="./03application/colorization/reference/73172(14)_145/frame0001.png" alt=""/></th>
+          <th rowspan="2"><video  width="340" src="./03application/colorization/single_output/73172(14)_145.mp4" autoplay loop controls muted/></th>
+          <th><img class="input_image_topdownlayout" src="./03application/colorization/reference/73606_1375/frame0001.png" alt=""/></th>
+          <th rowspan="2"><video  width="340" src="./03application/colorization/single_output/73606_1375.mp4" autoplay loop controls muted/></th>
+        </tr>
+        <tr>
+          <th ><video class="media-border" width="170" src="./03application/colorization/single_input/73172(14)_145.mp4" autoplay loop controls muted/></th>
+          <th ><video class="media-border" width="170" src="./03application/colorization/single_input/73606_1375.mp4" autoplay loop controls muted/></th>
+        </tr>
+          <tr> <td><br /></td> </tr> 
+      </tbody>
+    </table>
+
+
+    <p align="left">
+      Reference-based sketch colorization (dual-image-reference).
+    </p>
+    <table  width="1024" align="center">
+      <tbody>
+        <tr>
+          <th style="font-size: 16px">Input reference</th>
+          <th style="font-size: 16px">Input sketch</th>
+          <th style="font-size: 16px">Colorization results</th>
+          <th style="font-size: 16px">Input reference</th>
+          <th style="font-size: 16px">Input sketch</th>
+          <th style="font-size: 16px">Colorization results</th>
+        </tr>
+        <tr>
+          <th><img class="input_image_topdownlayout" src="./03application/colorization/reference/72088_477/frame0001.png" alt=""/></th>
+          <th rowspan="2"><video class="media-border"  width="170" src="./03application/colorization/dual_input/72088_477.mp4" autoplay loop controls muted/></th>
+          <th rowspan="2"><video  width="340" src="./03application/colorization/dual_output/72088_477.mp4" autoplay loop controls muted/></th>
+          <th><img class="input_image_topdownlayout" src="./03application/colorization/reference/72032_294/frame0001.png" alt=""/></th>
+          <th rowspan="2"><video class="media-border" width="170" src="./03application/colorization/dual_input/72032_294.mp4" autoplay loop controls muted/></th>
+          <th rowspan="2"><video  width="340" src="./03application/colorization/dual_output/72032_294.mp4" autoplay loop controls muted/></th>
+        </tr>
+        <tr>
+          <th><img class="input_image_topdownlayout" src="./03application/colorization/reference/72088_477/frame0016.png" alt=""/></th>
+          <th><img class="input_image_topdownlayout" src="./03application/colorization/reference/72032_294/frame0016.png" alt=""/></th>
+        </tr>
+          <tr> <td><br /></td> </tr> 
+      </tbody>
+    </table>
+
+
+    <!------------------ END   SECTION ------------------> 
+
+
+    <!------------------ BEGIN SECTION ------------------>
+    <p>&nbsp;</p>
+    <hr>
+        
+    <h2 id="sparse_container" align="left"><a name="image-results" id="image-results"></a>Sparse-sketch-guided generation</h2>
+    <p align="left">
+      Bisection (n=4) (the sketch of two input cartoon frames are always given).
+    </p>
+    <table  width="1024" align="center">
+      <tbody>
+        <tr>
+          <th style="font-size: 16px">Input frames</th>
+          <th style="font-size: 16px">Sparse sketch guidance</th>
+          <th style="font-size: 16px">Interpolation results</th>
+          <th style="font-size: 16px">Input frames</th>
+          <th style="font-size: 16px">Sparse sketch guidance</th>
+          <th style="font-size: 16px">Interpolation results</th>
+        </tr>
+        <tr>
+          <th><img class="input_image_topdownlayout" src="./06sparse/72047_966.mp4_00-00.png" alt=""/></th>
+          <th rowspan="2"><video class="media-border"  width="170" src="./06sparse/conds/72047_966_4.mp4" autoplay loop controls muted/></th>
+          <th rowspan="2"><video  width="340" src="./06sparse/72047_966_4.mp4" autoplay loop controls muted/></th>
+          <th><img class="input_image_topdownlayout" src="./06sparse/73172(17)_836.mp4_00-00.png" alt=""/></th>
+          <th rowspan="2"><video class="media-border" width="170" src="./06sparse/conds/73172(17)_836_4.mp4" autoplay loop controls muted/></th>
+          <th rowspan="2"><video  width="340" src="./06sparse/73172(17)_836_4.mp4" autoplay loop controls muted/></th>
+        </tr>
+        <tr>
+          <th><img class="input_image_topdownlayout" src="./06sparse/72047_966.mp4_00-01.png" alt=""/></th>
+          <th><img class="input_image_topdownlayout" src="./06sparse/73172(17)_836.mp4_00-01.png" alt=""/></th>
+        </tr>
+          <tr> <td><br /></td> </tr> 
+      </tbody>
+    </table>
+
+
+    <p align="left">
+      Bisection (n=3)
+    </p>
+    <table  width="1024" align="center">
+      <tbody>
+        <tr>
+          <th style="font-size: 16px">Input frames</th>
+          <th style="font-size: 16px">Sparse sketch guidance</th>
+          <th style="font-size: 16px">Interpolation results</th>
+          <th style="font-size: 16px">Input frames</th>
+          <th style="font-size: 16px">Sparse sketch guidance</th>
+          <th style="font-size: 16px">Interpolation results</th>
+        </tr>
+        <tr>
+          <th><img class="input_image_topdownlayout" src="./06sparse/72046_205.mp4_00-00.png" alt=""/></th>
+          <th rowspan="2"><video class="media-border"  width="170" src="./06sparse/conds/72046_205_3.mp4" autoplay loop controls muted/></th>
+          <th rowspan="2"><video  width="340" src="./06sparse/72046_205_3.mp4" autoplay loop controls muted/></th>
+          <th><img class="input_image_topdownlayout" src="./06sparse/72105_388.mp4_00-00.png" alt=""/></th>
+          <th rowspan="2"><video class="media-border" width="170" src="./06sparse/conds/72105_388_3.mp4" autoplay loop controls muted/></th>
+          <th rowspan="2"><video  width="340" src="./06sparse/72105_388_3.mp4" autoplay loop controls muted/></th>
+        </tr>
+        <tr>
+          <th><img class="input_image_topdownlayout" src="./06sparse/72046_205.mp4_00-01.png" alt=""/></th>
+          <th><img class="input_image_topdownlayout" src="./06sparse/72105_388.mp4_00-01.png" alt=""/></th>
+        </tr>
+          <tr> <td><br /></td> </tr> 
+      </tbody>
+    </table>
+
+
+
+    <p align="left">
+      Bisection (n=2)
+    </p>
+    <table  width="1024" align="center">
+      <tbody>
+        <tr>
+          <th style="font-size: 16px">Input frames</th>
+          <th style="font-size: 16px">Sparse sketch guidance</th>
+          <th style="font-size: 16px">Interpolation results</th>
+          <th style="font-size: 16px">Input frames</th>
+          <th style="font-size: 16px">Sparse sketch guidance</th>
+          <th style="font-size: 16px">Interpolation results</th>
+        </tr>
+        <tr>
+          <th><img class="input_image_topdownlayout" src="./06sparse/72044_467.mp4_00-00.png" alt=""/></th>
+          <th rowspan="2"><video class="media-border"  width="170" src="./06sparse/conds/72044_467_2.mp4" autoplay loop controls muted/></th>
+          <th rowspan="2"><video  width="340" src="./06sparse/72044_467_2.mp4" autoplay loop controls muted/></th>
+          <th><img class="input_image_topdownlayout" src="./06sparse/72105_345.mp4_00-00.png" alt=""/></th>
+          <th rowspan="2"><video class="media-border" width="170" src="./06sparse/conds/72105_345_2.mp4" autoplay loop controls muted/></th>
+          <th rowspan="2"><video  width="340" src="./06sparse/72105_345_2.mp4" autoplay loop controls muted/></th>
+        </tr>
+        <tr>
+          <th><img class="input_image_topdownlayout" src="./06sparse/72044_467.mp4_00-01.png" alt=""/></th>
+          <th><img class="input_image_topdownlayout" src="./06sparse/72105_345.mp4_00-01.png" alt=""/></th>
+        </tr>
+          <tr> <td><br /></td> </tr> 
+      </tbody>
+    </table>
+
+
+    <p align="left">
+      Bisection (n=1)
+    </p>
+    <table  width="1024" align="center">
+      <tbody>
+        <tr>
+          <th style="font-size: 16px">Input frames</th>
+          <th style="font-size: 16px">Sparse sketch guidance</th>
+          <th style="font-size: 16px">Interpolation results</th>
+          <th style="font-size: 16px">Input frames</th>
+          <th style="font-size: 16px">Sparse sketch guidance</th>
+          <th style="font-size: 16px">Interpolation results</th>
+        </tr>
+        <tr>
+          <th><img class="input_image_topdownlayout" src="./06sparse/73172(8)_1255.mp4_00-00.png" alt=""/></th>
+          <th rowspan="2"><video class="media-border"  width="170" src="./06sparse/conds/73172(8)_1255_1.mp4" autoplay loop controls muted/></th>
+          <th rowspan="2"><video  width="340" src="./06sparse/73172(8)_1255_1.mp4" autoplay loop controls muted/></th>
+          <th><img class="input_image_topdownlayout" src="./06sparse/72032_1295.mp4_00-00.png" alt=""/></th>
+          <th rowspan="2"><video class="media-border" width="170" src="./06sparse/conds/72032_1295_1.mp4" autoplay loop controls muted/></th>
+          <th rowspan="2"><video  width="340" src="./06sparse/72032_1295_1.mp4" autoplay loop controls muted/></th>
+        </tr>
+        <tr>
+          <th><img class="input_image_topdownlayout" src="./06sparse/73172(8)_1255.mp4_00-01.png" alt=""/></th>
+          <th><img class="input_image_topdownlayout" src="./06sparse/72032_1295.mp4_00-01.png" alt=""/></th>
+        </tr>
+          <tr> <td><br /></td> </tr> 
+      </tbody>
+    </table>
+
+    <p align="left">
+      Random
+    </p>
+    <table  width="1024" align="center">
+      <tbody>
+        <tr>
+          <th style="font-size: 16px">Input frames</th>
+          <th style="font-size: 16px">Sparse sketch guidance</th>
+          <th style="font-size: 16px">Interpolation results</th>
+          <th style="font-size: 16px">Input frames</th>
+          <th style="font-size: 16px">Sparse sketch guidance</th>
+          <th style="font-size: 16px">Interpolation results</th>
+        </tr>
+        <tr>
+          <th><img class="input_image_topdownlayout" src="./06sparse/72102_937.mp4_00-00.png" alt=""/></th>
+          <th rowspan="2"><video class="media-border"  width="170" src="./06sparse/conds/72102_937_5.mp4" autoplay loop controls muted/></th>
+          <th rowspan="2"><video  width="340" src="./06sparse/72102_937_5.mp4" autoplay loop controls muted/></th>
+          <th><img class="input_image_topdownlayout" src="./06sparse/72110_255.mp4_00-00.png" alt=""/></th>
+          <th rowspan="2"><video class="media-border" width="170" src="./06sparse/conds/72110_255_5.mp4" autoplay loop controls muted/></th>
+          <th rowspan="2"><video  width="340" src="./06sparse/72110_255_5.mp4" autoplay loop controls muted/></th>
+        </tr>
+        <tr>
+          <th><img class="input_image_topdownlayout" src="./06sparse/72102_937.mp4_00-01.png" alt=""/></th>
+          <th><img class="input_image_topdownlayout" src="./06sparse/72110_255.mp4_00-01.png" alt=""/></th>
+        </tr>
+          <tr> <td><br /></td> </tr> 
+      </tbody>
+    </table>
+
+    <!------------------ BEGIN SECTION ------------------>
+    <p>&nbsp;</p>
+    <hr>
+        
+    <h2 id="ablation_container" align="left"><a name="image-results" id="image-results"></a>Ablation study</h2>
+    <p align="left">
+        Toon rectification learning. 
+    </p>
+    <table  width="1024" align="center">
+      <tbody>
+        <tr>
+          <th style="font-size: 16px">Input</th>
+          <th style="font-size: 16px">I.</th>
+          <th style="font-size: 16px">II.</th>
+          <th style="font-size: 16px">III.</th>
+        </tr>
+        <tr>
+          <th><img class="input_image_topdownlayout" src="./04ablation/toon_rectification_learning/frame1.png" alt=""/></th>
+          <th rowspan="2"><video  width="340" src="./04ablation/toon_rectification_learning/I/74885_250.mp4" autoplay loop controls muted/></th>
+          <th rowspan="2"><video  width="340" src="./04ablation/toon_rectification_learning/II/74885_250.mp4" autoplay loop controls muted/></th>
+          <th rowspan="2"><video  width="340" src="./04ablation/toon_rectification_learning/III/74885_250.mp4" autoplay loop controls muted/></th>
+        </tr>
+        <tr>
+          <th><img class="input_image_topdownlayout" src="./04ablation/toon_rectification_learning/frame1.png" alt=""/></th>
+        </tr>
+
+        <th style="font-size: 16px"></th>
+        <th style="font-size: 16px">IV. (Ours)</th>
+        <th style="font-size: 16px">V.</th>
+        <th style="font-size: 16px"></th>
+      </tr>
+      <tr>
+        <th></th>
+        <!-- <th><img class="input_image_topdownlayout" src="./04ablation/toon_rectification_learning/frame1.png" alt=""/></th> -->
+        <th rowspan="2"><video  width="340" src="./04ablation/toon_rectification_learning/IV/74885_250.mp4" autoplay loop controls muted/></th>
+        <th rowspan="2"><video  width="340" src="./04ablation/toon_rectification_learning/V/74885_250.mp4" autoplay loop controls muted/></th>
+      </tr>
+      <tr>
+        <th></th>
+        <!-- <th><img class="input_image_topdownlayout" src="./04ablation/toon_rectification_learning/frame1.png" alt=""/></th> -->
+      </tr>
+
+          <tr> <td><br /></td> </tr> 
+      </tbody>
+    </table>
+
+
+    <p align="left">
+      Dual-reference-based 3D VAE decoder (Reconstruction results, i.e., decoding the latents encoded by encoder).
+    </p>
+    <table  width="1024" align="center">
+      <tbody>
+        <tr>
+          <th style="font-size: 16px">Input</th>
+          <th style="font-size: 16px">Ours</th>
+          <th style="font-size: 16px">Ours<sub>w/o P3D</sub></th>
+          <th style="font-size: 16px">Ours<sub>w/o HAR & P3D</sub></th>
+        </tr>
+        <tr>
+          <th><video  width="300" src="./04ablation/dual_reference_based_3d_decoder/input/72003_733.mp4" autoplay loop controls muted/></th>
+          <th><video  width="300" src="./04ablation/dual_reference_based_3d_decoder/ours/72003_733.mp4" autoplay loop controls muted/></th>
+          <th><video  width="300" src="./04ablation/dual_reference_based_3d_decoder/ours_wop3d/72003_733.mp4" autoplay loop controls muted/></th>
+          <th><video  width="300" src="./04ablation/dual_reference_based_3d_decoder/imageencoder/72003_733.mp4" autoplay loop controls muted/></th>
+        </tr>
+        <tr>
+          <th><video  width="300" src="./04ablation/dual_reference_based_3d_decoder/input/72022_801.mp4" autoplay loop controls muted/></th>
+          <th><video  width="300" src="./04ablation/dual_reference_based_3d_decoder/ours/72022_801.mp4" autoplay loop controls muted/></th>
+          <th><video  width="300" src="./04ablation/dual_reference_based_3d_decoder/ours_wop3d/72022_801.mp4" autoplay loop controls muted/></th>
+          <th><video  width="300" src="./04ablation/dual_reference_based_3d_decoder/imageencoder/72022_801.mp4" autoplay loop controls muted/></th>
+        </tr>
+          <tr> <td><br /></td> </tr> 
+      </tbody>
+    </table>
+
+
+    <p align="left">
+      Dual-reference-based 3D VAE decoder (Generation results, i.e., decoding the denoised latents from generator).
+    </p>
+    <p align="left">
+      Case 1: Please pay attention to the <b>lanterns</b>. <br>
+      Case 2: Please pay attention to the <b>newspaper</b>. 
+    </p>
+    <table  width="1024" align="center">
+      <tbody>
+        <tr>
+          <th style="font-size: 16px">Input starting frame</th>
+          <th style="font-size: 16px">Input ending frame</th>
+          <th style="font-size: 16px">Ours</th>
+          <th style="font-size: 16px">Ours<sub>w/o HAR & P3D</sub></th>
+        </tr>
+        <tr>
+          <th><img class="input_image_normal" src="./04ablation/decoder_in_generation/74094_642.mp4_00-00.png" alt=""/></th>
+          <th><img class="input_image_normal" src="./04ablation/decoder_in_generation/74094_642.mp4_00-01.png" alt=""/></th>
+          <th><video  width="340" src="./04ablation/decoder_in_generation/74094_642_Ours.mp4" autoplay loop controls muted/></th>
+          <th><video  width="340" src="./04ablation/decoder_in_generation/74094_642.mp4" autoplay loop controls muted/></th>
+        </tr>
+        <tr>
+          <th><img class="input_image_normal" src="./04ablation/decoder_in_generation/74234_552.mp4_00-00.png" alt=""/></th>
+          <th><img class="input_image_normal" src="./04ablation/decoder_in_generation/74234_552.mp4_00-01.png" alt=""/></th>
+          <th><video  width="340" src="./04ablation/decoder_in_generation/74234_552_Ours.mp4" autoplay loop controls muted/></th>
+          <th><video  width="340" src="./04ablation/decoder_in_generation/74234_552.mp4" autoplay loop controls muted/></th>
+        </tr>
+          <tr> <td><br /></td> </tr> 
+      </tbody>
+    </table>
+
+
+
+
+
+
+
+
+
+    <p align="left">
+      Sparse sketch guidance.
+    </p>
+    <table  width="1024" align="center">
+      <tbody>
+        <tr>
+          <th style="font-size: 16px">Input frame</th>
+          <th style="font-size: 16px">Sparse sketch control (middle-frame)</th>
+          <th style="font-size: 16px">ZeroGate</th>
+        </tr>
+        <tr>
+          <th><img class="input_image_topdownlayout" src="./04ablation/sparse_sketch_guidance/frame1.png" alt=""/></th>
+          <th rowspan="2"><video class="media-border" width="340" src="./04ablation/sparse_sketch_guidance/sketch_video.mp4" autoplay loop controls muted/></th>
+          <th rowspan="2"><video  width="340" src="./04ablation/sparse_sketch_guidance/73667_977_direct.mp4" autoplay loop controls muted/></th>
+        </tr>
+        <tr>
+          <th><img class="input_image_topdownlayout" src="./04ablation/sparse_sketch_guidance/frame3.png" alt=""/></th>
+        </tr>
+
+        <th style="font-size: 16px"></th>
+        <th style="font-size: 16px">FrameIn.Enc.</th>
+        <th style="font-size: 16px">w/o sketch</th>
+      </tr>
+      <tr>
+        <th></th>
+        <th rowspan="2"><video  width="340" src="./04ablation/sparse_sketch_guidance/73667_977_anime09_middlesketch.mp4" autoplay loop controls muted/></th>
+        <th rowspan="2"><video  width="340" src="./04ablation/sparse_sketch_guidance/73667_977_no_sketch.mp4" autoplay loop controls muted/></th>
+      </tr>
+      <tr>
+        <th></th>
+      </tr>
+
+          <tr> <td><br /></td> </tr> 
+      </tbody>
+    </table>
+
+
+
+    <!------------------ END   SECTION ------------------> 
+
+
+
+    <!------------------ BEGIN SECTION ------------------>
+    <p>&nbsp;</p>
+    <hr>
+        
+    <h2 id="limitations_container" align="left"><a name="image-results" id="image-results"></a>Limitations</h2>
+
+    <p align="left">
+      Our model may not correctly and semantically understand the image contents. (e.g., the black part should be the rigid body of the aircraft, which cannot sway with the wind.)
+    </p>
+    <table  width="1024" align="center">
+      <tbody>
+        <tr>
+          <th style="font-size: 16px">Input starting frame</th>
+          <th style="font-size: 16px">Input ending frame</th>
+          <th style="font-size: 16px">Our failure case</th>
+        </tr>
+        <tr>
+          <th><img class="input_image_frameinterp" src="./05limitation/74845_304_frame1.png" alt=""/></th>
+          <th><img class="input_image_frameinterp" src="./05limitation/74845_304_frame3.png" alt=""/></th>
+          <th><video  width="340" src="./05limitation/74845_304_WOurs.mp4" autoplay loop controls muted/></th>
+        </tr>
+
+          <tr> <td><br /></td> </tr> 
+      </tbody>
+    </table>
+
+
+    <p align="left">
+        Our model may struggle to generate convincing transition motions when objects appear or disappear in the frame.
+    </p>
+    <table  width="1024" align="center">
+      <tbody>
+        <tr>
+          <th style="font-size: 16px">Input starting frame</th>
+          <th style="font-size: 16px">Input ending frame</th>
+          <th style="font-size: 16px">Our failure case</th>
+        </tr>
+        <tr>
+          <th><img class="input_image_frameinterp" src="./05limitation/74244_465.mp4_00-00.png" alt=""/></th>
+          <th><img class="input_image_frameinterp" src="./05limitation/74244_465.mp4_00-01.png" alt=""/></th>
+          <th><video  width="340" src="./05limitation/74244_465.mp4" autoplay loop controls muted/></th>
+        </tr>
+
+          <tr> <td><br /></td> </tr> 
+      </tbody>
+    </table>
+
+
+
+    <!------------------ END   SECTION ------------------> 
+
+
+
+
+
+</div>
+
+
+<script>
+  const videoContainer = document.querySelector('.video-container');
+  const video = document.querySelector('video');
+  const hoverImage = document.querySelector('.hover-image');
+  const caption = document.querySelector('.caption');
+
+  videoContainer.addEventListener('mouseenter', () => {
+      video.pause();
+      hoverImage.style.display = 'block';
+      caption.style.display = 'block';
+  });
+
+  videoContainer.addEventListener('mouseleave', () => {
+      video.play();
+      hoverImage.style.display = 'none';
+      caption.style.display = 'none';
+  });
+
+  // for nerfies template
+  window.dataLayer = window.dataLayer || [];
+
+  function gtag() {
+    dataLayer.push(arguments);
+  }
+
+  gtag('js', new Date());
+
+  gtag('config', 'G-PYVRSFMDRL');
+
+
+
+
+
+  // for carousel
+  window.addEventListener('DOMContentLoaded', (event) => {
+        const videoWrappers = document.querySelectorAll('.video-wrapper');
+      
+        videoWrappers.forEach(wrapper => {
+          const defaultVideo = wrapper.querySelector('.default-video');
+          const aspectRatio = defaultVideo.videoWidth / defaultVideo.videoHeight;
+          const height = wrapper.offsetWidth / aspectRatio;
+      
+          wrapper.style.height = `${height}px`;
+      
+          wrapper.addEventListener('mouseenter', () => {
+            defaultVideo.pause();
+            hoverVideo.play();
+          });
+      
+          wrapper.addEventListener('mouseleave', () => {
+            defaultVideo.play();
+            hoverVideo.pause();
+          });
+        });
+      }); 
+      $(document).ready(function() {
+        var carouselItems = $('.carousel .item');
+        var numItems = carouselItems.length;
+        var numVideos = 5;
+        var currentIndex = 0;
+    
+        $('.carousel').on('click', function() {
+          currentIndex++;
+          if (currentIndex + numVideos <= numItems) {
+            carouselItems.removeClass('active');
+            carouselItems.slice(currentIndex, currentIndex + numVideos).addClass('active');
+          } else {
+            currentIndex = 0;
+            carouselItems.removeClass('active');
+            carouselItems.slice(currentIndex, currentIndex + numVideos).addClass('active');
+          }
+        });
+    
+        carouselItems.slice(currentIndex, currentIndex + numVideos).addClass('active');
+      });
+</script>
+
+
+<footer class="footer">
+  <div class="container" style="text-align: left;">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            Website content is licensed under a <a rel="license"
+                                                href="https://creativecommons.org/licenses/by-nc-sa/4.0/">Creative
+            Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            Website source code based on the <a href="https://nerfies.github.io/"> Nerfies</a> project page and <a href="https://diffusion-tokenflow.github.io/"> TokenFlow (supp)</a>. If you want to reuse their <a
+              href="https://github.com/nerfies/nerfies.github.io">source code</a>, please credit them appropriately.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+</body>
+</html>
