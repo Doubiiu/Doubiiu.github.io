@@ -369,6 +369,56 @@
             </td>
           </tr>
 
+
+	  <tr onmouseout="ms_stop()" onmouseover="ms_start()">
+            <td style="padding:20px;width:35%;vertical-align:top;text-align:middle">
+              <div class="one">
+                <div class="two" id="ms_image" style="display: inline;"> 
+                  <img src='images/magicstick/demo1.gif' alt="after for CodeTalker" width="320" height="180">
+                </div>
+                <img src='images/magicstick/demo2.gif' alt="after for CodeTalker" width="320" height="180">
+
+              </div>
+              <script type="text/javascript">
+                function ms_start() {
+                  document.getElementById('ms_image').style.opacity = "1";
+                }
+
+                function ms_stop() {
+                  document.getElementById('ms_image').style.opacity = "0";
+                }
+                ms_stop()
+              </script>
+            </td>
+            <td style="padding:20px;width:75%;vertical-align:middle">
+              <b>
+                <papertitle>MagicStick: Controllable Video Editing via Control Handle Transformations</papertitle>
+              </b>
+              <br>
+              
+              
+              <a href="https://mayuelala.github.io/">Yue Ma</a>,
+              <a href="https://vinthony.github.io/academic/">Xiaodong Cun</a>,
+              <a href="#">Sen Liang</a>,
+              <strong>Jinbo Xing</strong>,
+              <a href="https://github.com/YingqingHe">Yingqing He</a>,
+              <a href="https://chenyangqiqi.github.io/">Chenyang Qi</a>,
+              <a href="#">Siran Chen</a>,
+              <a href="https://cqf.io/">Qifeng Chen</a>
+              <br>
+              <em>IEEE/CVF Winter Conference on Applications of Computer Vision (<b>WACV</b>)</em>, 2025
+              <p> 
+                <a href="https://arxiv.org/abs/2312.03047">arXiv</a> 
+                &nbsp/&nbsp <a href="https://magic-stick-edit.github.io/">Project</a> 
+                &nbsp/&nbsp <a href="https://github.com/mayuelala/FollowYourHandle">Code</a> <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/mayuelala/FollowYourHandle?style=social">
+              </p>
+              <p>
+                MagicStick is a unified framework to modify video properties (e.g., shape, size, location, motion) leveraging the keyframe transformations on the extracted internal control signals.
+              </p>
+            </td>
+          </tr>
+		
+
           <tr onmouseout="rival_stop()" onmouseover="rival_start()">
             <td style="padding:20px;width:25%;vertical-align:middle">
               <div class="one">
@@ -1019,7 +1069,7 @@
             <td style="padding:0px">
               <br>
               <p style="text-align:right;font-size:small;">
-                Last updated: Sep. 2024
+                Last updated: Oct. 2024
                 <br>
                 Web page design credit to <a href="https://jonbarron.info" style="font-size: 14px">Jon Barron</a>
               </p>
