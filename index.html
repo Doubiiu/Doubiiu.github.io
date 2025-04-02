@@ -65,6 +65,54 @@
         <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
 
 
+          <tr onmouseout="mc_stop()" onmouseover="mc_start()">
+            <td style="padding:20px;width:25%;vertical-align:middle">
+              <div class="one">
+                <div class="two" id="tc_image" style="display: inline;"> 
+                  <img src='images/motioncanvas/mc_static.png' alt="after for CodeTalker" width="320" height="176">
+                </div>
+                <img src='images/motioncanvas/mc_dyn.gif' alt="after for CodeTalker" width="320" height="176">
+
+              </div>
+              <script type="text/javascript">
+                function mc_start() {
+                  document.getElementById('mc_image').style.opacity = "1";
+                }
+
+                function mc_stop() {
+                  document.getElementById('mc_image').style.opacity = "0";
+                }
+                mc_stop()
+              </script>
+            </td>
+            <td style="padding:20px;width:75%;vertical-align:middle">
+              <b>
+                <papertitle>MotionCanvas: Cinematic Shot Design with Controllable Image-to-Video Generation</papertitle>
+              </b>
+              <br>
+              
+              <strong>Jinbo Xing</strong>,
+              <a href="https://mai-t-long.com/">Long Mai</a>,
+              <a href="https://cusuh.github.io/">Cusuh Ham</a>,
+              <a href="https://gabriel-huang.github.io/">Jiahui Huang</a>,
+              <a href="https://anime26398.github.io/">Aniruddha Mahapatra</a>,
+              <a href="https://www.cse.cuhk.edu.hk/~cwfu/">Chi-Wing Fu</a>,
+              <a href="https://www.cse.cuhk.edu.hk/~ttwong/myself.html">Tien-Tsin Wong</a>,
+	      <a href="https://research.adobe.com/person/feng-liu/">Feng Liu</a>   
+              <br>
+              <em><b>SIGGRAPH</b></em>, 2025, <b>Conference Proceedings</b> (conditional acceptance)
+              <p> 
+		<a href="#">Paper</a> 
+                &nbsp/&nbsp <a href="https://arxiv.org/abs/2502.04299">arXiv</a> 
+                &nbsp/&nbsp <a href="https://motion-canvas25.github.io/">Project</a> 
+                &nbsp/&nbsp <a href="#">Code</a>
+              </p>
+              <p>
+                A unified motion control framework for DiT-based image-to-video diffusion models.
+              </p>
+            </td>
+          </tr>
+		
 
           <tr onmouseout="tc_stop()" onmouseover="tc_start()">
             <td style="padding:20px;width:25%;vertical-align:middle">
