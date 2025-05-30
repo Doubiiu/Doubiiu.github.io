@@ -21,8 +21,7 @@
                 <name>Jinbo Xing</name>
               </p>
               <p>
-                I am currently a final-year Ph.D student in the 
-                <a href="http://www.cse.cuhk.edu.hk/">CSE Department</a>, 
+                I obtained my Ph.D. degree in Computer Science and Engineering from, 
                 <a href="http://www.cuhk.edu.hk/">CUHK</a>, 
                 supervised by <a href="https://www.cse.cuhk.edu.hk/~ttwong/myself.html">Prof. Tien-Tsin WONG</a> and <a href="https://www.cse.cuhk.edu.hk/~cwfu/">Prof. Chi-Wing FU</a>.
               </p>
@@ -65,6 +64,8 @@
         <table style="width:100%;border:0px;border-spacing:0px;border-collapse:separate;margin-right:auto;margin-left:auto;"><tbody>
 
 
+
+		
           <tr onmouseout="mc_stop()" onmouseover="mc_start()">
             <td style="padding:20px;width:25%;vertical-align:middle">
               <div class="one">
@@ -112,8 +113,57 @@
               </p>
             </td>
           </tr>
-		
 
+          <tr onmouseout="jenga_stop()" onmouseover="jenga_start()">
+            <td style="padding:20px;width:25%;vertical-align:middle">
+              <div class="one">
+                <div class="two" id="jenga_image" style="display: inline;"> 
+                  <img src='images/jenga/static.png' alt="after for CodeTalker" width="320" height="176">
+                </div>
+                <img src='images/jenga/dyn.gif' alt="after for CodeTalker" width="320" height="176">
+
+              </div>
+              <script type="text/javascript">
+                function jenga_start() {
+                  document.getElementById('jenga_image').style.opacity = "1";
+                }
+
+                function jenga_stop() {
+                  document.getElementById('jenga_image').style.opacity = "0";
+                }
+                jenga_stop()
+              </script>
+            </td>
+            <td style="padding:20px;width:75%;vertical-align:middle">
+              <b>
+                <papertitle>Training-Free Efficient Video Generation via Dynamic Token Carving</papertitle>
+              </b>
+              <be>
+
+	      <a href="https://julianjuaner.github.io/">Yuechen Zhang</a>,
+              <strong>Jinbo Xing</strong>,
+              <a href="https://zj-binxia.github.io/">Bin Xia</a>,
+              <a href="https://www.shaotengliu.com/">Shaoteng Liu</a>,
+              <a href="https://pbihao.github.io/">Bohao Peng</a>,
+              <a href="https://www.xtao.website/">Xin Tao</a>,
+              <a href="#">Pengfei Wan</a>,
+	      <a href="#">Eric Lo</a>
+	      <a href="https://jiaya.me/">Jiaya Jia</a>
+              <br>
+              <em>arXiv</em>, 2025
+              <p> 
+		<a href="#">Paper</a> 
+                &nbsp/&nbsp <a href="https://arxiv.org/abs/2505.16864">arXiv</a> 
+                &nbsp/&nbsp <a href="https://julianjuaner.github.io/projects/jenga/index.html">Project</a> 
+                &nbsp/&nbsp <a href="https://github.com/dvlab-research/Jenga">Code</a> <img alt="GitHub Repo stars" src="https://img.shields.io/github/stars/dvlab-research/Jenga?style=social"> 
+              </p>
+              <p>
+                Jenga accelerates HunyuanVideo by 4.68-10.35× through dynamic attention carving and progressive resolution generation.
+              </p>
+            </td>
+          </tr>
+
+		
           <tr onmouseout="tc_stop()" onmouseover="tc_start()">
             <td style="padding:20px;width:25%;vertical-align:middle">
               <div class="one">
@@ -1202,7 +1252,7 @@
             <td style="padding:0px">
               <br>
               <p style="text-align:right;font-size:small;">
-                Last updated: March 2025
+                Last updated: May 2025
                 <br>
                 Web page design credit to <a href="https://jonbarron.info" style="font-size: 14px">Jon Barron</a>
               </p>
