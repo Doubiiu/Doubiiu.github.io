@@ -112,7 +112,53 @@
               </p>
             </td>
           </tr>
+	
+          <tr onmouseout="undo_stop()" onmouseover="undo_start()">
+            <td style="padding:20px;width:25%;vertical-align:middle">
+              <div class="one">
+                <div class="two" id="undo_image" style="display: inline;"> 
+                  <img src='images/paintundo/static.png' alt="after for CodeTalker" width="320" height="176">
+                </div>
+                <img src='images/paintundo/dyn.gif' alt="after for CodeTalker" width="320" height="176">
 
+              </div>
+              <script type="text/javascript">
+                function undo_start() {
+                  document.getElementById('undo_image').style.opacity = "1";
+                }
+
+                function undo_stop() {
+                  document.getElementById('undo_image').style.opacity = "0";
+                }
+                undo_stop()
+              </script>
+            </td>
+            <td style="padding:20px;width:75%;vertical-align:middle">
+              <b>
+                <papertitle>Generating Past and Future in Digital Painting Processes</papertitle>
+              </b>
+              <br>
+              
+              <a href="https://scholar.google.com/citations?user=ANMsdHYAAAAJ&hl=en">Lvmin Zhang</a>,
+              <a href="https://nauhcnay.github.io/">Chuan Yan</a>,
+              <a href="https://guoyww.github.io/">Yuwei Guo</a>,
+	      <strong>Jinbo Xing</strong>,
+              <a href="https://graphics.stanford.edu/~maneesh/">Maneesh Agrawala</a>
+              <br>
+              <em><b>SIGGRAPH</b></em>, 2025, <b>Journal Track</b>
+              <p> 
+		<a href="https://dl.acm.org/doi/pdf/10.1145/3731160">Paper</a> 
+                &nbsp/&nbsp <a href="#">arXiv</a> 
+                &nbsp/&nbsp <a href="https://lllyasviel.github.io/pages/paints_undo/">Project</a> 
+                &nbsp/&nbsp <a href="https://github.com/lllyasviel/Paints-UNDO">Code</a>
+              </p>
+              <p>
+                 Given a canvas image uploaded by a user, the framework can generate both preceding and succeeding states of the drawing process.
+              </p>
+            </td>
+          </tr>
+
+		
           <tr onmouseout="jenga_stop()" onmouseover="jenga_start()">
             <td style="padding:20px;width:25%;vertical-align:middle">
               <div class="one">
