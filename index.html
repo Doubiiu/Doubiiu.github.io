@@ -116,7 +116,61 @@
               </p>
             </td>
           </tr>
-	
+
+          <tr onmouseout="pica_stop()" onmouseover="pica_start()">
+            <td style="padding:20px;width:25%;vertical-align:middle">
+              <div class="one">
+                <div class="two" id="pica_image" style="display: inline;"> 
+                  <img src='images/picabench/pica_static.png' alt="after for CodeTalker" width="320" height="176">
+                </div>
+                <img src='images/picabench/pica_dyn.gif' alt="after for CodeTalker" width="320" height="176">
+
+              </div>
+              <script type="text/javascript">
+                function pica_start() {
+                  document.getElementById('pica_image').style.opacity = "1";
+                }
+
+                function pica_stop() {
+                  document.getElementById('pica_image').style.opacity = "0";
+                }
+                pica_stop()
+              </script>
+            </td>
+            <td style="padding:20px;width:75%;vertical-align:middle">
+              <b>
+                <papertitle>PICABench: How Far Are We from Physically Realistic Image Editing?</papertitle>
+              </b>
+              <br>
+
+			  <a href="https://andrew0613.github.io/">Yuandong Pu</a>,
+			  <a href="https://le-zhuo.com/">Le Zhuo</a>,
+			  <a href="https://scholar.google.com/citations?user=s-exUYYAAAAJ&hl=zh-CN">Songhao Han</a>,
+              <strong>Jinbo Xing</strong>,
+			  <a href="https://scholar.google.com/citations?user=O8lP5XMAAAAJ&hl=zh-CN">Kaiwen Zhu</a>,
+			  <a href="https://scholar.google.com/citations?hl=zh-CN&user=7QfNLCQAAAAJ">Shuo Cao</a>,
+			  <a href="https://scholar.google.com/citations?hl=zh-CN&user=9WhK1y4AAAAJ">Bin Fu</a>,
+              <a href="https://colalab.net/">Si Liu</a>,
+              <a href="https://www.ee.cuhk.edu.hk/~hsli/">Hongsheng Li</a>,
+              <a href="https://scholar.google.com/citations?user=gFtI-8QAAAAJ&hl=en">Yu Qiao</a>,
+              <a href="https://wenlongzhang0517.github.io/">Wenlong Zhang</a>,
+              <a href="https://xavierchen34.github.io/">Xi Chen</a>,
+	          <a href="https://lyh-18.github.io/">Yihao Liu</a>   
+              <br>
+              <em>arXiv</em> 2025
+              <p> 
+		<a href="#">Paper</a> 
+                &nbsp/&nbsp <a href="https://arxiv.org/abs/2510.17681">arXiv</a> 
+                &nbsp/&nbsp <a href="https://picabench.github.io/">Project</a> 
+                &nbsp/&nbsp <a href="https://github.com/Andrew0613/PICABench">Code</a>
+              </p>
+              <p>
+                A diagnostic benchmark designed to evaluate physical realism in image editing beyond semantic fidelity.
+              </p>
+            </td>
+          </tr>
+
+			
           <tr onmouseout="undo_stop()" onmouseover="undo_start()">
             <td style="padding:20px;width:25%;vertical-align:middle">
               <div class="one">
