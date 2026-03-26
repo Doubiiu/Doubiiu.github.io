@@ -1,0 +1,1506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wan-Weaver: Interleaved Multi-modal Generation via Decoupled Training</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #ffffff;
+      --text: #333333;
+      --text-light: #666666;
+      --border: #e5e7eb;
+      --accent: #2563eb;
+      --accent-hover: #1d4ed8;
+      --bg-alt: #f8fafc;
+      --panel-bg: #ffffff;
+      --accent-light: #eff6ff;
+    }
+    
+    body {
+      font-family: 'Inter', sans-serif;
+      line-height: 1.6;
+      color: var(--text);
+      background: var(--bg);
+      margin: 0;
+      padding: 0;
+    }
+    
+    .container {
+      max-width: 1600px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+    
+    header {
+      text-align: center;
+      margin-bottom: 60px;
+      padding: 40px 0;
+    }
+    
+    h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 20px;
+      color: #111827;
+      letter-spacing: -0.02em;
+    }
+
+    .wan-title {
+      color: rgb(97, 92, 237);
+    }
+    
+    .authors {
+      font-size: 1.1rem;
+      margin-bottom: 10px;
+      color: #4b5563;
+    }
+    
+    .authors span {
+      display: inline-block;
+      margin: 0 5px;
+    }
+    
+    .affiliations {
+      font-size: 1rem;
+      color: var(--text-light);
+      margin-bottom: 10px;
+    }
+
+    .venue {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 20px;
+    }
+    
+    .links {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin-top: 30px;
+    }
+    
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      padding: 12px 24px;
+      background: var(--bg-alt);
+      color: var(--text);
+      text-decoration: none;
+      border-radius: 99px;
+      border: 1px solid var(--border);
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+    
+    .btn:hover {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+    }
+    
+    .btn.primary {
+      background: #111827;
+      color: #ffffff;
+      border-color: #111827;
+    }
+    
+    .btn.primary:hover {
+      background: #374151;
+    }
+    
+    section {
+      margin-bottom: 80px;
+    }
+    
+    h2 {
+      font-size: 2rem;
+      border-bottom: 2px solid var(--accent-light);
+      padding-bottom: 15px;
+      margin-bottom: 30px;
+      color: #111827;
+      font-weight: 600;
+    }
+    
+    .abstract-text {
+      font-size: 1.1rem;
+      text-align: justify;
+      max-width: 1000px;
+      margin: 0 auto;
+      color: #4b5563;
+    }
+    
+    /* Showcase: single row, horizontal scroll + focus on active */
+    .tabs-scroll {
+      margin-bottom: 24px;
+      border: 1px solid #dbeafe;
+      border-radius: 14px;
+      background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.8);
+      padding: 10px 12px;
+      overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+    }
+    .tabs-scroll::-webkit-scrollbar {
+      height: 6px;
+    }
+    .tabs-scroll::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 999px;
+    }
+
+    .tabs {
+      display: flex;
+      flex-wrap: nowrap;
+      gap: 12px;
+      justify-content: flex-start;
+      align-items: center;
+      min-width: min-content;
+    }
+    
+    .tab-btn {
+      flex: 0 0 auto;
+      white-space: nowrap;
+      padding: 10px 18px;
+      background: #ffffff;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      cursor: pointer;
+      font-weight: 500;
+      font-size: 0.95rem;
+      color: var(--text);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+    }
+    
+    .tab-btn:hover {
+      background: #f1f5f9;
+      border-color: #cbd5e1;
+    }
+    
+    .tab-btn.active {
+      background: var(--accent);
+      color: #ffffff;
+      border-color: var(--accent);
+      transform: scale(1.06);
+      box-shadow: 0 6px 20px rgba(37, 99, 235, 0.35);
+      z-index: 1;
+      position: relative;
+    }
+    
+    .showcase-prompt {
+      background: var(--accent-light);
+      padding: 24px;
+      border-radius: 12px;
+      border: 1px solid #bfdbfe;
+      margin-bottom: 20px;
+      font-size: 1rem;
+      color: #1e3a8a;
+    }
+
+    .showcase-prompt p {
+      margin: 0;
+    }
+
+    .prompt-media {
+      margin-top: 14px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: flex-start;
+      max-width: 100%;
+    }
+
+    /* Prompt reference images: cap size so they do not dominate the viewport */
+    .prompt-media img {
+      max-width: min(380px, 100%);
+      width: auto;
+      height: auto;
+      max-height: 220px;
+      object-fit: contain;
+      border-radius: 10px;
+      border: 1px solid #bfdbfe;
+      display: block;
+      background: #fff;
+    }
+    
+    .showcase-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 20px;
+      align-items: stretch; /* Make all columns the same height */
+    }
+    
+    .showcase-col {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: var(--panel-bg);
+      overflow: hidden;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+      height: 800px; /* Fixed height for the columns */
+    }
+    
+    .method-name {
+      padding: 18px;
+      font-weight: 600;
+      text-align: center;
+      background: var(--bg-alt);
+      border-bottom: 1px solid var(--border);
+      color: #111827;
+      font-size: 1.1rem;
+      flex-shrink: 0; /* Prevent header from shrinking */
+    }
+    
+    .method-content {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      overflow-y: auto; /* Enable scrolling within the content area */
+      flex-grow: 1;
+    }
+    
+    .method-content p {
+      margin: 0;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: #4b5563;
+    }
+    
+    .method-content img {
+      width: 100%;
+      border-radius: 10px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      display: block; /* Fix image spacing */
+    }
+    
+    /* Custom Scrollbar */
+    .method-content::-webkit-scrollbar {
+      width: 6px;
+    }
+    .method-content::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    .method-content::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 3px;
+    }
+    .method-content::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+    
+    /* Tables */
+    .table-container {
+      overflow-x: auto;
+      background: var(--panel-bg);
+      border-radius: 16px;
+      padding: 20px;
+      border: 1px solid var(--border);
+      margin-bottom: 30px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 1rem;
+    }
+    
+    th, td {
+      padding: 16px;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+    
+    th {
+      color: #111827;
+      font-weight: 600;
+      background: var(--bg-alt);
+    }
+    
+    tr:last-child td {
+      border-bottom: none;
+    }
+    
+    .ours-row td {
+      background: var(--accent-light);
+      color: #1e3a8a;
+      font-weight: 600;
+    }
+    
+    /* Placeholders */
+    .placeholder-img {
+      width: 100%;
+      height: auto;
+      border-radius: 16px;
+      display: block;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+
+    .half-width-img {
+      width: 50%;
+      min-width: 360px;
+      max-width: 820px;
+      height: auto;
+      border-radius: 16px;
+      display: block;
+      margin: 0 auto 30px auto;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+
+    #supp-visual .supp-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      align-items: stretch;
+      width: 100%;
+    }
+
+    @media (max-width: 900px) {
+      #supp-visual .supp-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .supp-cell {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      width: 100%;
+    }
+
+    /* Full column width; same fixed height for both panels */
+    .supp-figure {
+      width: 100%;
+      /* height: min(52vh, 560px); */
+      min-height: 320px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg-alt);
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      padding: 10px;
+      box-sizing: border-box;
+    }
+
+    .supp-figure img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      border-radius: 12px;
+      display: block;
+    }
+    
+    /* Bibtex */
+    pre {
+      background: var(--bg-alt);
+      padding: 24px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      overflow-x: auto;
+      font-size: 0.95rem;
+      color: #4b5563;
+      line-height: 1.5;
+    }
+    
+    code {
+      font-family: 'Menlo', 'Monaco', 'Courier New', monospace;
+    }
+    
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1><span class="wan-title">Wan-Weaver</span>: Interleaved Multi-modal Generation<br>via Decoupled Training</h1>
+      <div class="authors">
+        <span>Jinbo Xing<sup>1</sup></span>
+        <span>Zeyinzi Jiang<sup>1</sup></span>
+        <span>Yuxiang Tuo<sup>1</sup></span>
+        <span>Chaojie Mao<sup>1</sup></span>
+        <span>Xiaotang Gai<sup>1</sup></span>
+        <span>Xi Chen<sup>1</sup></span>
+        <span>Jingfeng Zhang<sup>1</sup></span>
+        <span>Yulin Pan<sup>1</sup></span>
+        <span>Zhen Han<sup>1</sup></span><br>
+        <span>Jie Xiao<sup>1</sup></span>
+        <span>Keyu Yan<sup>1</sup></span>
+        <span>Chenwei Xie<sup>1</sup></span>
+        <span>Chongyang Zhong<sup>1</sup></span>
+        <span>Kai Zhu<sup>1</sup></span>
+        <span>Tong Shen<sup>1</sup></span>
+        <span>Lianghua Huang<sup>1</sup></span>
+        <span>Yu Liu<sup>1</sup></span>
+        <span>Yujiu Yang<sup>2</sup></span>
+      </div>
+      <div class="affiliations">
+        <span><sup>1</sup>Tongyi Lab</span> &nbsp;&nbsp;&nbsp;&nbsp;
+        <span><sup>2</sup>Tsinghua University</span>
+      </div>
+      <div class="venue">CVPR 2026</div>
+      <div class="links">
+        <a href="" class="btn primary">Paper PDF</a>
+        <a href="" class="btn">arXiv</a>
+      </div>
+    </header>
+
+    <section id="abstract">
+      <h2>Abstract</h2>
+      <p class="abstract-text">
+        Recent unified models have made unprecedented progress in both understanding and generation. However, while most of them accept multi-modal inputs, they typically produce only single-modality outputs. This challenge of producing interleaved content is mainly due to training data scarcity and the difficulty of modeling long-range cross-modal context. To address this issue, we decompose interleaved generation into textual planning and visual consistency modeling, and introduce a framework consisting of a planner and a visualizer. The planner produces dense textual descriptions for visual content, while the visualizer synthesizes images accordingly. Under this guidance, we construct large-scale textual-proxy interleaved data (where visual content is represented in text) to train the planner, and curate reference-guided image data to train the visualizer. These designs give rise to Wan-Weaver, which exhibits emergent interleaved generation ability with long-range textual coherence and visual consistency. Meanwhile, the integration of diverse understanding and generation data into planner training enables Wan-Weaver to achieve robust task reasoning and generation proficiency. To assess the model’s capability in interleaved generation, we further construct a benchmark that spans a wide range of use cases across multiple dimensions. Extensive experiments demonstrate that, even without access to any real interleaved data, Wan-Weaver achieves superior performance over existing methods.
+      </p>
+    </section>
+
+    <section id="showcase">
+      <h2>Qualitative Comparison (Interleaved Generation)</h2>
+      <p style="text-align: center; color: var(--text-light); margin-bottom: 30px;">Select a case below to compare the interleaved text-image generation results across different methods.</p>
+      
+      <div class="tabs-scroll">
+        <div class="tabs">
+          <button class="tab-btn active" onclick="showCase('118968ed8334ff127cc80fd83377dd39', this)">Case 1: Art Museum</button>
+        <button class="tab-btn" onclick="showCase('9b63bd1d222a35a58253e4cc7e36f237', this)">Case 2: River Cleanup</button>
+        <button class="tab-btn" onclick="showCase('85e85370e52c416a3ac80b053ed2fe14', this)">Case 3: Durian Pizza</button>
+        <button class="tab-btn" onclick="showCase('17d648374d1739558816e6bb5d574d38', this)">Case 4: Please generate a detailed</button>
+        <button class="tab-btn" onclick="showCase('4ce43bde4b0178e6ef0e1e7e859439a7', this)">Case 5: "Desktop robotic arm" promotional</button>
+        <button class="tab-btn" onclick="showCase('a86e497216d6239abf75ee63605e276f', this)">Case 6: Please generate a detailed</button>
+        <button class="tab-btn" onclick="showCase('acdbd570f6c1a007d63fdb5eba1a5136', this)">Case 7: Generate a text-and-image educational</button>
+        <button class="tab-btn" onclick="showCase('c107467b15c272c1570ed2db35613b9d', this)">Case 8: Analyze the model’s outfit</button>
+        <button class="tab-btn" onclick="showCase('836c821fb34a49f363df8e228148dd42', this)">Case 9: Using the given image</button>
+        <button class="tab-btn" onclick="showCase('fa02905cc24fdce4939b87a269fe6900', this)">Case 10: Please use the hero</button>
+        <button class="tab-btn" onclick="showCase('d8738dff2c2b584a180bc625054e2c3c', this)">Case 11: what does the red</button>
+        </div>
+      </div>
+
+      <div id="showcase-container">
+        <div class="showcase-case" id="case-118968ed8334ff127cc80fd83377dd39" style="display: block;">
+  <div class="showcase-prompt">
+    <p><strong>Prompt:</strong> Create an article where narrative paragraphs and consistent anime-style illustrations are woven together seamlessly about &quot;The Tortoise and the Hare&quot;.</p>
+  </div>
+  <div class="showcase-grid">
+    <div class="showcase-col">
+      <div class="method-name">Wan-Weaver (Ours)</div>
+      <div class="method-content">
+        <p>The story begins in a sun-drenched meadow where the Tortoise, slow but steady, announces a race against the Hare, who laughs at the idea.</p>
+        <img src="./assets/comparisons/118968ed8334ff127cc80fd83377dd39/weaver_image_00000000.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>The race begins with a shout, and the Hare darts forward like a streak of lightning while the Tortoise plods along, each step measured and sure.</p>
+        <img src="./assets/comparisons/118968ed8334ff127cc80fd83377dd39/weaver_image_00000001.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>Midway through the course, the Hare, certain of victory, hops into a shady tree and drifts into a nap, while the Tortoise keeps moving, undeterred by fatigue.</p>
+        <img src="./assets/comparisons/118968ed8334ff127cc80fd83377dd39/weaver_image_00000002.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>At last, the Tortoise reaches the finish line, greeted by cheers, while the Hare awakens to the shocking sight of the slow competitor already triumphant.</p>
+        <img src="./assets/comparisons/118968ed8334ff127cc80fd83377dd39/weaver_image_00000003.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>The moral is clear: confidence without diligence can falter, while steady effort can conquer even the swiftest rival. The meadow quiets as the sun sets, and the animals reflect on the lesson that patience and perseverance often outrun pride and haste.</p>
+      </div>
+    </div>
+    <div class="showcase-col">
+      <div class="method-name">Nano Banana</div>
+      <div class="method-content">
+        <p>The sun beat down on the dusty road, shimmered above the fields, as the Hare, known for his incredible speed and boastful nature, stretched languidly. &quot;Another beautiful day to show everyone who the fastest is!&quot; he exclaimed, flicking his ears. The other forest creatures sighed, accustomed to his antics.</p>
+        <img src="./assets/comparisons/118968ed8334ff127cc80fd83377dd39/nano_banana_image_00000000.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>The Tortoise, slow and steady, but possessed of an unwavering spirit, happened to be nearby, enjoying a peaceful munch on some clover. He looked up, his ancient eyes twinkling. &quot;Perhaps not everyone, friend Hare,&quot; he said in a calm, measured voice. &quot;I believe I could give you a run for your money.&quot;<br><br>A ripple of laughter went through the small crowd of animals. The Hare, initially stunned, soon erupted in uproarious guffaws. &quot;You? Race me? That&#x27;s the funniest thing I&#x27;ve heard all year, old-timer!&quot; he chortled, wiping a tear from his eye. &quot;Very well, then. Let&#x27;s set a course. From the big oak to the whispering willow, and back again!&quot;</p>
+        <img src="./assets/comparisons/118968ed8334ff127cc80fd83377dd39/nano_banana_image_00000001.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+      </div>
+    </div>
+    <div class="showcase-col">
+      <div class="method-name">Orthus</div>
+      <div class="method-content">
+        <p>Once upon a time, in a forest filled with tall trees and winding streams, lived two friends named Tortoise and Hare. Tortoise was slow-moving, but he was also determined and always finished whatever task he began. Hare, on the other hand, was fast and confident, but he didn&#x27;t always finish what he started.<br><br>One day, while wandering through the forest, Tortoise and Hare came across a race track. Tortoise decided to enter the race, and to his surprise, he won. Hare was furious and decided to enter the race as well, but he underestimated Tortoise and didn&#x27;t put in the effort he needed to win.<br><br>As the race began, Hare quickly took the lead, but Tortoise kept a steady pace and never gave up. Hare didn&#x27;t want to be outpaced by a humble tortoise, so he pushed himself to run even faster, but he became so exhausted that he slowed down and let Tortoise catch up to him.<br><br>In the end, Tortoise won the race and proved that hard work and perseverance can overcome even the fastest competitor. Hare learned a valuable lesson about the importance of effort and determination, and from that day forward, he and Tortoise became the best of friends.</p>
+      </div>
+    </div>
+    <div class="showcase-col">
+      <div class="method-name">Emu3.5</div>
+      <div class="method-content">
+        <p>Once upon a time, in a lush meadow beneath a bright blue sky, lived a hare known for his incredible speed and a tortoise celebrated for his steady, unwavering pace. The hare, full of pride, often mocked the tortoise for his slowness, while the tortoise, though patient, dreamed of proving his worth.</p>
+        <img src="./assets/comparisons/118968ed8334ff127cc80fd83377dd39/emu35_image_00000000.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>One sunny morning, the hare challenged the tortoise to a race, confident he would win easily. The animals gathered to watch as the hare darted ahead, leaving the tortoise far behind. The hare, feeling smug, soon grew tired and decided to rest under a shady tree, certain the tortoise would never catch up.</p>
+        <img src="./assets/comparisons/118968ed8334ff127cc80fd83377dd39/emu35_image_00000001.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>As the hare slept, the tortoise kept moving, step by steady step. He didn’t rush; he simply kept going, driven by quiet determination. The other animals watched, some amused, others hopeful.</p>
+        <img src="./assets/comparisons/118968ed8334ff127cc80fd83377dd39/emu35_image_00000002.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>When the hare awoke, he was shocked to see the tortoise near the finish line. He sprinted with all his might, but it was too late—the tortoise had already crossed. The animals cheered as the tortoise, exhausted but triumphant, reached the end. The hare, humbled, realized that steady effort can overcome even the greatest speed.</p>
+        <img src="./assets/comparisons/118968ed8334ff127cc80fd83377dd39/emu35_image_00000003.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>From that day on, the hare learned the value of humility and consistency, while the tortoise was celebrated for his perseverance. The animals of the meadow often told the tale of the tortoise and the hare, a reminder that slow and steady can win the race.</p>
+        <img src="./assets/comparisons/118968ed8334ff127cc80fd83377dd39/emu35_image_00000004.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+      </div>
+    </div>
+    <div class="showcase-col">
+      <div class="method-name">Anole</div>
+      <div class="method-content">
+        <p>Once upon a time, in a land far, far away, there was a wise old man who lived in a small village nestled in the rolling hills of a lush forest. The villagers revered the old man for his wisdom and sought his guidance on all matters, both great and small.<br><br>One day, a young tortoise named Tom came to the wise old man seeking his counsel. Tom was a slow and steady creature, content to take things one step at a time and enjoy the journey. But Tom was also a bit curious and restless, always eager to explore new horizons and discover new things.<br><br>The wise old man listened to Tom&#x27;s tale and smiled. He knew that Tom was not like the other creatures in the forest, who were quick and nimble, always rushing to get wherever they were going. No, Tom was different, and the wise old man knew that this was something to be celebrated, not condemned.<br><br>&quot;You, my young friend, are a tortoise,&quot; the wise old man said. &quot;And tortoises are slow, but they are also strong and determined. You must not compare yourself to others, for that is a road that leads to disappointment and discouragement. Instead, focus on your own strengths and weaknesses, and use them to your advantage.&quot;<br><br>And with that, the wise old man taught Tom a valuable lesson. From that day on, Tom the tortoise began to see the world in a new light. He no longer felt the need to rush or compete with others, but rather to simply enjoy the journey and let his own pace guide him.<br><br>And as the years passed, Tom the tortoise became known throughout the land for his wisdom and kindness. He was loved and respected by all who knew him, and his slow and steady pace became a symbol of perseverance and determination.<br><br>In the end, it was not the winner of the race who mattered, but the journey itself. And for Tom the tortoise, that journey was filled with joy, peace, and a deep understanding of the true meaning of wisdom.<br><br>And so, the story of Tom the tortoise and the wise old man teaches us that it is not always the fastest or the strongest who succeed, but rather those who are willing to slow down and appreciate the journey.</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="showcase-case" id="case-9b63bd1d222a35a58253e4cc7e36f237" style="display: none;">
+  <div class="showcase-prompt">
+    <p><strong>Prompt:</strong> Write a live report on the &quot;Urban Drone Light Show.&quot; Start with a wide-angle photo of drones forming patterns in the night sky, accompanied by a description of the atmosphere that evening, integrating visuals and text in a show-style arrangement, and respond in English but ensure all text shown within images is in Chinese. In the second part, briefly explain the theme of the performance and the background of the rehearsals, paired with a photo of the staff operating equipment on the ground. The third part highlights the standout formations from the show, such as a giant globe and a peace dove shape, accompanied by high-definition photos of those moments. Finally, summarize the audience&#x27;s reactions, with a candid snapshot of spectators looking up to capture the moment.</p>
+  </div>
+  <div class="showcase-grid">
+    <div class="showcase-col">
+      <div class="method-name">Wan-Weaver (Ours)</div>
+      <div class="method-content">
+        <p>The evening air over the riverside park was electric with anticipation as thousands gathered to witness the Urban Drone Light Show.</p>
+        <img data-src="./assets/comparisons/9b63bd1d222a35a58253e4cc7e36f237/weaver_image_00000000.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>The show’s creative director explained that the performance was inspired by the city’s history of innovation and its commitment to sustainable technology. Months of rehearsals took place in a nearby industrial park, where engineers fine-tuned the choreography to ensure flawless transitions between formations.</p>
+        <img data-src="./assets/comparisons/9b63bd1d222a35a58253e4cc7e36f237/weaver_image_00000001.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>As the performance reached its climax, the drones morphed into a luminous globe that slowly rotated, symbolizing unity and global cooperation. Cheers erupted when the globe dissolved into a flock of golden birds that soared across the sky before coalescing into a peace dove.</p>
+        <img data-src="./assets/comparisons/9b63bd1d222a35a58253e4cc7e36f237/weaver_image_00000002.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>The final formation, a radiant phoenix rising from the river’s reflection, drew a standing ovation that echoed across the waterfront. Families, tourists, and local residents alike exchanged smiles, their faces glowing with the afterimage of the lights.</p>
+        <img data-src="./assets/comparisons/9b63bd1d222a35a58253e4cc7e36f237/weaver_image_00000003.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>The Urban Drone Light Show proved that technology and artistry can merge to create unforgettable public experiences. As the crowd slowly dispersed, the lingering glow of the drones in memory promised that the city’s skies would soon host another dazzling performance.</p>
+      </div>
+    </div>
+    <div class="showcase-col">
+      <div class="method-name">Nano Banana</div>
+      <div class="method-content">
+        <p>Good evening, everyone, and welcome to our live coverage of the spectacular Urban Drone Light Show! The city skyline is alive tonight, buzzing with anticipation as thousands gather to witness this dazzling display. The air is electric, filled with a mix of wonder and excitement, as families and friends find their spots, craning their necks towards the inky canvas above. The subtle hum of the drones is just beginning to punctuate the city&#x27;s usual rhythm, promising a night of unforgettable aerial artistry.</p>
+        <img data-src="./assets/comparisons/9b63bd1d222a35a58253e4cc7e36f237/nano_banana_image_00000000.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+      </div>
+    </div>
+    <div class="showcase-col">
+      <div class="method-name">Orthus</div>
+      <div class="method-content">
+        <p>**青年科技文化节开幕：城市飞机产品戏剧性舞台上**<br><br>亚洲科技城市的夜空，不再只是星星光。在科技节开幕大晩上，一些自发工具、磁铁、弹跳发光材料和飞机制造了一种天文动作。如在图中所示，这些物件在蜜月状像，融合在一起，形成了多极星和多极猎户星。这种展示使普通人一看危险，也就是说，这些飞机在宇宙中，蒙面在宇宙中。<br><br>这次“城市飞机产品戏剧性舞台”（Urban Drone Light Show），由城市科学研究所和美国飞机制造商联合编排，从节目开始，让我们设法实现，这是一幕令人惊喜的观赏。虽然是大晚上，这里不是完全闭门的，这里有许多人，这里有更多的景物，但是观众不能为此感到不安。这些飞机是在飞行高空，可以看到，那是的一整群的飞机。<br><br>这里是一个从地面上操作，他们经过东西，并制定了一些变化，以便给观众最佳的效果。<br><br>这是不是一个特别的技巧。但是这里的飞机不是像一个群组，我们更多的认为是一个更大的场景。这里有一些飞机已经很远了，这里有一些更新飞机更宽、更高，这里有一些更大的飞机。在这里我们看到的飞机，更新过来了，更宽，更高，更高、更高。这样的飞机可以更好地表现，更好地占据空间，更好地形成一些特别的形状。<br><br>这里是图中展示的，飞机制造商，这里有一个特别的形状。这个特别的形状，不仅是一些猎户星，也是一些多极星。这时看到的观众面积，在一些高阶级的建筑物，可以看到更多的飞机，更多的空间。这里我们还觉得，观众来的并不是特别的，不等于观众的厚厚的满肚子。这里是一些工作，这里是一些人，这里是人的一分的，一分的工作，和一些一分的飞机。人的一分的飞机，飞机的一分的人。飞机的一分的飞机，飞机的一分的人。飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飞机，飞机的一分的飛机，飞机的一分的飛机，飞机的一分的飛机，飞机的一分的飛朲，飞机的一分的飛朲，飞机的一分的飛朚，飞机的一分的飛，飞机的一分的飛飞，飞机的一分的飛飞，飞机的一分的飛飞，飞机的一分的飛飔，飞机的一分的飛飜<br>飞机的一分的飛札。飞机的一分的飛札。飞机的一分的飛札。飞机的一分的飛札。飞机的一分的飛札。飞机的一分的飛札。飞机的一分的飛札。飞机的一分的飛札。飞机的一分的飛札。飞机的一分的飛札。飞机的一分的飛札。飞机的一分的飛札。飞机的一分的飛札。飞机的一分的飛札。飞机的一分的飛札。飞机的一分的飛札。飞机的一分的飛札。飞机的一分的飛札。飞机的一分的飛札。飞机的一分的飛札。飞机的一分的飛札。飞机的一分的飛札。飞机的一分的飛札。飞机的一分的飛札。飞机的一分的飛札。飞机的一分的飛札。飞机的一分的飛札。飞机的一分的飛札。飞机的一分的飛札。飞机的一分的飛札。飞机的一分的飛札。飞机的一分的飛札。飞机的一分的飛札。飞机的一分的飛札。飞机的一分的飛札。飞机的一分的飛札。飞机的一分的飛札。飞机的一分的飛札。飞机的一分的飛札。飞机的一分的飛札。飞机的一分的飛札。飞机的一分的飛札。飞机的一分的飛札。飞机的一分的飛札。飞机的一分的飛札。飞机的一分的飛札。飞机的一分的飛札。飞<br>飞机的一分的飛札。飞机的一分的飛札。飞机的一分的飛札。飞机的一分的飛札。飞机的一分的飛札。飞机的一分的飛札。飞机的一分的飛札。飞机的一分的飛札。飞机的一分的飛札。飞机的一分of a performance. The Urban Drone Light Show uses the night sky as a canvas for a choreographed dance of drones and lights, creating a dazzling display that captivates audiences around the world. The show has been performed in cities such as Beijing, Seoul, and New York, and has inspired countless artworks and performances inspired by the wonders of the night sky.</p>
+      </div>
+    </div>
+    <div class="showcase-col">
+      <div class="method-name">Emu3.5</div>
+      <div class="method-content">
+        <p>**Live Report: Urban Drone Light Show**<br><br>The night sky over the city transforms into a canvas of light as hundreds of drones take flight. They form intricate patterns, weaving together in a dazzling display of synchronized motion. The air hums with excitement as spectators gather, their faces lit by the vibrant colors of the drones. Tonight’s show, titled *“Unity in the Skies,”* celebrates global harmony through a breathtaking aerial performance.<br><br>![Wide-angle photo of drones forming patterns in the night sky. The drones are illuminated in vibrant colors, creating intricate designs against the dark backdrop. The audience is visible in the foreground, silhouetted against the light.] <br><br>The atmosphere is electric, filled with anticipation and awe. As the drones ascend, they begin to form a giant globe, symbolizing the interconnectedness of our world. The lights pulse and shift, creating a mesmerizing visual spectacle that captivates all who watch. <br><br>![Staff members operate equipment on the ground, focused on their screens. The cityscape behind them is lit up, with buildings glowing in the night.] <br><br>Behind the scenes, a team of skilled technicians and pilots worked tirelessly to perfect every movement. Rehearsals took place under the cover of darkness, ensuring that each drone followed its programmed path with precision. The result is a flawless performance that leaves the audience in awe.<br><br>![High-definition photo of the giant globe formation, with drones flying in perfect synchronization. The globe is illuminated in blue and green, representing Earth.] <br><br>One of the standout moments of the show is the formation of a peace dove, symbolizing hope and tranquility. The drones move gracefully, their lights creating the delicate outline of the dove against the night sky. The audience erupts in applause, moved by the beauty and message of the performance.<br><br>![Close-up of the peace dove formation, with drones flying in a synchronized, graceful pattern. The dove is illuminated in white, its wings spread wide.] <br><br>As the show comes to a close, the drones gradually descend, their lights fading into the night. The crowd remains silent for a moment, reflecting on the stunning display they have just witnessed. The *“Unity in the Skies”* drone light show leaves a lasting impression, a testament to the power of technology and art to inspire and unite.<br><br>![Candid snapshot of the audience, looking up and capturing the moment on their phones. Their faces are lit by the fading drone lights, expressions of wonder and joy evident.] <br><br>The *“Urban Drone Light Show”* is more than just a spectacle; it is a celebration of our shared humanity, a reminder of the beauty that can be achieved when we come together. As the last drone lights disappear, the night sky returns to its usual darkness, but the memory of the show lingers, a beacon of hope and unity in the urban landscape. <br><br>![Final wide-angle shot of the city skyline, now dark and quiet, with the faint glow of distant lights hinting at the recent performance.] <br><br>This is [Your Name], reporting live from the heart of the city, where the night sky has once again become a canvas for the extraordinary. Until next time, good night. <br><br>---<br><br>*Note: All text within images is in Chinese.*</p>
+      </div>
+    </div>
+    <div class="showcase-col">
+      <div class="method-name">Anole</div>
+      <div class="method-content">
+        <p>A thrilling night in the sky:<br><br>As the lights of the city came on, the dark sky began to light up with a mesmerizing display of drones forming intricate patterns in the night sky. The Urban Drone Light Show, held at the city&#x27;s largest park, was an immersive experience that left spectators in awe.<br><br>The atmosphere was electric, with the sound of drones flying overhead and the crowd cheering. The drones, each equipped with its own light, floated through the air, creating a mesmerizing display of light and color. The audience was captivated by the mesmerizing display, with many taking out their phones to capture the moment.<br><br>The show was a collaboration between local technology companies and government agencies, and was designed to showcase the latest in drone technology. The theme of the performance was the integration of drones into daily life, and the organizers hoped to inspire the public to embrace the use of drones in their own lives.<br><br>To get the show off the ground, the organizers had to rehearse extensively. The staff had to work around the clock to ensure that the drones were operating smoothly and that the show was flawless. The result was a performance that was truly one of a kind.<br><br>Among the many impressive formations, two standout examples were a giant globe and a peace dove shape. The globe, which resembled a miniature planet Earth, was a stunning sight, with the drones flying in a synchronized pattern to create the illusion of a spinning globe. The peace dove shape, which was created by the drones flying in a pattern that resembled a heart, was a touching tribute to the theme of the performance.<br><br>The audience was treated to a truly magical experience, with many taking out their phones to capture the moment. Many people were impressed by the advanced technology used in the show, and the organizers were hailed for their efforts to make the performance accessible to everyone.<br><br>As the show came to a close, the audience erupted into cheers and applause, with many expressing their gratitude to the organizers and the performers for an unforgettable experience.<br><br>With a team of 400 technicians and a budget of $5 million, the Urban Drone Light Show was a major undertaking, but it was well worth it. The show was a testament to the power of technology and the imagination, and it left a lasting impression on all who witnessed it.<br><br>As the last drone soared into the night sky, the audience filed out of the park, still talking about the incredible experience they had just witnessed. The Urban Drone Light Show was a truly magical experience, and one that would be remembered for years to come.<br><br>**Beijing Timelapse**</p>
+        <img data-src="./assets/comparisons/9b63bd1d222a35a58253e4cc7e36f237/anole_image_00000000.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+      </div>
+    </div>
+  </div>
+</div>
+<div class="showcase-case" id="case-85e85370e52c416a3ac80b053ed2fe14" style="display: none;">
+  <div class="showcase-prompt">
+    <p><strong>Prompt:</strong> Write a text-and-image interleaved feature on New Art Museum Opens: include the facade at night, a visitor flow plan showing entrance, halls, and cafe, a photo of the opening show, and a 60-word curator quote integrated with the visuals in a curated visual-story fusion.</p>
+  </div>
+  <div class="showcase-grid">
+    <div class="showcase-col">
+      <div class="method-name">Wan-Weaver (Ours)</div>
+      <div class="method-content">
+        <p>The city’s cultural calendar has a new highlight: the unveiling of the New Art Museum, a glass-and-steel landmark that promises to reshape the local creative scene.</p>
+        <img data-src="./assets/comparisons/85e85370e52c416a3ac80b053ed2fe14/weaver_image_00000000.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>Inside, the architects have designed a fluid circulation path that guides visitors from the foyer to the galleries and finally to the rooftop terrace café.</p>
+        <img data-src="./assets/comparisons/85e85370e52c416a3ac80b053ed2fe14/weaver_image_00000001.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>The inaugural exhibition, “Chromatic Echoes,” explores how color and sound intersect in contemporary art.</p>
+        <img data-src="./assets/comparisons/85e85370e52c416a3ac80b053ed2fe14/weaver_image_00000002.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>Curator Dr. Lena Morales believes the museum’s mission is to “blur the boundaries between observer and artwork, turning every visitor into a co-creator of meaning.” Her words echo the building’s ethos of openness and experimentation.</p>
+        <img data-src="./assets/comparisons/85e85370e52c416a3ac80b053ed2fe14/weaver_image_00000003.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>With its bold architecture, interactive exhibitions, and forward-thinking leadership, the New Art Museum is poised to become a beacon for artists and audiences alike.</p>
+      </div>
+    </div>
+    <div class="showcase-col">
+      <div class="method-name">Nano Banana</div>
+      <div class="method-content">
+        <p>## A New Beacon for Art: The Grand Opening of The Nexus Museum<br><br>A new cultural landmark has emerged, promising to enrich the city&#x27;s artistic landscape. The Nexus Museum, with its striking modern architecture, officially opened its doors this past weekend, welcoming art enthusiasts and curious minds alike.<br><br>**An Architectural Marvel Illuminated**<br><br>As night falls, The Nexus Museum transforms into a luminous spectacle, its innovative design highlighted by strategic lighting that beckons visitors from afar.</p>
+        <img data-src="./assets/comparisons/85e85370e52c416a3ac80b053ed2fe14/nano_banana_image_00000000.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+      </div>
+    </div>
+    <div class="showcase-col">
+      <div class="method-name">Orthus</div>
+      <div class="method-content">
+        <p>Opening Night for the New Art Museum<br><br>Last month, the highly anticipated opening of the **New Art Museum** took place in the vibrant city of [insert city here]. The museum is celebrating the groundbreaking works of **Artist Name**, which offer a fresh perspective on contemporary art, culture, and society.<br><br>The museum&#x27;s striking facade is a feature in its own right, with a sleek and modern design that catches the eye. As night falls, the facade glows with a subtle light, adding an extra layer of intrigue to the building. Here&#x27;s a glimpse of the museum&#x27;s facade at night:</p>
+        <img data-src="./assets/comparisons/85e85370e52c416a3ac80b053ed2fe14/orthus_image_00000000.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <img data-src="./assets/comparisons/85e85370e52c416a3ac80b053ed2fe14/orthus_image_00000001.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <img data-src="./assets/comparisons/85e85370e52c416a3ac80b053ed2fe14/orthus_image_00000002.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>The museum&#x27;s layout is designed to create a seamless flow for visitors, with the entry points marked in this image:</p>
+        <p>The museum&#x27;s design is also home to a café and bookstore, which offer visitors a break from exploring the exhibits. The café and bookstore are marked in this image:</p>
+        <p>The curator quote is integrated with the visual elements highlighting the museum&#x27;s innovative approach to contemporary art.</p>
+      </div>
+    </div>
+    <div class="showcase-col">
+      <div class="method-name">Emu3.5</div>
+      <div class="method-content">
+        <p>The New Art Museum’s striking facade gleams at night, its sleek, angular lines and shimmering glass reflecting the city lights. A grand entrance beckons, flanked by softly lit pathways and a few early visitors already gathering. The museum’s name, etched in bold letters, stands out against the dark sky.</p>
+        <img data-src="./assets/comparisons/85e85370e52c416a3ac80b053ed2fe14/emu35_image_00000000.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>Inside, a visitor flow plan reveals the museum’s layout. The grand entrance leads to a spacious lobby, where a reception desk greets guests. From there, visitors can explore the main galleries, lined with diverse artworks. A bright, airy cafe with large windows offers a place to rest and enjoy refreshments. The design prioritizes a smooth, engaging experience.</p>
+        <img data-src="./assets/comparisons/85e85370e52c416a3ac80b053ed2fe14/emu35_image_00000001.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>The opening night buzzes with energy. Visitors of all ages mingle among the exhibits, some pausing to study a painting, others chatting animatedly. A curator stands by a contemporary sculpture, explaining its meaning to a small group. The air hums with the sound of footsteps and conversation, alive with the thrill of new art and shared experience.</p>
+        <img data-src="./assets/comparisons/85e85370e52c416a3ac80b053ed2fe14/emu35_image_00000002.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>As the evening ends, the curator steps onto the stage in the main gallery, addressing the crowd. &quot;Tonight marks the beginning of a new chapter,&quot; they say, their voice echoing through the space. &quot;The New Art Museum is more than a building—it&#x27;s a vibrant hub for creativity, dialogue, and connection. We invite you to return, to explore, and to be part of the art that shapes our world.&quot; The audience applauds, their faces lit by the soft glow of the galleries.</p>
+        <img data-src="./assets/comparisons/85e85370e52c416a3ac80b053ed2fe14/emu35_image_00000003.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+      </div>
+    </div>
+    <div class="showcase-col">
+      <div class="method-name">Anole</div>
+      <div class="method-content">
+        <p>&quot;The New Art Museum, featuring contemporary works by renowned artists, opens its doors to the public. Take a look at the building&#x27;s striking facade at night, designed to evoke a sense of mystery and intrigue. A visitor flow plan reveals the sleek layout, with galleries, a cafe, and stunning views of the surrounding cityscape.<br><br>Behold the captivating artwork on display, showcasing the latest innovations and techniques in the art world. This stunning opening exhibition is not to be missed, and we can&#x27;t wait to see what the future holds for this innovative museum.<br><br>&quot;In the New Art Museum, visitors are invited to explore a realm of creativity and inspiration. The museum&#x27;s design, by award-winning architects, sets the stage for a captivating experience that transcends traditional art galleries.&quot; - Curator, New Art Museum<br><br>Here is the full feature image, which includes the face of the building at night, a visitor flow plan, a photo of the opening show, and a 60-word quote from the curator:</p>
+        <img data-src="./assets/comparisons/85e85370e52c416a3ac80b053ed2fe14/anole_image_00000000.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <img data-src="./assets/comparisons/85e85370e52c416a3ac80b053ed2fe14/anole_image_00000001.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+      </div>
+    </div>
+  </div>
+</div>
+<div class="showcase-case" id="case-17d648374d1739558816e6bb5d574d38" style="display: none;">
+  <div class="showcase-prompt">
+    <p><strong>Prompt:</strong> Please generate a detailed article reporting on the &#x27;river cleanup day.&#x27; I need it to be structured with engaging text in multiple paragraphs, visually interweaving &#x27;before&#x27; and &#x27;after&#x27; shoreline images to show the impact, along with a clear bar chart illustrating the total waste weight collected, in a balanced visual–text composition.</p>
+  </div>
+  <div class="showcase-grid">
+    <div class="showcase-col">
+      <div class="method-name">Wan-Weaver (Ours)</div>
+      <div class="method-content">
+        <p>The annual river cleanup day is always a testament to community spirit and environmental stewardship. This year, hundreds of volunteers gathered along the banks of the winding River Serene, armed with gloves, bags, and a shared determination to restore its natural beauty. The effort began early in the morning, with teams fanning out to cover every stretch of the river&#x27;s edge, tackling areas that had accumulated debris over the past year. The initial sight was often disheartening, a stark reminder of the challenges faced by our waterways.</p>
+        <img data-src="./assets/comparisons/17d648374d1739558816e6bb5d574d38/weaver_image_00000000.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>The volunteers worked tirelessly, meticulously sifting through the detritus. From plastic bottles and food packaging to larger items like discarded tires and broken furniture, every piece of waste was carefully collected. The sheer volume of trash was staggering, but the collective effort of the community proved to be a powerful force for change. Hours passed, and the riverbanks began to transform, revealing glimpses of the natural landscape beneath the layers of refuse. The air, once heavy with the scent of decay, slowly began to clear, replaced by the fresh, earthy smell of the river.</p>
+        <img data-src="./assets/comparisons/17d648374d1739558816e6bb5d574d38/weaver_image_00000001.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>The impact of the day&#x27;s work was not just visual; it was tangible. At the end of the cleanup, all collected waste was weighed, providing a clear metric of the community&#x27;s success. The data revealed a significant reduction in the river&#x27;s pollution burden, underscoring the effectiveness of targeted environmental action. This quantitative measure serves as a powerful indicator of the positive change brought about by dedicated individuals.</p>
+        <img data-src="./assets/comparisons/17d648374d1739558816e6bb5d574d38/weaver_image_00000002.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>The success of the river cleanup day is a powerful reminder that collective action can lead to significant environmental improvements. While the challenge of pollution remains, events like these demonstrate the community&#x27;s commitment to protecting our natural heritage. The revitalized riverbanks now stand as a testament to what can be achieved when people come together for a common cause, inspiring hope for a cleaner, healthier future for our waterways.</p>
+      </div>
+    </div>
+    <div class="showcase-col">
+      <div class="method-name">Nano Banana</div>
+      <div class="method-content">
+        <p>## Local Heroes Make Waves: A River Revitalization Story<br><br>The tranquil banks of the Elmwood River, a beloved community natural space, witnessed a remarkable transformation this past Saturday during the annual &#x27;River Cleanup Day.&#x27; What began as a picturesque but litter-strewn landscape by morning&#x27;s light, ended the day as a pristine testament to collective environmental stewardship.<br><br>### Before the Transformation: A Call to Action<br><br>For years, the Elmwood River has been a cherished spot for fishing, kayaking, and quiet contemplation. However, like many urban waterways, it has also become a casualty of neglect, with plastic bottles, discarded packaging, and various debris marring its natural beauty.</p>
+        <img data-src="./assets/comparisons/17d648374d1739558816e6bb5d574d38/nano_banana_image_00000000.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+      </div>
+    </div>
+    <div class="showcase-col">
+      <div class="method-name">Orthus</div>
+      <div class="method-content">
+        <p>Title: On the Banks of Renewal: A River Cleaning Day Story<br><br>Introduction:<br><br>Imagine a stretch of shoreline along a scenic river, once a picturesque haven for wildlife and recreational activities, now riddled with unsightly trash and debris. This is the situation that faced a group of concerned individuals in a small town located along the banks of the river. Determined to make a difference, they mobilized and planned a river cleaning day event.<br><br>Before the Cleaning Day:<br><br>Before the cleaning day, the shoreline along the river was heavily polluted with trash and debris, including plastic bottles, wrappers, and other discarded items. The area was also home to a thriving population of aquatic life, but the pollution had made life difficult for them. The water was dirty, and it made the shore look quite uninviting.<br><br>The Impact of the Cleaning Day:<br><br>With the help of volunteers and community residents, the river cleaning day event saw a significant change in the shoreline. After the clean-up, the area was transformed into a beautiful oasis, teeming with life as the water was no longer polluted. The plastic bottles and wrappers were removed, and the shoreline looked clean and inviting once again. Here are before and after photographs of the river during the cleanup.<br><br>After the cleanup, the river took on a new appearance. The water was now clear and inviting, and the shoreline showed a remarkable transformation (see below).</p>
+        <img data-src="./assets/comparisons/17d648374d1739558816e6bb5d574d38/orthus_image_00000000.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <img data-src="./assets/comparisons/17d648374d1739558816e6bb5d574d38/orthus_image_00000001.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>As the group looked on, they couldn&#x27;t help but feel a sense of pride and accomplishment. The river had become a better place to live, and they were grateful for the opportunity to make a difference.</p>
+        <p>A River Cleaning Day Bar Chart:<br><br>Here is a bar chart summarizing the weight of waste collected during the river cleaning day:
+<br>
+<br>| Wastes Collected  |  
+<br>|   - Tons |
+<br>|  - Bags of Plastic   |
+<br>|   - Bottles and Jars  |
+<br>|   - Miscellaneous (Straws, Cans, etc.)  |
+<br>| Total |
+<br>
+<br>On this day, a total of three tons of waste were collected, made up of 100 bags of plastic, 50 bottles of various types, and miscellaneous items like straws, cans, and packaging.
+<br>
+<br>Reflections:
+<br>
+<br>As the volunteers completed their cleanup, they looked at the transformed shoreline and felt a sense of pride and accomplishment. They knew that their efforts had made a difference, not just for the river and its ecosystem, but also for the community that relied on it for recreation and clean drinking water.
+<br>
+<br>The event served as a reminder of the impact of human activity on the environment. It also highlighted the importance of community involvement and collective action in protecting our natural resources and preserving the beauty of our surroundings.
+<br>
+<br>As the group dispersed, they knew that their work was not done yet. There would always be more trash to collect, more rivers to clean, and more communities to educate. But with this initial success, they were optimistic about the future, knowing that together, they could make a positive impact on the world around them.</p>
+      </div>
+    </div>
+    <div class="showcase-col">
+      <div class="method-name">Emu3.5</div>
+      <div class="method-content">
+        <p>The sun beat down on the murky riverbank, where plastic bottles, discarded cans, and tangled fishing nets littered the shore. Volunteers gathered, their faces set with determination. This was the start of the annual &quot;River Cleanup Day.&quot;</p>
+        <img data-src="./assets/comparisons/17d648374d1739558816e6bb5d574d38/emu35_image_00000000.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>Hours passed as volunteers worked tirelessly, filling large bags with trash. Children helped pick up small items, while adults removed larger debris. The air buzzed with the rustle of plastic and the occasional shout of encouragement. Slowly, the once-littered shore began to reveal itself.</p>
+        <img data-src="./assets/comparisons/17d648374d1739558816e6bb5d574d38/emu35_image_00000001.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>As the sun set, the volunteers gathered their full bags of waste. A bar chart displayed the total weight of the collected trash, revealing a significant reduction in pollution. The &quot;River Cleanup Day&quot; had been a success—a testament to the power of community action in protecting the environment.</p>
+        <img data-src="./assets/comparisons/17d648374d1739558816e6bb5d574d38/emu35_image_00000002.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+      </div>
+    </div>
+    <div class="showcase-col">
+      <div class="method-name">Anole</div>
+      <div class="method-content">
+        <p>---<br><br>For the first time in several years, residents of Lakeview and Riverview joined forces to host a river cleanup day. The event was a huge success, with over 100 volunteers pitching in to clean up the area around the river. The two groups collaborated to pick up hundreds of pounds of trash, including old tires, broken glass, and plastic bags.<br><br>Before the event, the area was littered with trash and debris, as seen in the below image.</p>
+        <img data-src="./assets/comparisons/17d648374d1739558816e6bb5d574d38/anole_image_00000000.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>After the cleanup, the area was transformed into a beautiful stretch of river, as seen in the below image.</p>
+        <img data-src="./assets/comparisons/17d648374d1739558816e6bb5d574d38/anole_image_00000001.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>The total weight of waste collected during the event was an astonishing 400 pounds, highlighting the immense impact of the community&#x27;s effort. The cleanup was a success due to the collective efforts of residents from Lakeview and Riverview, and it serves as a testament to what can be accomplished when people come together for a common cause.<br><br>---<br><br>I hope this article works for you! Please let me know if there is anything else I can help you with.</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="showcase-case" id="case-4ce43bde4b0178e6ef0e1e7e859439a7" style="display: none;">
+  <div class="showcase-prompt">
+    <p><strong>Prompt:</strong> &quot;Desktop robotic arm&quot; promotional graphics: A total of 8 images, including three pictures demonstrating line drawing, picking, and assembly; a safety fence diagram; an API interface screenshot placed in the right column; and three icons representing the education, maker, and factory scenarios—arranged in a content-image rotation layout.</p>
+  </div>
+  <div class="showcase-grid">
+    <div class="showcase-col">
+      <div class="method-name">Wan-Weaver (Ours)</div>
+      <div class="method-content">
+        <p>The desktop robotic arm has become a symbol of accessible automation, shrinking industrial-grade dexterity into a device that fits on a standard desk.</p>
+        <img data-src="./assets/comparisons/4ce43bde4b0178e6ef0e1e7e859439a7/weaver_image_00000000.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>The ability to switch from artistic tasks to practical ones is one of the arm’s greatest strengths.</p>
+        <img data-src="./assets/comparisons/4ce43bde4b0178e6ef0e1e7e859439a7/weaver_image_00000001.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>Beyond simple pick-and-place, the arm can be programmed for intricate assembly routines.</p>
+        <img data-src="./assets/comparisons/4ce43bde4b0178e6ef0e1e7e859439a7/weaver_image_00000002.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>Safety remains paramount even at desktop scale.</p>
+        <img data-src="./assets/comparisons/4ce43bde4b0178e6ef0e1e7e859439a7/weaver_image_00000003.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>Connectivity unlocks the arm’s full potential.</p>
+        <img data-src="./assets/comparisons/4ce43bde4b0178e6ef0e1e7e859439a7/weaver_image_00000004.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>The arm’s versatility shines in educational settings.</p>
+        <img data-src="./assets/comparisons/4ce43bde4b0178e6ef0e1e7e859439a7/weaver_image_00000005.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>Makerspaces embrace the arm for rapid prototyping.</p>
+        <img data-src="./assets/comparisons/4ce43bde4b0178e6ef0e1e7e859439a7/weaver_image_00000006.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>Finally, the same technology scales effortlessly to light-industrial production lines.</p>
+        <img data-src="./assets/comparisons/4ce43bde4b0178e6ef0e1e7e859439a7/weaver_image_00000007.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>With its modular tooling, open API, and compact footprint, the desktop robotic arm is poised to redefine what we expect from personal and small-scale automation.</p>
+      </div>
+    </div>
+    <div class="showcase-col">
+      <div class="method-name">Nano Banana</div>
+      <div class="method-content">
+        <p>Here are 8 promotional graphics for a desktop robotic arm, designed with your specifications in mind:<br><br>1.  **Line Drawing Demonstration:**</p>
+        <img data-src="./assets/comparisons/4ce43bde4b0178e6ef0e1e7e859439a7/nano_banana_image_00000000.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>2.  **Picking Demonstration:**</p>
+        <img data-src="./assets/comparisons/4ce43bde4b0178e6ef0e1e7e859439a7/nano_banana_image_00000001.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>3.  **Assembly Demonstration:**</p>
+        <img data-src="./assets/comparisons/4ce43bde4b0178e6ef0e1e7e859439a7/nano_banana_image_00000002.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>4.  **Safety Fence Diagram:**</p>
+        <img data-src="./assets/comparisons/4ce43bde4b0178e6ef0e1e7e859439a7/nano_banana_image_00000003.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>5.  **API Interface Screenshot:**</p>
+        <img data-src="./assets/comparisons/4ce43bde4b0178e6ef0e1e7e859439a7/nano_banana_image_00000004.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>6.  **Education Scenario Icon:**</p>
+        <img data-src="./assets/comparisons/4ce43bde4b0178e6ef0e1e7e859439a7/nano_banana_image_00000005.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>7.  **Maker Scenario Icon:**</p>
+        <img data-src="./assets/comparisons/4ce43bde4b0178e6ef0e1e7e859439a7/nano_banana_image_00000006.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>8.  **Factory Scenario Icon:**</p>
+        <img data-src="./assets/comparisons/4ce43bde4b0178e6ef0e1e7e859439a7/nano_banana_image_00000007.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+      </div>
+    </div>
+    <div class="showcase-col">
+      <div class="method-name">Orthus</div>
+      <div class="method-content">
+        <p>Sure, I can create a collection of promotional graphics for a desktop robotic arm showcasing different scenarios and capabilities. Here&#x27;s an example layout I came up with:
+<br>
+<br>Promotional Graphics for Desktop Robot Arm
+<br>
+<br>**Scenario 1: Education**
+<br>
+<br>* Icon: A schoolboy working at a desk, surrounded by educational materials and the robotic arm.
+<br>* Visual: A close-up shot of the robotic arm in the foreground, with a student, surrounded by books and supplies, in the background.
+<br>* Copy: &quot;Educational applications: Students can learn about robotics, mechanics, and programming through hands-on experience with our arm.&quot;
+<br>
+<br>**Scenario 2: Maker**
+<br>
+<br>* Icon: A person, potentially a maker or hobbyist, working on a project with the robotic arm.
+<br>* Visual: A shot of the robotic arm in action, with a person working on a project in the background.
+<br>* Copy: &quot;Maker applications: Our arm can assist with prototyping, assembly, and testing of various projects.&quot;
+<br>
+<br>**Scenario 3: Factory**
+<br>
+<br>* Icon: A worker at a factory, with the robotic arm in the background.
+<br>* Visual: A shot of the robotic arm in the factory, with a worker visible in the background.
+<br>* Copy: &quot;Industrial applications: Our arm can perform repetitive tasks and operate in harsh conditions, increasing efficiency and reducing errors.&quot;
+<br>
+<br>**Scenario 4: Line Drawing**
+<br>
+<br>* Icon: A worker drawing a line on a sheet of paper using a pen.
+<br>* Visual: A close-up shot of the pen in the worker&#x27;s hand, with the robotic arm drawing a line on the paper in the background.
+<br>* Copy: &quot;Line drawing application: Our arm can be programmed to draw lines or shapes on a wide range of surfaces.&quot;
+<br>
+<br>**Scenario 5: Picking**
+<br>
+<br>* Icon: A worker at a warehouse, with the robotic arm in the background.
+<br>* Visual: A shot of the robotic arm in the warehouse, with a worker visible in the background.
+<br>* Copy: &quot;Industrial applications: Our arm can pick and place items with precision and speed.&quot;
+<br>
+<br>**Scenario 6: Assembly**
+<br>
+<br>* Icon: A worker assembling a complex object or device using the robotic arm.
+<br>* Visual: A close-up shot of the worker assembling the object, with the robotic arm assisting with the process in the background.
+<br>* Copy: &quot;Assembly application: Our arm can assist with the assembly of complex objects, reducing time and effort.&quot;
+<br>
+<br>**Scenario 7: Safety Fencing**
+<br>
+<br>* Icon: A worker wearing safety gear and standing next to a robotic arm.
+<br>* Visual: A shot of the worker with the robotic arm behind them, with a safety fence in the background to indicate safe operation.
+<br>* Copy: &quot;Safety application: Our arm comes with a safety fence to prevent accidents and ensure user safety.&quot;
+<br>
+<br>**Scenario 8: API Interfaces**
+<br>
+<br>* Icon: A developer working with code and a computer in a coding environment.
+<br>* Visual: A shot of a developer working with code, with the robotic arm API interface visible in the background.
+<br>* Copy: &quot;API interface application: Our arm is easily integrated with various software tools, allowing for seamless integration with various systems.&quot;
+<br>
+<br>This layout showcases the different scenarios and capabilities of the robotic arm, highlighting its versatility and potential across various industries. The images are well-suited for various formats, from social media to websites, to create awareness and excitement about the product.</p>
+      </div>
+    </div>
+    <div class="showcase-col">
+      <div class="method-name">Emu3.5</div>
+      <div class="method-content">
+        <p>A promotional graphic introduces a desktop robotic arm, highlighting its ability to draw lines, pick up small objects, and assemble components. Three images show the arm in action: one drawing a straight line on paper, another picking up a small black object, and the third assembling a small mechanical part. A safety fence diagram is displayed in the right column, underscoring the product’s safety features.</p>
+        <img data-src="./assets/comparisons/4ce43bde4b0178e6ef0e1e7e859439a7/emu35_image_00000000.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>The second image shows the robotic arm picking up a small black object from a white surface. The third image displays the arm assembling a small mechanical component, highlighting its precision and adaptability.</p>
+        <img data-src="./assets/comparisons/4ce43bde4b0178e6ef0e1e7e859439a7/emu35_image_00000001.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>A screenshot of the API interface shows the robotic arm&#x27;s programmability and integration capabilities, with code snippets and configuration options displayed in a clean, modern layout.</p>
+        <img data-src="./assets/comparisons/4ce43bde4b0178e6ef0e1e7e859439a7/emu35_image_00000002.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>The right column of the graphic introduces three scenarios: education, maker, and factory. Each is represented by a clear icon and a brief description. The education scenario shows a student working with a robotic arm, the maker scenario features a person assembling a project, and the factory scenario depicts robotic arms working on an assembly line. These visuals highlight the product’s versatility across different industries and skill levels.</p>
+        <img data-src="./assets/comparisons/4ce43bde4b0178e6ef0e1e7e859439a7/emu35_image_00000003.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>The promotional graphic highlights the robotic arm&#x27;s precision, adaptability, and ease of use. It emphasizes the product&#x27;s safety features and API capabilities, positioning it as a versatile tool for education, hobbyist projects, and industrial automation. The clean, professional design effectively conveys the robotic arm&#x27;s value and potential.</p>
+        <img data-src="./assets/comparisons/4ce43bde4b0178e6ef0e1e7e859439a7/emu35_image_00000004.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+      </div>
+    </div>
+    <div class="showcase-col">
+      <div class="method-name">Anole</div>
+      <div class="method-content">
+        <p>Image 1: A close-up image of the desktop robotic arm, showing the three axes (Y, Z, and X) and the camera.</p>
+        <img data-src="./assets/comparisons/4ce43bde4b0178e6ef0e1e7e859439a7/anole_image_00000000.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>Image 2: An image of the robotic arm, highlighting the X, Y, and Z axes.</p>
+        <img data-src="./assets/comparisons/4ce43bde4b0178e6ef0e1e7e859439a7/anole_image_00000001.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>Image 3: A close-up image of the robotic arm, highlighting the line drawing capabilities.</p>
+        <img data-src="./assets/comparisons/4ce43bde4b0178e6ef0e1e7e859439a7/anole_image_00000002.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>Image 4: A screen capture of the API interface for the robotic arm, showing its functionality and capabilities. The right side of the screen displays the linear servo motor, allowing for precise line drawing. Screen captures are placed in the right column to create an attention-grabbing layout.</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="showcase-case" id="case-a86e497216d6239abf75ee63605e276f" style="display: none;">
+  <div class="showcase-prompt">
+    <p><strong>Prompt:</strong> Please generate a detailed article with text-photo coupling for the &quot;Urban Picnic Map&quot; event solicitation. The article should introduce in sections the high-quality grasslands, restrooms, and trash bin distributions in different areas, and include clear icons and real-life photos for each type of facility.</p>
+  </div>
+  <div class="showcase-grid">
+    <div class="showcase-col">
+      <div class="method-name">Wan-Weaver (Ours)</div>
+      <div class="method-content">
+        <p>Welcome to the Urban Picnic Map, a crowd-sourced guide that helps city dwellers find the best spots to spread a blanket and enjoy a meal outdoors. Below, you will find an overview of the first three districts we are currently mapping, along with illustrative photos and facility icons.</p>
+        <img data-src="./assets/comparisons/a86e497216d6239abf75ee63605e276f/weaver_image_00000000.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>District One, Riverside Promenade, boasts 1.2 hectares of manicured lawn. The grass is mowed weekly, free of weeds, and irrigated during dry spells. We invite volunteers to verify the lawn’s condition and note any seasonal changes.</p>
+        <img data-src="./assets/comparisons/a86e497216d6239abf75ee63605e276f/weaver_image_00000001.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>In District Two, Central Meadow, we have identified three eco-restrooms like the one above. Each is equipped with motion-sensor faucets and composting toilets. Please photograph any additional facilities and upload them to the map.</p>
+        <img data-src="./assets/comparisons/a86e497216d6239abf75ee63605e276f/weaver_image_00000002.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>District Three, Old Town Commons, has begun installing smart bins like the ones pictured. These bins report fullness levels to city staff and compact waste automatically. We need your help to document their locations and test their functionality.<br><br>Thank you for contributing to the Urban Picnic Map. Your photos and notes will make outdoor dining safer, cleaner, and more enjoyable for everyone.</p>
+      </div>
+    </div>
+    <div class="showcase-col">
+      <div class="method-name">Nano Banana</div>
+      <div class="method-content">
+        <p>## Discover Your Perfect Picnic Spot: The Urban Picnic Map Event!<br><br>Are you ready to embrace the joy of outdoor dining amidst the vibrant cityscape? The Urban Picnic Map event invites you to explore the best picnic locations our city has to offer. We&#x27;ve curated a comprehensive guide to help you find high-quality grasslands, convenient restrooms, and easily accessible trash bins, ensuring your picnic experience is as delightful and hassle-free as possible. Get ready to pack your baskets and discover your next favorite urban oasis!<br><br>### Area 1: Central Park Green<br><br>Central Park Green is the heart of our urban landscape, boasting expansive, well-maintained lawns perfect for a leisurely picnic. Its central location makes it easily accessible, and the mature trees provide ample shade for those sunny afternoons.<br><br>#### High-Quality Grasslands <br><br>Our team has meticulously scouted Central Park Green to identify the most pristine grassland areas. Look for the &quot;Picnic Perfect&quot; icon on our map, indicating soft, lush grass ideal for spreading out your blanket. These spots are regularly mowed and free from debris, ensuring a comfortable and clean experience.</p>
+        <img data-src="./assets/comparisons/a86e497216d6239abf75ee63605e276f/nano_banana_image_00000000.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>#### Restrooms <br><br>Conveniently located throughout Central Park Green, our clean and well-maintained restrooms are easily identifiable with the &quot;Restroom&quot; icon. These facilities are regularly serviced to ensure a pleasant experience for all park visitors.</p>
+        <img data-src="./assets/comparisons/a86e497216d6239abf75ee63605e276f/nano_banana_image_00000001.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>#### Trash Bins <br><br>We encourage all picnickers to help us keep our parks beautiful. You&#x27;ll find numerous &quot;Waste Disposal&quot; bins strategically placed across Central Park Green, making it easy to dispose of your picnic waste responsibly.</p>
+        <img data-src="./assets/comparisons/a86e497216d6239abf75ee63605e276f/nano_banana_image_00000002.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+      </div>
+    </div>
+    <div class="showcase-col">
+      <div class="method-name">Orthus</div>
+      <div class="method-content">
+        <p>It is time once again for the event I have been waiting for! The &quot;Urban Picnic Map&quot; event is coming to your neighborhood soon. I have a few highlights that have my attention, such as grasslands, restrooms, and trash bins. Let&#x27;s take a look at the facilities that will be offered:<br><br>* **Grasslands**<br><br>Enjoy a picnic with a difference on the beautifully manicured grasslands. The image below will show you just how inviting these areas are.</p>
+        <img data-src="./assets/comparisons/a86e497216d6239abf75ee63605e276f/orthus_image_00000000.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <img data-src="./assets/comparisons/a86e497216d6239abf75ee63605e276f/orthus_image_00000001.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <img data-src="./assets/comparisons/a86e497216d6239abf75ee63605e276f/orthus_image_00000002.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>The grasslands are perfect for those with children or pets to enjoy a picnic with them.</p>
+        <p>* **Restrooms**<br><br>For those who can&#x27;t bring their own restrooms, the ones at the &quot;Urban Picnic Map&quot; event are easily accessible and clean. The below image shows you just how modern and nice the restrooms are.</p>
+        <p>* **Trash Bins**<br>Enjoy your urban picnic with a bag full of picnic goodies and be sure to dispose of your garbage by the designated trash bins throughout the &quot;Urban Picnic Map&quot; event.</p>
+      </div>
+    </div>
+    <div class="showcase-col">
+      <div class="method-name">Emu3.5</div>
+      <div class="method-content">
+        <p>The &quot;Urban Picnic Map&quot; event is coming to the city’s most vibrant public spaces. Organizers have carefully planned the layout to ensure comfort and convenience for all attendees. The map highlights key areas with lush grasslands, strategically placed restrooms, and clearly marked trash bins to keep the event clean and enjoyable.</p>
+        <img data-src="./assets/comparisons/a86e497216d6239abf75ee63605e276f/emu35_image_00000000.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>The grasslands are a highlight of the event, offering spacious, well-maintained lawns perfect for picnics and family gatherings. Lush and inviting, they provide plenty of shade and room for blankets and games. Families and groups spread out, enjoying the fresh air and sunshine.</p>
+        <img data-src="./assets/comparisons/a86e497216d6239abf75ee63605e276f/emu35_image_00000001.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>Restrooms are strategically placed throughout the event area, ensuring easy access for all attendees. Clean and well-maintained, they feature clear signage and are staffed to assist with any needs. The goal is to provide a convenient and comfortable experience for everyone.</p>
+        <img data-src="./assets/comparisons/a86e497216d6239abf75ee63605e276f/emu35_image_00000002.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>To keep the event clean and organized, trash bins are strategically placed across the grasslands and near seating areas. Clearly labeled and easily accessible, they encourage responsible waste disposal. Volunteers are on hand to assist with collection and maintenance, ensuring the event remains enjoyable for all.</p>
+        <img data-src="./assets/comparisons/a86e497216d6239abf75ee63605e276f/emu35_image_00000003.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+      </div>
+    </div>
+    <div class="showcase-col">
+      <div class="method-name">Anole</div>
+      <div class="method-content">
+        <p>If you have any questions or need help with the language, please feel free to ask.<br><br>Happy writing! <br><br><br><br>Urban Picnic Map is coming soon! Join us in discovering the hidden treasures of our urban greenspaces this August, with the help of the below-listed features.<br><br>First, head to the beautiful Bradbury Trail and explore the riverbanks. This has easily accessible picnic areas as well as an abundance of butterflies and birds for added entertainment. Don&#x27;t forget to stop by the restrooms that line the trail, just in case! Here is a photo of the paved trail leading to one of the most idyllic picnic spots:</p>
+        <img data-src="./assets/comparisons/a86e497216d6239abf75ee63605e276f/anole_image_00000000.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>After getting your fill of green, take a stroll along the shady Prindle Park streets. Here, the grass is neatly trimmed and well-kept, with multiple picnic tables for your enjoyment. Take a look at the park below:</p>
+        <img data-src="./assets/comparisons/a86e497216d6239abf75ee63605e276f/anole_image_00000001.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>Finally, head to the second oldest park in Daphne and enjoy the beautiful views of the Mobile Bay. Located next to the water, the green spaces are inviting and open for your use. As a bonus, there are nearby restrooms for your convenience. Here is a photo of the walkway along the bay that leads to the grass:</p>
+        <img data-src="./assets/comparisons/a86e497216d6239abf75ee63605e276f/anole_image_00000002.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>I hope this article is helpful! If you have any questions or need more information, please let me know.</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="showcase-case" id="case-acdbd570f6c1a007d63fdb5eba1a5136" style="display: none;">
+  <div class="showcase-prompt">
+    <p><strong>Prompt:</strong> Generate a text-and-image educational guide titled “Beginner’s Songwriting Tutorial,”. Use the provided photo of a focused young man playing acoustic guitar in a cozy room as the central visual anchor. Structure output as alternating blocks: 1) short, encouraging instructional text (max 50 words) explaining one simple songwriting step (e.g., “Start with 4 chords you love”), followed by 2) a relevant, minimalist illustration or symbolic icon (e.g., chord diagram, musical note). Repeat this pattern 4 times. Keep all text concise, warm, and action-oriented. Ensure final layout visually alternates text and image blocks vertically.</p>
+    <div class="prompt-media">
+      <img data-src="./assets/comparisons/acdbd570f6c1a007d63fdb5eba1a5136/prompt_00.jpg" alt="Prompt image" loading="lazy" decoding="async" fetchpriority="low" />
+    </div>
+  </div>
+  <div class="showcase-grid">
+    <div class="showcase-col">
+      <div class="method-name">Wan-Weaver (Ours)</div>
+      <div class="method-content">
+        <p>Title: Beginner’s Songwriting Tutorial – 4 Steps to Your First Original Track<br><br>Step 1 – Pick a Feel-Good Key and Four Chords<br><br>Before you write a single word of lyrics, let the mood of the music lead the way. Choose a friendly key with plenty of open strings—C major is popular because it sounds bright and needs few finger contortions. Limit yourself to four chords that naturally flow together; C – G – Am – F is a classic progression used in thousands of songs. Strum slowly, listening to how each change makes you feel, and imagine the story these changes will soon tell.</p>
+        <img data-src="./assets/comparisons/acdbd570f6c1a007d63fdb5eba1a5136/weaver_image_00000001.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>Step 2 – Record a 30-Second Loop<br><br>Now that you have a catchy progression, hit the record button on your phone or laptop and capture exactly four rounds of the pattern. Loop this snippet until it plays on an endless cycle. This pocket of sound becomes your personal sonic sandbox, letting you experiment with lyrics and melodic ideas without stopping the flow.</p>
+        <img data-src="./assets/comparisons/acdbd570f6c1a007d63fdb5eba1a5136/weaver_image_00000002.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>Step 3 – Speak-Sing Your Story<br><br>With the loop bouncing in your ear, start talking through the chord changes. Tell a short, honest story: a first date, a late-night train ride, a childhood memory. Don’t worry about rhymes or perfect meter—just let natural speech rhythms ride the chords. Once the words feel genuine, begin to exaggerate inflection and timing until phrases naturally fall into melody.</p>
+        <img data-src="./assets/comparisons/acdbd570f6c1a007d63fdb5eba1a5136/weaver_image_00000003.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>Step 4 – Polish and Share<br><br>Once you have a rough melody and lyrics recorded over the loop, spend a short session refining. Smooth out awkward rhymes, trim unnecessary words, and add a bridge if you like contrast. Then export the track— even if it sounds rough—and share it with one trusted friend or a small online community. Feedback, applause, or even a single encouraging emoji will boost your confidence and spark new ideas for the next song.</p>
+        <img data-src="./assets/comparisons/acdbd570f6c1a007d63fdb5eba1a5136/weaver_image_00000004.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>Conclusion<br><br>You’ve just turned four simple chords into a fully fledged song in less time than a single episode of your favorite show. Repeat the process, experiment with new progressions, and watch your confidence and catalog grow. Remember: every hit single started as a humble loop and a scribbled idea. Keep your guitar close, your phone recorder handy, and your creative spirit open to surprise. Happy writing!</p>
+      </div>
+    </div>
+    <div class="showcase-col">
+      <div class="method-name">Nano Banana</div>
+      <div class="method-content">
+        <p>Here&#x27;s your &quot;Beginner&#x27;s Songwriting Tutorial&quot; guide, incorporating the provided image and alternating text and illustrations.<br><br>**Beginner&#x27;s Songwriting Tutorial**</p>
+        <img data-src="./assets/comparisons/acdbd570f6c1a007d63fdb5eba1a5136/nano_banana_image_00000001.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+      </div>
+    </div>
+    <div class="showcase-col">
+      <div class="method-name">Orthus</div>
+      <div class="method-content">
+        <p>oundmicms(arm���</p>
+        <img data-src="./assets/comparisons/acdbd570f6c1a007d63fdb5eba1a5136/orthus_image_00000001.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+      </div>
+    </div>
+    <div class="showcase-col">
+      <div class="method-name">Emu3.5</div>
+      <div class="method-content">
+        <p>Step 1: **Start with 4 chords you love.** Choose chords that feel comfortable under your fingers and sound good together. Imagine a simple chord diagram appearing beside the guitar player, showing the finger positions for a basic progression like C, G, Am, and F.</p>
+        <img data-src="./assets/comparisons/acdbd570f6c1a007d63fdb5eba1a5136/emu35_image_00000001.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>Step 2: **Craft a simple melody that feels right.** Imagine a musical note floating above the guitar strings, as if the player is plucking a tune that complements the chords.</p>
+        <img data-src="./assets/comparisons/acdbd570f6c1a007d63fdb5eba1a5136/emu35_image_00000002.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>Step 3: **Write a verse that tells a story or captures a feeling.** Picture a small notebook and pen beside the guitar, as if the player is jotting down lyrics while the music flows.</p>
+        <img data-src="./assets/comparisons/acdbd570f6c1a007d63fdb5eba1a5136/emu35_image_00000003.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>Step 4: **Add a chorus that repeats and sticks.** Imagine a circular arrow symbol above the guitar, indicating the cyclical nature of the chorus returning throughout the song.</p>
+        <img data-src="./assets/comparisons/acdbd570f6c1a007d63fdb5eba1a5136/emu35_image_00000004.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+      </div>
+    </div>
+    <div class="showcase-col">
+      <div class="method-name">Anole</div>
+      <div class="method-content">
+        <p>STEP 1: Start With 4 Chords You Love<br><br>STEP 2: Add More Chords and Tunes<br><br>STEP 3: Play Your Guitar<br><br>STEP 4: Create Lyrics and Melodies<br><br>Note: Each block alternates text and image, ensuring the layout remains visually cohesive and easy to read.</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="showcase-case" id="case-c107467b15c272c1570ed2db35613b9d" style="display: none;">
+  <div class="showcase-prompt">
+    <p><strong>Prompt:</strong> Analyze the model’s outfit in the picture using a combination of text and images, and provide additional outfit suggestions along with images showing the recommended clothes being worn; include an accompanying image in every section.</p>
+    <div class="prompt-media">
+      <img data-src="./assets/comparisons/c107467b15c272c1570ed2db35613b9d/prompt_00.jpg" alt="Prompt image" loading="lazy" decoding="async" fetchpriority="low" />
+    </div>
+  </div>
+  <div class="showcase-grid">
+    <div class="showcase-col">
+      <div class="method-name">Wan-Weaver (Ours)</div>
+      <div class="method-content">
+        <p>The rainy morning light bouncing off the cobblestones instantly sets a cinematic tone, and the model’s neutral palette feels perfectly attuned to that muted glow. Before we dive into alternative styling ideas, it helps to pause and observe the original ensemble in context—why it works, how it balances tailoring with ease, and where its quiet luxury truly shines.</p>
+        <img data-src="./assets/comparisons/c107467b15c272c1570ed2db35613b9d/weaver_image_00000001.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>The foundation of this outfit is its flawless use of tonal dressing. By keeping the color range within the spectrum of stone, cream, and black, the wearer achieves length and continuity, allowing the eye to glide from shoulder to hem without interruption. The blazer’s relaxed shoulders and the trousers’ fluid flare create movement, while the crisp tailoring prevents the silhouette from appearing sloppy. The gold chain necklace punctuates the monotone with a flash of warmth, and the bucket bag introduces a modern, sculptural twist. Let’s preserve that spirit of understated polish while imagining three fresh variations that respond to different moods and settings.<br><br>First, consider a cozy café afternoon when the temperature dips just enough to crave texture. Swap the black crew-neck for a fine-gauge turtleneck in a soft oatmeal shade, and slide on a rust-colored cashmere scarf that echoes the tan panel of the bag. Replace the trousers with a pair of ecru wide-leg knit pants—still elegant, but cozier against chilly air. Keep the blazer, because its structured shape contrasts beautifully with the plush knit. Finish with sock-style ankle boots in chocolate brown to ground the look.</p>
+        <img data-src="./assets/comparisons/c107467b15c272c1570ed2db35613b9d/weaver_image_00000002.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>For an art-gallery opening at dusk, elevate the original look with subtle sheen and a hint of drama. Trade the black loafers for patent leather kitten-heel mules and introduce a silk scarf in deep charcoal, tied loosely around the neck for artistic flair. Belt the blazer with a slim, matte-gold buckle to define the waist and echo the chain necklace. Switch the trousers to a satin-finish ivory fabric that catches gallery lighting with every step. Finally, tuck a compact, geometric clutch in brushed brass under one arm for a nod to modern sculpture.</p>
+        <img data-src="./assets/comparisons/c107467b15c272c1570ed2db35613b9d/weaver_image_00000003.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>Finally, imagine a weekend getaway that calls for both style and practicality. The blazer remains a hero piece, but this time it’s layered over a lightweight striped Breton tee in cream and black. The trousers give way to tailored bermuda shorts that hit just above the knee, made from the same ivory suiting fabric for continuity. Slip into white leather sneakers trimmed with tan suede to keep the palette cohesive while ensuring comfort for city exploration. Replace the structured bucket bag with a hands-free nylon crossbody in muted khaki—perfect for travel—yet retain the gold chain necklace to maintain a hint of glamour. Top it off with oversized tortoiseshell sunglasses and a straw fedora for sun protection.</p>
+        <img data-src="./assets/comparisons/c107467b15c272c1570ed2db35613b9d/weaver_image_00000004.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>Across all four looks, the through-line is a commitment to refined minimalism: clean silhouettes, elevated neutrals, and strategic pops of texture or color. Whether stepping over rain-slicked pavement, savoring a quiet latte, admiring avant-garde art, or wandering a historic square, the camel blazer and tonal palette prove endlessly versatile. By swapping fabrics, layering thoughtfully, and playing with accessories, you can transition seamlessly from workweek to weekend, from drizzle to golden hour, without ever sacrificing polish. The key takeaway? Invest in well-cut neutrals and a few statement accessories, and you’ll unlock a wardrobe that bends to every mood and setting with grace.</p>
+      </div>
+    </div>
+    <div class="showcase-col">
+      <div class="method-name">Nano Banana</div>
+      <div class="method-content">
+        <p>The model is wearing a sophisticated and stylish outfit that blends classic and contemporary elements. Here&#x27;s a breakdown:<br><br>**Outfit Analysis:**<br><br>The focal point of her outfit is a chic **beige oversized blazer**. This piece adds a touch of relaxed elegance and structure. It&#x27;s a versatile item that can be dressed up or down. Underneath, she has a simple **black crew-neck top**, providing a clean and understated base that allows the blazer and accessories to stand out. Her **light beige wide-leg trousers** offer a comfortable yet polished look, contributing to the overall relaxed tailoring. For footwear, she&#x27;s wearing **black loafers**, which are both comfortable and on-trend, tying in with the black top and adding a classic touch. The **gold chain necklace** provides a luxurious accent, elevating the outfit and drawing attention to her neckline. Finally, her **color-block handbag** (black, white, and brown) adds a modern, graphic element and a pop of contrast to the neutral tones of her clothing.</p>
+        <img data-src="./assets/comparisons/c107467b15c272c1570ed2db35613b9d/nano_banana_image_00000001.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>**Outfit Suggestion 1: Casual Chic with Denim**<br><br>To transition this look for a more casual yet still polished vibe, swap the black top for a **denim shirt** worn open over a simple white or black tank top. Pair it with **straight-leg blue jeans** and keep the **beige oversized blazer** for that effortless layering. White sneakers would be a comfortable and stylish choice for footwear, and you can retain the **gold chain necklace** for a touch of elegance. The **color-block handbag** would also complement this outfit perfectly.</p>
+        <img data-src="./assets/comparisons/c107467b15c272c1570ed2db35613b9d/nano_banana_image_00000002.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>**Outfit Suggestion 2: Dressed Up for Evening**<br><br>For an evening look, the beige oversized blazer can still be the star. Replace the black crew-neck with a **silk camisole or a fitted knit top** in a darker jewel tone like emerald green or sapphire blue. Swap the wide-leg trousers for **tailored black trousers** or even a **sleek black midi skirt**. Opt for **heeled ankle boots or classic pumps** to elevate the outfit. A more delicate, layered gold necklace or statement earrings would add a touch of glamour. Keep the **color-block handbag** for a sophisticated finish.</p>
+        <img data-src="./assets/comparisons/c107467b15c272c1570ed2db35613b9d/nano_banana_image_00000003.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+      </div>
+    </div>
+    <div class="showcase-col">
+      <div class="method-name">Orthus</div>
+      <div class="method-content">
+        <p>A</p>
+        <img data-src="./assets/comparisons/c107467b15c272c1570ed2db35613b9d/orthus_image_00000001.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>Dollars</p>
+      </div>
+    </div>
+    <div class="showcase-col">
+      <div class="method-name">Emu3.5</div>
+      <div class="method-content">
+        <p>To enhance the outfit, consider adding a tailored navy blazer over a white blouse for a professional yet chic look, or a pastel pink blazer over a cream top paired with light blue jeans for a more casual and vibrant style.&lt;|extra_61|&gt;To enhance the outfit, consider adding a tailored navy blazer over a white blouse for a professional yet chic look, or a pastel pink blazer over a cream top paired with light blue jeans for a more vibrant and casual style.&lt;|extra_61|&gt;The model is wearing a beige blazer over a black top, paired with high-waisted beige trousers and black loafers. The ensemble is accessorized with a chunky gold chain necklace and a large tote bag with a geometric pattern. The outfit combines neutral tones with a touch of boldness from the accessories. For outfit suggestions, consider adding a tailored navy blazer over a white blouse for a professional yet chic look, or a pastel pink blazer over a cream top paired with light blue jeans for a more casual and vibrant style.</p>
+        <img data-src="./assets/comparisons/c107467b15c272c1570ed2db35613b9d/emu35_image_00000001.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>The model is wearing a beige blazer over a black top, paired with high-waisted beige trousers and black loafers. The ensemble is accessorized with a chunky gold chain necklace and a large tote bag with a geometric pattern. The outfit combines neutral tones with a touch of boldness from the accessories. For outfit suggestions, consider adding a tailored navy blazer over a white blouse for a professional yet chic look, or a pastel pink blazer over a cream top paired with light blue jeans for a more casual and vibrant style.</p>
+        <img data-src="./assets/comparisons/c107467b15c272c1570ed2db35613b9d/emu35_image_00000002.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+      </div>
+    </div>
+    <div class="showcase-col">
+      <div class="method-name">Anole</div>
+      <div class="method-content">
+        <p>An outfit like the one displayed in the provided image might be worn to a bridal shower or a similar celebration. It features a white or cream-colored sundress or a dressy top and pants. For shoes, choose a pair of flat sandals, ballet flats, or high heels. The outfit includes a long jacket or a wrap blazer that can be worn casually over the dress or tucked in, and a matching scarf or tie to add a pop of color. Adding some jewellery such as a necklace or bracelet can complete the look. <br><br>Here are some additional outfit suggestions for various occasions:<br><br>* **Business casual:** Pair the sundress or dressy top with a blazer or cardigan, black pants or skirts, and comfortable shoes like loafers or flats. Accessorize with a watch, a simple necklace, and some jewelry.<br>* **Dates:** Dress up the outfit with a leather jacket or a fitted blazer, and add some trendy accessories like a statement bag or a bold watch.<br>* **Weekend:** Dress down the outfit with a pair of denim jeans and a graphic tee, and add some casual footwear like sneakers or sneaker boots.<br>* **Casual events:** Wear the outfit casually with a pair of sneakers or loafers, and add a casual accessory like a baseball cap or a beanie.<br><br>This image shows a woman dressed in a sleek, low-rise sundress with a form-fitting bodice and a gathered waistline, paired with a cropped jacket and a pair of sleek ankle boots.</p>
+        <img data-src="./assets/comparisons/c107467b15c272c1570ed2db35613b9d/anole_image_00000001.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+      </div>
+    </div>
+  </div>
+</div>
+<div class="showcase-case" id="case-836c821fb34a49f363df8e228148dd42" style="display: none;">
+  <div class="showcase-prompt">
+    <p><strong>Prompt:</strong> Using the given image, craft a durian pizza-themed piece where vivid descriptions dance with illustrative images, words and visuals woven together to make the reader taste and see each step.</p>
+    <div class="prompt-media">
+      <img data-src="./assets/comparisons/836c821fb34a49f363df8e228148dd42/prompt_00.jpg" alt="Prompt image" loading="lazy" decoding="async" fetchpriority="low" />
+    </div>
+  </div>
+  <div class="showcase-grid">
+    <div class="showcase-col">
+      <div class="method-name">Wan-Weaver (Ours)</div>
+      <div class="method-content">
+        <p>When people first hear the phrase “durian pizza,” their reactions tend to fall into two camps: intrigued curiosity or skeptical disbelief. The fruit’s notorious aroma is legendary, but when handled thoughtfully, durian can transform into a creamy, custard-like sweetness that pairs beautifully with molten cheese and aromatic herbs. In this article, we will explore the history, science, and culinary artistry behind this unusual pie, and we will imagine how each stage might look through the lens of a wandering photographer. So, sharpen your paring knives and your senses alike—our journey into the spiky heart of flavor begins now.<br><br>To appreciate durian pizza, one must understand the fruit’s cultural significance. In many parts of Southeast Asia, durian is not merely a food but a cultural icon, affectionately nicknamed the “king of fruits.” Its seasonal arrival is celebrated in night markets, where families gather to crack open the formidable husks and revel in the golden flesh within. Transplanting that same custard-rich pulp onto a pizza crust is a modern twist that bridges tradition and innovation, inviting diners to experience comfort and surprise in a single bite.</p>
+        <img data-src="./assets/comparisons/836c821fb34a49f363df8e228148dd42/weaver_image_00000001.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>The first bite of durian pizza often surprises even skeptics with its subtlety. The pungent sulfur compounds that dominate raw durian are mellowed by oven heat, leaving behind velvety sweetness reminiscent of custard apple with a whisper of almond. As the cheese melts, it binds the durian pieces into a creamy river that flows over the crust, preventing the pie from becoming dry or grainy. A sprinkle of fresh basil or Thai holy basil tempers the sweetness with herbal lift, while a drizzle of chili-infused honey at the end adds a faint smokiness that plays against the fruit’s natural cloying finish.<br><br>Creating the perfect crust for this pizza requires a slight tweak to conventional dough. Because durian contains roughly 40–50 % water, the dough’s hydration must be reduced so that the base does not turn gummy. A touch of semolina or rye flour lends enough structure to stand against the creamy topping, while a short, cold ferment develops flavor without over-inflating the crumb. When stretched correctly, the dough should resemble a thin, supple canvas that can still blister at high temperatures.</p>
+        <img data-src="./assets/comparisons/836c821fb34a49f363df8e228148dd42/weaver_image_00000002.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>Science offers an interesting footnote: durian’s natural glutamates act as hidden umami boosters, amplifying the savory notes of aged cheeses. This synergy means you can actually reduce the salt content of the pizza by a pinch without sacrificing depth. For home cooks, that revelation can be liberating; fewer seasonings are needed when the produce itself contains built-in flavor amplifiers. The key is to keep the additional ingredients restrained so the fruit can sing.<br><br>Once the dough has proofed, preheat the oven to its hottest safe temperature—ideally 260 °C (500 °F) or higher. A screaming-hot surface promotes rapid steam expansion, giving the crust its coveted lift. Spread a thin layer of tomato-free garlic miso paste for umami complexity, then dot the surface with cubes of ripe durian. Finally, blanket the pie with mozzarella, a touch of ricotta, and a shower of finely grated parmesan. The parmesan caramelizes last, creating browned speckles that lend visual drama and nutty depth.</p>
+        <img data-src="./assets/comparisons/836c821fb34a49f363df8e228148dd42/weaver_image_00000003.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>Baking takes roughly eight minutes, but watch closely after the six-minute mark. The crust’s perimeter will develop a sandy crunch, and the cheese will begin to blister around the durian, forming tiny golden halos. Slide the pizza onto a wooden peel, drizzle a teaspoon of chili honey over the top, and garnish with torn basil leaves. Allow the pie to rest for two minutes; this brief pause lets molten cheese thicken slightly, preventing it from spilling out when sliced.<br><br>Serving durian pizza is an experience in sensory contrasts. The visual is familiar—golden cheese, crisp crust—yet the aroma whispers of night markets and tropical groves. Guests who once dismissed durian as too “pungent” find themselves reaching for a second slice, lured by its mellowed sweetness and creamy texture. Pair the pizza with a chilled glass of off-dry Riesling; its stone-fruit notes echo the durian’s flavor while taming its intensity. Alternatively, a cold-brewed Thai tea with a splash of coconut milk creates a casual, refreshing counterpoint.</p>
+        <img data-src="./assets/comparisons/836c821fb34a49f363df8e228148dd42/weaver_image_00000004.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>Ultimately, durian pizza is more than a novelty; it is a testament to culinary curiosity. By embracing ingredients that challenge our expectations, we expand the map of what comfort food can be. The spiky exterior of the fruit may seem forbidding, but inside lies a silky treasure that, when united with the universal language of cheese and dough, tells a story of harmony between cultures and flavors. The next time someone raises an eyebrow at the mention of durian, invite them to share a slice instead of an argument. You may find that skepticism melts away just as quickly as cheese in a hot oven, leaving behind a surprising, shared delight.</p>
+      </div>
+    </div>
+    <div class="showcase-col">
+      <div class="method-name">Nano Banana</div>
+      <div class="method-content">
+        <p>Imagine a culinary creation that challenges the very boundaries of conventional taste: the durian pizza. It begins with a perfectly baked crust, golden and slightly crispy, acting as the foundation for this adventurous dish.</p>
+        <img data-src="./assets/comparisons/836c821fb34a49f363df8e228148dd42/nano_banana_image_00000001.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>Nestled atop this base, instead of traditional tomato sauce, is a layer of rich, creamy durian pulp. Its distinct aroma, often described as a mix of sweet and savory, fills the air even before the first bite. The pulp, a pale yellow, is spread generously, promising a burst of flavor in every slice.<br><br>Then comes the cheese—a golden, bubbly blanket that melts harmoniously with the durian. The cheese, slightly browned in places, offers a beautiful contrast to the soft fruit underneath.</p>
+        <img data-src="./assets/comparisons/836c821fb34a49f363df8e228148dd42/nano_banana_image_00000002.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+      </div>
+    </div>
+    <div class="showcase-col">
+      <div class="method-name">Orthus</div>
+      <div class="method-content">
+        <p>�3</p>
+        <img data-src="./assets/comparisons/836c821fb34a49f363df8e228148dd42/orthus_image_00000001.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>Abstract blur, soft focus, bokeh image from a windows looking outside</p>
+      </div>
+    </div>
+    <div class="showcase-col">
+      <div class="method-name">Emu3.5</div>
+      <div class="method-content">
+        <p>The aroma of durian filled the cozy kitchen as I prepared my durian pizza. Fresh durian flesh, its creamy yellow custard-like texture, sat in a bowl beside a ball of pizza dough dusted with flour. Sunlight streamed through the window, catching the spiky green durian shells stacked on the counter. I imagined the contrast of the savory crust and the sweet, pungent durian.</p>
+        <img data-src="./assets/comparisons/836c821fb34a49f363df8e228148dd42/emu35_image_00000001.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>I carefully spread the durian custard over the pizza dough, its rich, custardy scent filling the air. The creamy yellow filling dotted with tiny black seeds created a striking contrast against the pale dough. I arranged fresh durian segments around the edge, their golden flesh glistening like jewels.</p>
+        <img data-src="./assets/comparisons/836c821fb34a49f363df8e228148dd42/emu35_image_00000002.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>I slid the durian pizza into the preheated oven, watching as the crust turned golden brown and the durian topping bubbled and caramelized. The kitchen filled with a sweet, savory aroma. I could almost taste the creamy durian, its pungent flavor mellowed by the heat.</p>
+        <img data-src="./assets/comparisons/836c821fb34a49f363df8e228148dd42/emu35_image_00000003.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>Finally, the durian pizza was ready. I sliced it into wedges, the golden crust yielding easily to the knife. The aroma was intoxicating—sweet, creamy, and subtly pungent. I took a bite, and the flavors exploded on my tongue: the crisp crust, the rich durian custard, and the lingering hint of durian seeds. It was a unique, unforgettable pizza experience.</p>
+        <img data-src="./assets/comparisons/836c821fb34a49f363df8e228148dd42/emu35_image_00000004.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>I kneaded the durian-infused pizza dough, its sweet, pungent aroma filling the kitchen. Sunlight streamed through the window, catching the golden specks of durian seeds in the soft, elastic dough. I imagined the contrast of the savory crust with the creamy durian topping.</p>
+        <img data-src="./assets/comparisons/836c821fb34a49f363df8e228148dd42/emu35_image_00000005.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>I spread a layer of creamy durian custard over the pizza dough, its rich, custardy scent filling the air. The golden-yellow filling dotted with tiny black seeds created a striking contrast against the pale dough. I arranged fresh durian segments around the edge, their golden flesh glistening like jewels.</p>
+        <img data-src="./assets/comparisons/836c821fb34a49f363df8e228148dd42/emu35_image_00000006.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>I slid the durian pizza into the preheated oven, watching as the crust turned golden brown and the durian topping bubbled and caramelized. The kitchen filled with a sweet, savory aroma. I could almost taste the creamy durian, its pungent flavor mellowed by the heat.</p>
+        <img data-src="./assets/comparisons/836c821fb34a49f363df8e228148dd42/emu35_image_00000007.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>Finally, the durian pizza was ready. I sliced it into wedges, the golden crust yielding easily to the knife. The aroma was intoxicating—sweet, creamy, and subtly pungent. I took a bite, and the flavors exploded on my tongue: the crisp crust, the rich durian custard, and the lingering hint of durian seeds. It was a unique, unforgettable pizza experience.</p>
+        <img data-src="./assets/comparisons/836c821fb34a49f363df8e228148dd42/emu35_image_00000008.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+      </div>
+    </div>
+    <div class="showcase-col">
+      <div class="method-name">Anole</div>
+      <div class="method-content">
+        <p>The durian king slumbering in the photo, its iconic spikes protecting the kingdom within. The plump body, a treasure trove of flavor and fragrance, waiting to be unleashed. As I cut into its velvety embrace, a wave of delight washes over me. The first bite bursts with aroma, filling the air with the intoxicating scent of durian. Sweet and savory, with hints of nuts and spice. The flesh is smooth and creamy, gliding effortlessly onto my tongue. Each bite reveals a different flavor profile, a journey through a world of sensations. The flavors meld together in perfect harmony, a symphony of taste and texture. Each bite is a celebration of the durian&#x27;s glory. &lt;/BEGIN&gt;</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="showcase-case" id="case-fa02905cc24fdce4939b87a269fe6900" style="display: none;">
+  <div class="showcase-prompt">
+    <p><strong>Prompt:</strong> Please use the hero image of the shiitake mushroom beef sauce as the centerpiece to craft a compelling culinary promotional article for this condiment. The piece should comprehensively introduce its carefully selected ingredients, distinctive production process, rich flavor profile, and diverse usage scenarios. Seamlessly weave in four images throughout the article; each should, from different angles, showcase the jar design, detailed quality cues of the core ingredients, the sauce’s enticing texture, and its limitless pairing possibilities with various dishes. The overall style must be appetizing, inspiring readers’ desire to purchase and try.</p>
+    <div class="prompt-media">
+      <img data-src="./assets/comparisons/fa02905cc24fdce4939b87a269fe6900/prompt_00.jpg" alt="Prompt image" loading="lazy" decoding="async" fetchpriority="low" />
+    </div>
+  </div>
+  <div class="showcase-grid">
+    <div class="showcase-col">
+      <div class="method-name">Wan-Weaver (Ours)</div>
+      <div class="method-content">
+        <p>Few condiments can promise to transform an ordinary meal into a feast with the effortless sweep of a spoon, yet a single taste of Yi-Bo’s Shiitake Mushroom Beef Sauce reveals why seasoned chefs and home cooks alike swear by its magic. At first glance, the jar seems to glow with a deep amber hue, hinting at layers of umami waiting to unfold. What began as a family recipe in a small mountain workshop has now become a modern classic, marrying traditional slow-cooking wisdom with meticulous food-science standards. In the paragraphs that follow, we will trace the journey from farm to jar, explore the craftsmanship behind each batch, and discover creative ways to let this sauce shine on your table.</p>
+        <img data-src="./assets/comparisons/fa02905cc24fdce4939b87a269fe6900/weaver_image_00000001.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>The heart of this sauce lies in three pillars: non-GMO yellow soybeans harvested at 14 % moisture, premium imported beef chuck, and sun-dried shiitake mushrooms cultivated in fog-kissed mountain valleys. The soybeans lend a creamy, nutty foundation, while the beef contributes gelatin-rich bites that melt in the mouth. Mushrooms, meanwhile, infuse every drop with a woodland perfume that can’t be replicated by artificial flavorings. Before reaching the pot, each bean is soaked for exactly ten hours to maximize protein availability, and every beef strip undergoes a low-temperature blanching that locks in moisture. The result is a condiment that tastes honest—never harsh—and layered, rather than one-dimensionally spicy.</p>
+        <img data-src="./assets/comparisons/fa02905cc24fdce4939b87a269fe6900/weaver_image_00000002.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>Flavor, however, is only half the story; versatility completes the tale. A pea-sized dab can elevate plain congee from bland to brilliant, while two teaspoons will give a humble omelet the depth of a gourmet brunch. For stir-fries, the sauce performs double duty: its soybean paste grips onto the pan, forming a caramelized base, and its red oil coats every vegetable shard with glossy sheen. Adventurous grillers have even mixed it into yakitori skewers, discovering that the mushroom’s natural sugars create a perfect char while the beef pieces add smoky bite. Vegans need not feel excluded—simply spread a thin layer on warm toast and top with a fried egg for a plant-forward treat that tricks even the most carnivorous palates.</p>
+        <img data-src="./assets/comparisons/fa02905cc24fdce4939b87a269fe6900/weaver_image_00000003.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>Beyond the dinner table, Yi-Bo’s sauce has become a sought-after gift for food lovers. The label’s retro design evokes nostalgia for old-town markets, yet its minimalist typography aligns with modern aesthetics, making it an ideal souvenir or housewarming present. Inside the company’s production facility, glass walls allow visitors to watch as each batch is cooked in small copper kettles, then cooled in revolving racks that maintain temperature integrity. Every jar passes a three-point quality check: viscosity, microbial safety, and flavor consistency. Only after clearing these hurdles does it receive the final seal that customers see on store shelves. This transparency fosters trust and, more importantly, guarantees that the sauce in your pantry mirrors the sample you tasted in the showroom.</p>
+        <img data-src="./assets/comparisons/fa02905cc24fdce4939b87a269fe6900/weaver_image_00000004.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>As the final wisps of steam drift from the skillet, one truth becomes clear: Yi-Bo’s Shiitake Mushroom Beef Sauce is more than a condiment—it is a passport to culinary creativity. Whether you are a busy professional seeking quick flavor fixes or a weekend experimentalist chasing new horizons, this jar promises to shorten prep time without sacrificing depth. Keep one in the fridge, another in your desk drawer, and a third in your travel bag; the first spoonful you take will convert skeptics, and the many that follow will remind loyalists why they keep coming back. Taste, after all, is the best argument—and in this case, it speaks fluently to every palate it meets.</p>
+      </div>
+    </div>
+    <div class="showcase-col">
+      <div class="method-name">Nano Banana</div>
+      <div class="method-content">
+        <p>Are you ready to elevate your culinary experience? Introducing **&quot;Jiang Yi Bo Shiitake Mushroom Beef Sauce&quot;** – a gourmet condiment crafted to transform your everyday meals into extraordinary feasts. With its rich aroma and exquisite taste, this sauce is more than just an ingredient; it&#x27;s an invitation to a world of flavor.<br><br>At the heart of Jiang Yi Bo lies an unwavering commitment to quality. We meticulously select only the finest ingredients, ensuring every spoonful delivers a burst of authentic taste. Our sauce features succulent, imported beef, renowned for its tender texture and deep, savory notes. This premium beef is perfectly complemented by carefully chosen shiitake mushrooms, prized for their earthy fragrance and umami richness. These core ingredients are harmoniously blended with a secret mix of traditional spices, creating a flavor profile that is both complex and incredibly satisfying.</p>
+        <img data-src="./assets/comparisons/fa02905cc24fdce4939b87a269fe6900/nano_banana_image_00000001.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+      </div>
+    </div>
+    <div class="showcase-col">
+      <div class="method-name">Orthus</div>
+      <div class="method-content">
+        <p>�    ’]*</p>
+        <img data-src="./assets/comparisons/fa02905cc24fdce4939b87a269fe6900/orthus_image_00000001.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>Abstract fractal illustration looks like a bright flame that consists of multicolored rays</p>
+      </div>
+    </div>
+    <div class="showcase-col">
+      <div class="method-name">Emu3.5</div>
+      <div class="method-content">
+        <p>The rich, earthy aroma of shiitake mushrooms and aged beef fills the air as a small, family-run kitchen hums with the careful crafting of a beloved condiment: Shiitake Mushroom Beef Sauce. Made from only the finest ingredients, each batch is a testament to generations of culinary tradition. The sauce begins with hand-picked shiitake mushrooms, their deep, glossy caps simmered slowly to release their umami essence. Aged beef, carefully marinated in a blend of spices and herbs, is then added, its rich flavor melding seamlessly with the mushrooms. The slow-cooking process allows the flavors to deepen and harmonize, resulting in a sauce that is both complex and comforting.</p>
+        <img data-src="./assets/comparisons/fa02905cc24fdce4939b87a269fe6900/emu35_image_00000001.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>The sauce is a rich, glossy brown, thick and velvety, clinging to the spoon as it’s lifted. The aroma is a harmonious blend of earthy mushrooms and savory beef, with subtle hints of garlic and ginger. It’s not just a condiment—it’s a flavor enhancer, elevating simple dishes to something extraordinary. Imagine drizzling it over stir-fried vegetables, adding depth to grilled meats, or using it as a dipping sauce for dumplings. Its versatility is matched only by its bold taste.</p>
+        <img data-src="./assets/comparisons/fa02905cc24fdce4939b87a269fe6900/emu35_image_00000002.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>Whether you&#x27;re a seasoned chef or a home cook looking to elevate your meals, Shiitake Mushroom Beef Sauce is a must-have. Its rich, complex flavor and versatility make it a staple in any kitchen. So why wait? Open a jar and let the delicious journey begin.</p>
+        <img data-src="./assets/comparisons/fa02905cc24fdce4939b87a269fe6900/emu35_image_00000003.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+      </div>
+    </div>
+    <div class="showcase-col">
+      <div class="method-name">Anole</div>
+      <div class="method-content">
+        <p>Introducing our newest culinary addition: Shiitake Mushroom Beef Sauce! This premium condiment, expertly crafted from carefully selected ingredients and masterfully crafted using traditional techniques, promises a rich and indulgent flavor experience that will enhance your dining experience like never before. But what sets our Shiitake Mushroom Beef Sauce apart from the rest? <br><br>**Ingredients:**<br><br>1. Shiitake Mushrooms: The heart of our sauce, these luxurious mushrooms are carefully selected for their superior taste, texture, and nutritional value. Our Shiitake Mushrooms are grown without the use of harmful chemicals or pesticides, ensuring that every bite delivers maximum flavor and health benefits. <br><br>2. Katsuo Bonito (Japanese Dried Fish): Katsuo Bonito adds a depth of umami flavor to our sauce, making it the perfect complement to a variety of dishes. Our Katsuo Bonito is hand-picked for its optimal quality and taste, ensuring that every bite is bursting with flavor.<br><br>3. Soy Sauce: Made from fermented soybeans, our soy sauce adds a tangy, savory flavor to our sauce, making it perfect for using on meats, vegetables, and noodles. We only use the finest soybeans and traditional fermentation techniques to ensure that every batch of soy sauce is rich and creamy.<br><br>4. Shaoxing Wine: A key ingredient in many Chinese cooking techniques, Shaoxing Wine adds a subtle sweetness and depth of flavor to our sauce. Made from fermented glutinous rice and wheat, our Shaoxing Wine has a complex, mellow flavor that complements a wide range of dishes. <br><br>**Production Process:**<br><br>1. Shiitake Mushroom Selection: Our Shiitake Mushrooms are carefully selected for their superior taste, texture, and nutritional value. They are grown without the use of harmful chemicals or pesticides, ensuring that every bite delivers maximum flavor and health benefits.<br><br>2. Katsuo Bonito Hand-picking: Our Katsuo Bonito is hand-picked for its optimal quality and taste. We only use the finest katsuo bonito, which is then carefully chopped and blended with other ingredients.<br><br>3. Soy Sauce Fermentation: Our soy sauce is made from fermented soybeans, which are carefully selected for their optimal quality and taste. The soybeans are then fermented using traditional techniques to create a rich, creamy sauce that is perfect for using on meats, vegetables, and noodles.<br><br>4. Shaoxing Wine Fermentation: Our Shaoxing Wine is made from fermented glutinous rice and wheat, which are carefully selected for their optimal quality and taste. The glutinous rice and wheat are then fermented using traditional techniques to create a complex, mellow flavor that complements a wide range of dishes. <br><br>**Flavor Profile:**<br><br>Our Shiitake Mushroom Beef Sauce has a rich, indulgent flavor that will enhance your dining experience like never before. The combination of the luxurious Shiitake Mushrooms, Katsuo Bonito, and Shaoxing Wine creates a depth of umami flavor that complements a wide range of dishes. The added soy sauce and Shaoxing Wine add a tangy, savory flavor that pairs perfectly with meats, vegetables, and noodles.<br><br>**Usage Scenarios:**<br><br>Our Shiitake Mushroom Beef Sauce is perfect for enhancing the flavor of a variety of dishes. Here are some of the best usage scenarios:<br><br>1. Stir-Fries: Our sauce pairs perfectly with stir-fries, adding a depth of flavor to dishes like beef, chicken, pork, or tofu.<br>2. Noodles: Our sauce can be used as a marinade or as a dipping sauce for noodles, adding a rich, indulgent flavor to your meal.<br>3. Beef Dishes: Our sauce is perfect for adding flavor to beef dishes, like beef stir-fries, stir-fried beef with vegetables, or beef and vegetable soups.<br>4. Vegetable Dishes: Our sauce can be used to add flavor to vegetable dishes, like stir-fried vegetables, vegetable stir-fries, or vegetable soups.<br>5. Salads: Our sauce can be used as a marinade for grilled meats, like chicken or steak, and can also be used as a dipping sauce for salads.<br><br>**Final Thoughts**<br><br>At [Brand], we believe that every bite should be a delicious and satisfying experience. That&#x27;s why we take pride in crafting our Shiitake Mushroom Beef Sauce using only the finest ingredients and traditional techniques. With its rich, indulgent flavor and diverse usage scenarios, our sauce is the perfect addition to your next meal. So why wait? Try our Shiitake Mushroom Beef Sauce today and experience the difference for yourself.</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="showcase-case" id="case-d8738dff2c2b584a180bc625054e2c3c" style="display: none;">
+  <div class="showcase-prompt">
+    <p><strong>Prompt:</strong> what does the red arrow see? Try to analysize and generate the answer in a text-image-interleaved format article</p>
+    <div class="prompt-media">
+      <img data-src="./assets/comparisons/d8738dff2c2b584a180bc625054e2c3c/prompt_00.jpg" alt="Prompt image" loading="lazy" decoding="async" fetchpriority="low" />
+    </div>
+  </div>
+  <div class="showcase-grid">
+    <div class="showcase-col">
+      <div class="method-name">Wan-Weaver (Ours)</div>
+      <div class="method-content">
+        <p>The San Francisco Bay is a region of immense natural beauty, rich history, and vibrant urban life. A closer look at its geography reveals a tapestry of coastal defenses, scenic overlooks, and bustling cityscapes. The map below provides a high-level overview of this dynamic area, highlighting key locations and the intricate relationship between land and water.</p>
+        <img data-src="./assets/comparisons/d8738dff2c2b584a180bc625054e2c3c/weaver_image_00000001.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>The red arrow on our map points directly towards a mysterious, fingerprint-like pattern situated in the vast expanse of the Golden Gate. This visual cue invites us to delve deeper into what lies within that specific maritime zone. Is it a geological anomaly, a hidden current, or perhaps a symbolic representation of something more profound? To understand this, we must first consider the broader context of the Golden Gate, a strait that has captivated explorers, engineers, and artists for centuries.<br><br>The Golden Gate is a strait connecting the San Francisco Bay to the Pacific Ocean. It is considered one of the most potent and historically significant landmarks of San Francisco, California. The iconic Golden Gate Bridge spans this strait, famously linking the city with Marin County. The area is renowned for its challenging sailing conditions, strong currents, and dense fogs, which have contributed to its mystique and the numerous tales of maritime adventure and peril. Understanding the natural forces at play here is crucial to interpreting any unusual features within its waters.</p>
+        <img data-src="./assets/comparisons/d8738dff2c2b584a180bc625054e2c3c/weaver_image_00000002.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>Given the geographical context, the fingerprint pattern could represent several phenomena. One intriguing possibility is a unique oceanographic feature. The San Francisco Bay is known for its complex system of tides and currents, driven by the immense volume of water flowing in and out twice a day. This dynamic hydrodynamics can sometimes create unusual surface patterns, eddies, or vortices, especially in constricted areas like the Golden Gate. These natural formations, while often invisible to the naked eye, can be detected and visualized through satellite imagery or specialized oceanographic mapping, potentially manifesting as concentric rings or swirling textures on the water&#x27;s surface.<br><br>Alternatively, the fingerprint could be a stylized representation of an archaeological discovery or a geological formation beneath the bay&#x27;s surface. The waters of the Golden Gate have witnessed countless historical events, including naval maneuvers and the passage of countless ships over centuries. It&#x27;s not unimaginable that a submerged ancient structure, a significant shipwreck, or a unique geological formation could exist there, and the fingerprint could be a scientific visualization of its topography or magnetic signature.</p>
+        <img data-src="./assets/comparisons/d8738dff2c2b584a180bc625054e2c3c/weaver_image_00000003.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>Another compelling interpretation is that the fingerprint pattern signifies a zone of intense biological activity. The San Francisco Bay is home to a rich and diverse marine ecosystem. Upwelling zones, where cold, nutrient-rich water rises to the surface, are critical for supporting abundant plankton, which in turn forms the base of the marine food web. This can sometimes create visible patterns in satellite imagery, particularly when observing chlorophyll concentrations or sea surface temperature anomalies. The fingerprint could thus be a visual representation of a particularly vibrant and productive patch of ocean, a biological hotspot teeming with life, from microscopic organisms to larger marine mammals attracted to the food source.<br><br>Regardless of its precise scientific or geographical meaning, the visual impact of the fingerprint pattern invites contemplation. It serves as a reminder of the hidden complexities and intricate systems that underpin our natural world, even in well-trodden areas like the San Francisco Bay. The interplay of land, sea, and human endeavor in this region creates a constantly evolving landscape, both above and below the water.</p>
+        <img data-src="./assets/comparisons/d8738dff2c2b584a180bc625054e2c3c/weaver_image_00000004.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>In conclusion, the &quot;fingerprint&quot; seen by the red arrow on our initial map is a fascinating focal point that encourages us to look beyond the surface. Whether it represents a unique current, a submerged geological feature, or a biological hotspot, it underscores the dynamic and multifaceted nature of the San Francisco Bay. This area, famous for its iconic landmarks, holds countless secrets beneath its waves, waiting to be discovered and understood, reminding us that even in well-charted territories, there is always more to explore and appreciate.</p>
+      </div>
+    </div>
+    <div class="showcase-col">
+      <div class="method-name">Nano Banana</div>
+      <div class="method-content">
+        <p>The red arrow is pointing towards the Pacific Ocean, specifically in the area just outside the Golden Gate, to the west of the Golden Gate Bridge.<br><br>This area is characterized by:<br><br>*   **Open Water:** It&#x27;s the vast expanse of the Pacific Ocean where the San Francisco Bay meets the sea.<br>*   **Strong Currents:** The currents here can be very strong due to the tidal flow in and out of the Golden Gate.<br>*   **Shipping Lanes:** This is a major entry and exit point for ships heading into and out of the Port of San Francisco and other Bay Area ports.<br>*   **Marine Wildlife:** Various marine animals, including birds, seals, and sometimes whales, can be found in these waters.<br>*   **Fog:** The outer coast of San Francisco, including this area, is often shrouded in dense fog, especially during the summer months.<br><br>Here&#x27;s an image that captures the essence of what the red arrow &quot;sees&quot;:</p>
+        <img data-src="./assets/comparisons/d8738dff2c2b584a180bc625054e2c3c/nano_banana_image_00000001.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+      </div>
+    </div>
+    <div class="showcase-col">
+      <div class="method-name">Orthus</div>
+      <div class="method-content">
+        <img data-src="./assets/comparisons/d8738dff2c2b584a180bc625054e2c3c/orthus_image_00000001.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>Abstract artistic image of an old door surrounded by a blurred image.</p>
+      </div>
+    </div>
+    <div class="showcase-col">
+      <div class="method-name">Emu3.5</div>
+      <div class="method-content">
+        <p>Step 1: The red arrow points towards a coastal area near the intersection of Telegraph Avenue and El Camino Real, between Berkeley and Oakland, California.</p>
+        <img data-src="./assets/comparisons/d8738dff2c2b584a180bc625054e2c3c/emu35_image_00000001.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>Step 2: Based on the arrow&#x27;s direction and the surrounding landmarks, the red arrow likely shows a view of the coastline, with the shoreline and possibly some waterfront parks or buildings visible.</p>
+        <img data-src="./assets/comparisons/d8738dff2c2b584a180bc625054e2c3c/emu35_image_00000002.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+        <p>Step 3: The area appears to be a mix of residential neighborhoods, commercial buildings, and green spaces, with the coastline providing a distinct boundary between the land and the water.</p>
+        <img data-src="./assets/comparisons/d8738dff2c2b584a180bc625054e2c3c/emu35_image_00000003.jpg" alt="Generated image" loading="lazy" decoding="async" fetchpriority="low" />
+      </div>
+    </div>
+    <div class="showcase-col">
+      <div class="method-name">Anole</div>
+      <div class="method-content">
+      </div>
+    </div>
+  </div>
+</div>
+      </div>
+    </section>
+
+    <section id="overview">
+      <h2>Method Overview</h2>
+      <img class="half-width-img" src="./assets/overview_paper.png" alt="Architecture Overview" loading="lazy" decoding="async" fetchpriority="low" />
+      <p style="max-width: 1000px; margin: 0 auto; text-align: center; color: var(--text-light); font-size: 1.1rem;">
+        Wan-Weaver decomposes interleaved generation into textual planning and visual consistency modeling. The planner is trained on textual-proxy data to generate dense visual guidance, while the visualizer is trained on reference-guided data to ensure visual consistency across the generated sequence.
+      </p>
+    </section>
+
+    <section id="results-opening">
+      <h2>Quantitative Results: Interleaved Generation</h2>
+      <p style="margin-bottom: 20px; color: var(--text-light);">Results on the OpenING Benchmark for interleaved generation.</p>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th style="text-align:left">Method</th>
+              <th>Completeness</th>
+              <th>Quality</th>
+              <th>Richness</th>
+              <th>Correctness</th>
+              <th>Human Align.</th>
+              <th>IT Coherency</th>
+              <th>Multi-step Consist.</th>
+              <th>Overall</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="text-align:left">NExT-GPT</td>
+              <td>3.89</td><td>4.25</td><td>3.35</td><td>3.61</td><td>5.35</td><td>3.32</td><td>3.85</td><td>3.95</td>
+            </tr>
+            <tr>
+              <td style="text-align:left">MiniGPT-5</td>
+              <td>3.91</td><td>4.50</td><td>3.61</td><td>3.63</td><td>5.51</td><td>3.56</td><td>4.10</td><td>4.12</td>
+            </tr>
+            <tr>
+              <td style="text-align:left">Orthus</td>
+              <td>4.43</td><td>4.30</td><td>3.71</td><td>4.15</td><td>4.80</td><td>3.51</td><td>4.20</td><td>4.16</td>
+            </tr>
+            <tr>
+              <td style="text-align:left">Show-o</td>
+              <td>4.37</td><td>4.79</td><td>3.83</td><td>3.76</td><td>5.78</td><td>4.04</td><td>4.33</td><td>4.41</td>
+            </tr>
+            <tr>
+              <td style="text-align:left">VILA-U</td>
+              <td>5.60</td><td>5.14</td><td>4.68</td><td>4.78</td><td>5.69</td><td>4.74</td><td>4.79</td><td>5.06</td>
+            </tr>
+            <tr>
+              <td style="text-align:left">SEED-LLaMA</td>
+              <td>5.59</td><td>5.50</td><td>4.61</td><td>4.59</td><td>6.50</td><td>4.43</td><td>5.13</td><td>5.19</td>
+            </tr>
+            <tr>
+              <td style="text-align:left">Anole</td>
+              <td>6.27</td><td>6.02</td><td>5.28</td><td>5.06</td><td>6.91</td><td>4.90</td><td>5.81</td><td>5.75</td>
+            </tr>
+            <tr>
+              <td style="text-align:left">Emu3</td>
+              <td>5.90</td><td>5.96</td><td>5.52</td><td>5.43</td><td>6.47</td><td>5.66</td><td>5.37</td><td>5.76</td>
+            </tr>
+            <tr>
+              <td style="text-align:left">SEED-X</td>
+              <td>5.65</td><td>6.07</td><td>4.92</td><td>5.77</td><td>7.03</td><td>5.72</td><td>5.72</td><td>5.84</td>
+            </tr>
+            <tr>
+              <td style="text-align:left">Gemini+Flux</td>
+              <td>7.58</td><td>7.26</td><td>6.48</td><td>7.03</td><td>7.98</td><td>6.98</td><td>7.33</td><td>7.23</td>
+            </tr>
+            <tr>
+              <td style="text-align:left">GPT-4o+DALL-E3</td>
+              <td>8.66</td><td>8.01</td><td>7.42</td><td>7.98</td><td><u>8.77</u></td><td>8.15</td><td>8.38</td><td>8.20</td>
+            </tr>
+            <tr>
+              <td style="text-align:left">Nano Banana</td>
+              <td><u>9.34</u></td><td><strong>8.58</strong></td><td><u>8.00</u></td><td><strong>9.17</strong></td><td><strong>8.88</strong></td><td><strong>9.27</strong></td><td><strong>8.70</strong></td><td><strong>8.85</strong></td>
+            </tr>
+            <tr class="ours-row">
+              <td style="text-align:left">Wan-Weaver (Ours)</td>
+              <td><strong>9.41</strong></td><td><u>8.32</u></td><td><strong>8.03</strong></td><td><u>8.90</u></td><td>8.69</td><td><u>8.78</u></td><td><u>8.56</u></td><td><u>8.67</u></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="benchmark">
+      <h2>WeaverBench</h2>
+      <p style="margin-bottom: 30px; font-size: 1.1rem; color: var(--text-light);">
+        We introduce WeaverBench, a comprehensive benchmark for evaluating open-ended interleaved image-text generation, covering a wide range of daily use cases including design, education, reporting, and more.
+      </p>
+      
+      <img class="half-width-img" src="./assets/weaverbench.png" alt="WeaverBench Table" loading="lazy" decoding="async" fetchpriority="low" />
+
+      <h3 style="margin-top: 40px; margin-bottom: 20px; color: #111827;">Quantitative Results on WeaverBench</h3>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th style="text-align:left">Method</th>
+              <th>Prompt Adherence (PA)</th>
+              <th>Narrative Coord. (NC)</th>
+              <th>Content Consist. (CC)</th>
+              <th>Image Consist. (IC)</th>
+              <th>Completeness (CP)</th>
+              <th>Overall</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="text-align:left">Orthus</td>
+              <td>2.47</td>
+              <td>1.88</td>
+              <td>1.69</td>
+              <td>1.51</td>
+              <td>1.91</td>
+              <td>1.89</td>
+            </tr>
+            <tr>
+              <td style="text-align:left">Anole</td>
+              <td>4.14</td>
+              <td>3.76</td>
+              <td>3.77</td>
+              <td>3.42</td>
+              <td>3.64</td>
+              <td>3.74</td>
+            </tr>
+            <tr>
+              <td style="text-align:left">Emu3.5</td>
+              <td>7.65</td>
+              <td>7.55</td>
+              <td>7.56</td>
+              <td>7.50</td>
+              <td>7.41</td>
+              <td>7.53</td>
+            </tr>
+            <tr>
+              <td style="text-align:left">Nano Banana</td>
+              <td><u>8.53</u></td>
+              <td><u>8.19</u></td>
+              <td><strong>8.53</strong></td>
+              <td><strong>8.38</strong></td>
+              <td><u>8.29</u></td>
+              <td><u>8.38</u></td>
+            </tr>
+            <tr class="ours-row">
+              <td style="text-align:left">Wan-Weaver (Ours)</td>
+              <td><strong>8.71</strong></td>
+              <td><strong>8.33</strong></td>
+              <td><u>8.50</u></td>
+              <td><u>8.13</u></td>
+              <td><strong>8.46</strong></td>
+              <td><strong>8.43</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="results-single">
+      <h2>Quantitative Results: Single-Modality Generation Tasks</h2>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr>
+              <th rowspan="2" style="text-align:left; border-bottom: 1px solid var(--border);">Model</th>
+              <th colspan="2" style="border-bottom: 1px solid var(--border);">Understanding</th>
+              <th colspan="2" style="border-bottom: 1px solid var(--border);">Image Generation</th>
+              <th colspan="2" style="border-bottom: 1px solid var(--border);">Image Editing</th>
+            </tr>
+            <tr>
+              <th>MMMU</th>
+              <th>MathVista</th>
+              <th>GenEval</th>
+              <th>DPG</th>
+              <th>ImgEdit</th>
+              <th>GEdit-EN</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="text-align:left">InternVL3-38B</td>
+              <td>69.7</td><td>76.3</td><td>--</td><td>--</td><td>--</td><td>--</td>
+            </tr>
+            <tr>
+              <td style="text-align:left">Ovis2-34B</td>
+              <td>66.7</td><td>76.1</td><td>--</td><td>--</td><td>--</td><td>--</td>
+            </tr>
+            <tr>
+              <td style="text-align:left">Qwen2.5-VL-32B<sup>†</sup></td>
+              <td><strong>75.1</strong></td><td><strong>84.7</strong></td><td>--</td><td>--</td><td>--</td><td>--</td>
+            </tr>
+            <tr>
+              <td style="text-align:left">FLUX.1-dev</td>
+              <td>--</td><td>--</td><td>0.66</td><td>84.0</td><td>--</td><td>--</td>
+            </tr>
+            <tr>
+              <td style="text-align:left">Step1X-Edit</td>
+              <td>--</td><td>--</td><td>--</td><td>--</td><td>3.06</td><td><u>6.70</u></td>
+            </tr>
+            <tr>
+              <td colspan="7" style="text-align:left; font-weight:600; color:#111827; background:var(--bg-alt)">Unified Models</td>
+            </tr>
+            <tr>
+              <td style="text-align:left">Bagel</td>
+              <td>55.3</td><td>73.1</td><td><u>0.88</u></td><td><u>85.07</u></td><td>3.20</td><td>6.52</td>
+            </tr>
+            <tr>
+              <td style="text-align:left">UniWorld-V1</td>
+              <td>58.6</td><td>--</td><td>0.84</td><td>81.38</td><td><u>3.26</u></td><td>4.85</td>
+            </tr>
+            <tr class="ours-row">
+              <td style="text-align:left">Wan-Weaver (Ours)</td>
+              <td><u>74.9</u></td><td><u>84.3</u></td><td><strong>0.89</strong></td><td><strong>87.21</strong></td><td><strong>4.31</strong></td><td><strong>7.39</strong></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <section id="supp-visual">
+      <h2>Supplementary T2I / I2I Results</h2>
+      <div class="supp-grid">
+        <div class="supp-cell">
+          <p style="text-align:center; color: var(--text-light); margin: 0 0 10px 0;">Text-to-Image (T2I)</p>
+          <div class="supp-figure">
+            <img src="./assets/supp_t2i.png" alt="Supplementary T2I results" loading="lazy" decoding="async" fetchpriority="low" />
+          </div>
+        </div>
+        <div class="supp-cell">
+          <p style="text-align:center; color: var(--text-light); margin: 0 0 10px 0;">Image-to-Image (I2I)</p>
+          <div class="supp-figure">
+            <img src="./assets/supp_i2i.png" alt="Supplementary I2I results" loading="lazy" decoding="async" fetchpriority="low" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="citation">
+      <h2>Citation</h2>
+      <pre><code>@inproceedings{xing2026wanweaver,
+  title={Wan-Weaver: Interleaved Multi-modal Generation via Decoupled Training},
+  author={Xing, Jinbo and Jiang, Zeyinzi and Tuo, Yuxiang and Mao, Chaojie and Gai, Xiaotang and Chen, Xi and Zhang, Jingfeng and Pan, Yulin and Han, Zhen and Xiao, Jie and Yan, Keyu and Xie, Chenwei and Zhong, Chongyang and Zhu, Kai and Shen, Tong and Huang, Lianghua and Liu, Yu and Yang, Yujiu},
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  year={2026}
+}</code></pre>
+    </section>
+  </div>
+
+  <script>
+    function hydrateCaseImages(caseEl) {
+      if (!caseEl) return;
+      caseEl.querySelectorAll('img[data-src]').forEach((img) => {
+        img.src = img.dataset.src;
+        img.removeAttribute('data-src');
+      });
+    }
+
+    function showCase(caseId, btn) {
+      // Hide all cases
+      document.querySelectorAll('.showcase-case').forEach(el => {
+        el.style.display = 'none';
+      });
+      
+      // Show selected case
+      const activeCase = document.getElementById('case-' + caseId);
+      activeCase.style.display = 'block';
+      hydrateCaseImages(activeCase);
+      
+      // Update buttons
+      document.querySelectorAll('.tab-btn').forEach(el => {
+        el.classList.remove('active');
+      });
+      btn.classList.add('active');
+      try {
+        btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      } catch (e) {}
+    }
+
+    // Ensure first visible case is hydrated.
+    document.addEventListener('DOMContentLoaded', () => {
+      hydrateCaseImages(document.querySelector('.showcase-case[style*="display: block"]'));
+    });
+  </script>
+</body>
+</html>
